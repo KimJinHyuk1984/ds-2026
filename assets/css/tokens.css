@@ -1,0 +1,133 @@
+/* ★ 공통 자산: 템플릿 원본에서만 수정하고 sync-shared.sh 또는 sync-shared.ps1로 강의 저장소에 배포합니다.
+ * DESIGN.md의 Mintlify 토큰과 교실·오프라인 적용 규칙을 구현하는 유일한 토큰 소스입니다.
+ * 각 강의는 이 파일을 수정하지 않고 data/site.js에서 accent를 선택합니다.
+ */
+:root {
+  color-scheme: light;
+  --bg: #ffffff;
+  --surface: #f7f7f7;
+  --surface-2: #fafafa;
+  --border: #e5e5e5;
+  --text: #0a0a0a;
+  --text-muted: #5a5a5c;
+  --accent: #00d4a4;
+  --accent-soft: #7cebcb;
+  --accent-ink: #0a0a0a;
+  --accent-text: #006b53;
+  --warn: #855300;
+  --warn-soft: #fff4df;
+  --control-border: #888888;
+  --code-bg: #1c1c1e;
+  --code-text: #ffffff;
+  --code-muted: #b3b3b3;
+  --code-border: #5a5a5c;
+  --code-highlight: #303b37;
+  --syntax-keyword: #ceb5ff;
+  --syntax-string: #7cebcb;
+  --syntax-number: #ffd08a;
+  --syntax-function: #a8d5ff;
+  --backdrop: rgb(10 10 10 / 65%);
+  --shadow-dialog: 0 24px 48px -8px rgb(0 0 0 / 24%);
+
+  --font-sans: system-ui, "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  --font-mono: ui-monospace, "D2Coding", "Consolas", monospace;
+  --font-body: 1.125rem; /* 18px: Mintlify subtitle, 교실 본문 최소 17px 충족 */
+  --font-small: 1.0625rem;
+  --font-code: 0.9375rem; /* 15px: 교실 코드 최소 크기 */
+  --font-hero: 4.5rem;
+  --font-section: 2.25rem;
+  --font-card: 1.375rem;
+  --weight-medium: 500;
+  --weight-heading: 600;
+  --leading-body: 1.5;
+  --leading-hero: 1.05;
+  --leading-heading: 1.2;
+  --tracking-hero: -2px;
+  --tracking-heading: -0.5px;
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 9999px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-7: 32px;
+  --space-8: 40px;
+  --space-section-sm: 48px;
+  --space-section: 64px;
+  --space-section-lg: 96px;
+  --space-hero: 120px;
+  --maxw: 1080px;
+  --header-offset: 88px; /* shared.js가 실제 헤더 높이에 맞춥니다. */
+  --duration-fast: 180ms;
+  --duration-reveal: 450ms;
+  --reveal-distance: 16px;
+}
+
+/* 시스템 테마는 저장한 선택이 없을 때만 적용됩니다. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #0a0a0a;
+    --surface: #1c1c1e;
+    --surface-2: #141414;
+    --border: #3a3a3c;
+    --text: #ffffff;
+    --text-muted: #b3b3b3;
+    --warn: #ffd08a;
+    --warn-soft: #332710;
+  }
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0a0a0a;
+  --surface: #1c1c1e;
+  --surface-2: #141414;
+  --border: #3a3a3c;
+  --text: #ffffff;
+  --text-muted: #b3b3b3;
+  --warn: #ffd08a;
+  --warn-soft: #332710;
+}
+
+/* 밝은 액센트 면에는 어두운 글자를 사용해 AA 대비를 확보합니다. */
+[data-accent="neon-green"] {
+  --accent: #00d4a4;
+  --accent-soft: #7cebcb;
+  --accent-text: #006b53;
+}
+
+[data-accent="violet"] {
+  --accent: #a855f7;
+  --accent-soft: #ede9fe;
+  --accent-text: #5b21b6;
+}
+
+[data-accent="amber"] {
+  --accent: #f59e0b;
+  --accent-soft: #fff4df;
+  --accent-text: #855300;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-accent="neon-green"] { --accent-text: #7cebcb; }
+  :root:not([data-theme="light"]) [data-accent="violet"] { --accent-text: #c4b5fd; }
+  :root:not([data-theme="light"]) [data-accent="amber"] { --accent-text: #ffd08a; }
+}
+
+:root[data-theme="dark"] [data-accent="neon-green"] { --accent-text: #7cebcb; }
+:root[data-theme="dark"] [data-accent="violet"] { --accent-text: #c4b5fd; }
+:root[data-theme="dark"] [data-accent="amber"] { --accent-text: #ffd08a; }
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-fast: 0s;
+    --duration-reveal: 0s;
+    --reveal-distance: 0px;
+  }
+}
