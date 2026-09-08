@@ -1,0 +1,11 @@
+# Raw downloads stay on disk and must not be committed.
+/source/
+/work-temp/
+# Only the reviewed final weather/bike CSV belongs in Git.
+/data/weather-bike/**/*.csv
+!/data/weather-bike/bike-daily.csv
+.venv/
+venv/
+__pycache__/
+*.pyc
+/docs/reference/

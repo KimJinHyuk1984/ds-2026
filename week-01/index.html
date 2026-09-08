@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="1주차 · 1–3차시 · 학습 자료 준비 중">
+  <meta name="color-scheme" content="light dark">
+  <title>오리엔테이션과 Orange3·Colab 시작</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="../assets/css/tokens.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/lecture.css">
+  <!-- 일반 스크립트를 사용하므로 file://에서도 데이터를 읽을 수 있습니다. -->
+  <script src="../data/site.js" defer></script>
+  <script src="../assets/js/shared.js" defer></script>
+  <script src="../assets/js/widgets.js" defer></script>
+</head>
+<body data-level="week-01">
+  <a class="skip-link" href="#main">본문으로 건너뛰기</a>
+  <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__fill" data-progress></div></div>
+  <header class="site-header" data-header>
+    <div class="container header-inner">
+      <a class="back-to-hub" href="../index.html">← 학기 홈</a>
+      <a class="brand" href="#top" aria-label="강의 처음으로">
+        <span class="brand-mark" aria-hidden="true">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v15M3 4h5a4 4 0 0 1 4 2 4 4 0 0 1 4-2h5v14h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3Z"/></svg>
+        </span>
+        <span class="brand-title" data-lecture-title>오리엔테이션과 Orange3·Colab 시작</span>
+      </a>
+      <!-- shared.js가 본문의 .lecture-section을 수집해 링크를 생성합니다. -->
+      <nav class="section-nav" aria-label="강의 섹션" data-section-nav></nav>
+      <div class="header-actions">
+        <button class="button button-primary" type="button" data-open-instructor>선생님 소개 보기</button>
+        <button class="button button-icon" type="button" data-theme-toggle aria-label="테마 전환">
+          <svg data-theme-icon width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" tabindex="-1">
+    <div class="container">
+      <section class="hero" id="top" aria-labelledby="lecture-title">
+        <p class="kicker" data-lecture-kicker>1주차</p>
+        <h1 id="lecture-title" data-lecture-title>오리엔테이션과 Orange3·Colab 시작</h1>
+        <p class="hero-subtitle" data-lecture-subtitle>1–3차시</p>
+        <p class="section-description">이번 주는 Orange3와 Google Colab을 함께 준비합니다. 같은 데이터를 두 도구에서 확인하고, Orange3의 결과를 Python으로 재현하는 수업을 시작합니다.</p>
+        <p class="section-description">현재는 설치·접속 안내를 볼 수 있습니다. CSV를 사용하는 실습은 준비 중입니다.</p>
+      </section>
+
+      <section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
+        <div class="section-heading"><h2 id="objectives-title">학습목표</h2></div>
+        <ul class="week-objectives">
+          <li>Orange3와 Google Colab을 함께 열어 실습을 시작할 수 있다.</li>
+          <li>따릉이 일별 대여 건수 CSV를 두 도구에서 불러와 같은 데이터를 확인할 수 있다.</li>
+          <li>기본 워크플로우를 실행하며 데이터 과학의 활동을 살펴볼 수 있다.</li>
+        </ul>
+      </section>
+
+
+      <section class="lecture-section" id="lesson-plan" aria-labelledby="lesson-plan-title">
+        <div class="section-heading"><h2 id="lesson-plan-title">1–3차시 구성</h2></div>
+        <div class="card-grid">
+          <article class="card"><h3>1차시 · 함께 시작하기</h3><p>Orange3와 Colab을 열고 실습 환경을 확인합니다.</p></article>
+          <article class="card"><h3>2차시 · 같은 데이터 확인</h3><p>CSV 활동 준비 중</p></article>
+          <article class="card"><h3>3차시 · 워크플로우와 결과 비교</h3><p>CSV 활동 준비 중</p></article>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="orange-setup" aria-labelledby="orange-setup-title">
+        <div class="section-heading">
+          <h2 id="orange-setup-title">Orange3 설치·실행</h2>
+          <p class="section-description">Windows 기준 안내입니다. 이미 설치되어 있으면 실행 단계부터 확인합니다.</p>
+        </div>
+        <div class="example-stack">
+          <ol class="week-objectives">
+            <li><a href="https://orangedatamining.com/download/" target="_blank" rel="noopener noreferrer">Orange 공식 다운로드 페이지(새 탭)</a>를 엽니다.</li>
+            <li>Windows의 Standalone installer를 내려받아 설치 화면의 안내에 따라 설치합니다. 다른 운영체제에서는 같은 페이지에서 맞는 설치 프로그램을 선택합니다.</li>
+            <li>설치가 끝나면 시작 메뉴나 설치된 바로가기에서 Orange를 실행합니다.</li>
+            <li>빈 작업 화면을 열어 왼쪽 위젯 목록과 가운데 작업 공간을 확인합니다. 현재는 내장 데이터와 예제 워크플로우를 불러오지 않습니다.</li>
+          </ol>
+          <aside class="callout"><div><strong>준비 확인</strong><p>Orange의 빈 작업 화면이 열리면 설치·실행 준비가 끝났습니다. 따릉이 CSV를 연결하는 활동은 자료가 준비된 뒤 진행합니다.</p></div></aside>
+          <p>조작 참고: <a href="https://orangedatamining.com/getting-started/" target="_blank" rel="noopener noreferrer">Orange 시작 안내(새 탭)</a></p>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="colab-setup" aria-labelledby="colab-setup-title">
+        <div class="section-heading"><h2 id="colab-setup-title">Google Colab 접속·기본 사용</h2></div>
+        <div class="example-stack">
+          <ol class="week-objectives">
+            <li><a href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer">Google Colab(새 탭)</a>에 접속하고 수업에서 사용할 Google 계정으로 로그인합니다.</li>
+            <li>새 노트북을 만들고 제목을 week-01-ready.ipynb로 바꿉니다.</li>
+            <li>코드 셀에는 실행할 Python 코드를, 텍스트 셀에는 설명과 관찰 내용을 적습니다. 텍스트 셀에 ‘1주차 환경 준비’라고 적어 봅니다.</li>
+            <li>런타임을 연결하고 코드 셀에 아래 연결 확인 코드를 입력합니다. 셀 왼쪽 실행 버튼이나 Ctrl+Enter로 실행합니다.</li>
+          </ol>
+          <pre data-code data-language="python" data-label="Colab 연결 확인"><code>print("Colab 준비 완료")</code></pre>
+          <aside class="callout"><div><strong>준비 확인</strong><p>셀 아래에 ‘Colab 준비 완료’가 출력되는지 확인합니다. 이 코드는 실행 환경만 확인하며 CSV를 읽거나 데이터를 생성하지 않습니다.</p></div></aside>
+          <p>노트북은 Google Drive에 저장됩니다. 이름과 저장 상태를 확인합니다. 런타임이 종료되면 실행 상태가 사라질 수 있으므로 다시 연결한 뒤 필요한 셀을 실행합니다.</p>
+          <p>조작 참고: <a href="https://research.google.com/colaboratory/faq.html" target="_blank" rel="noopener noreferrer">Google Colab 공식 FAQ(새 탭)</a></p>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="csv-practice" aria-labelledby="csv-practice-title">
+        <div class="section-heading"><h2 id="csv-practice-title">CSV 실습 · 준비 중</h2></div>
+        <div class="example-stack">
+          <div id="orange-csv-practice"><h3>Orange3 실습</h3><p>CSV 준비 후 공개합니다.</p></div>
+          <div id="python-csv-practice"><h3>Python 실습</h3><p>CSV 준비 후 공개합니다.</p></div>
+          <div id="workflow-comparison"><h3>워크플로우 실행·결과 비교</h3><p>CSV 준비 후 공개합니다.</p></div>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="materials" aria-labelledby="materials-title">
+        <div class="section-heading"><h2 id="materials-title">사용 데이터와 교재</h2></div>
+        <dl class="week-materials">
+          <dt>사용 데이터</dt><dd>따릉이 일별 대여 건수 CSV · bike-daily.csv (준비 중)</dd>
+          <dt>대상 기간</dt><dd>2024-03-01 ~ 2025-02-16</dd>
+          <dt>자료 범위</dt><dd>서울 전체 일별 대여건수와 기상청 서울(108) 일자료</dd>
+          <dt>교재 쪽수</dt><dd>관련 교재 p.11</dd>
+        </dl>
+      </section>
+
+      <section class="lecture-section" id="preparation" aria-labelledby="preparation-title">
+        <div class="section-heading"><h2 id="preparation-title">준비 중 안내</h2></div>
+        <aside class="callout" aria-label="학습 자료 준비 중">
+          <div><strong>이 주차의 학습 자료는 준비 중입니다</strong><p>설치·접속 안내만 먼저 제공합니다. CSV 실습 자료는 준비 후 공개합니다.</p></div>
+        </aside>
+        <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+      </section>
+
+      <div data-widget="week-navigation">
+        <p>공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다.</p>
+        <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div class="footer-instructor">
+        <div data-instructor-avatar></div>
+        <div>
+          <strong data-instructor-name></strong>
+          <p data-instructor-affiliation></p>
+          <a class="footer-email" data-instructor-email></a>
+        </div>
+      </div>
+      <div data-other-lectures-region>
+        <h2 class="footer-heading">다른 강의 둘러보기</h2>
+        <div class="other-lectures" data-other-lectures></div>
+      </div>
+    </div>
+  </footer>
+  <!-- 선생님 소개 모달의 내용은 shared.js가 SITE.instructor로 한 번만 생성합니다. -->
+  <div class="sr-only" role="status" aria-live="polite" data-copy-status></div>
+  <noscript>주차 목록과 공통 기능을 사용하려면 브라우저에서 JavaScript를 켜 주세요.</noscript>
+</body>
+</html>

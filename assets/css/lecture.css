@@ -1,4 +1,4 @@
-﻿/* 강의별 커스텀 스타일은 이 파일에만 작성합니다.
+/* 강의별 커스텀 스타일은 이 파일에만 작성합니다.
  * 공통 토큰은 tokens.css에 있습니다. 여기서는 공통 토큰을 재정의하지 않습니다.
  * value-slider는 범용 등록 예시이며 실제 강의 콘텐츠가 아닙니다.
  */
@@ -12,4 +12,32 @@
 .widget-note { color: var(--text-muted); }
 @media (prefers-reduced-motion: reduce) {
   .widget-meter-fill { transition: none; }
+}
+
+/* 학기 주차 안내와 이동. 공통 메뉴와 토큰은 그대로 사용합니다. */
+.week-objectives { margin: 0; padding-left: var(--space-6); }
+.week-objectives li + li, .course-fallback-list li + li { margin-top: var(--space-3); }
+.week-materials { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--space-4) var(--space-6); margin: 0; }
+.week-materials dt { font-weight: var(--weight-heading); }
+.week-materials dd { margin: 0; min-width: 0; }
+.week-home-link { margin-top: var(--space-6); }
+.week-navigation { display: grid; gap: var(--space-5); margin-bottom: var(--space-section); padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-2); }
+.week-picker { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--space-3); }
+.week-picker-label { font-weight: var(--weight-heading); }
+.week-select { width: 100%; min-width: 0; min-height: 44px; padding: var(--space-2) var(--space-3); border: 1px solid var(--control-border); border-radius: var(--radius-md); background: var(--bg); color: var(--text); font: inherit; }
+.week-select:focus-visible { outline: 3px solid var(--accent-text); outline-offset: var(--space-1); }
+.week-navigation :disabled { color: var(--text-muted); background: var(--surface); cursor: not-allowed; }
+.week-steps { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-3); }
+.week-steps .button { text-align: center; }
+.week-navigation-status { color: var(--text-muted); font-size: var(--font-small); }
+
+@media (max-width: 767px) {
+  .week-navigation { padding: var(--space-4); }
+  .week-picker { grid-template-columns: minmax(0, 1fr) auto; }
+  .week-picker-label { grid-column: 1 / -1; }
+  .week-materials { grid-template-columns: minmax(0, 1fr); gap: var(--space-2); }
+  .week-materials dd + dt { margin-top: var(--space-3); }
+}
+@media (max-width: 479px) {
+  .week-steps { grid-template-columns: minmax(0, 1fr); }
 }

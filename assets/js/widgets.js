@@ -1,4 +1,4 @@
-﻿/* 강의별 위젯 등록 파일. 공통 shared.js는 수정하지 않습니다.
+/* 강의별 위젯 등록 파일. 공통 shared.js는 수정하지 않습니다.
  * 등록: window.WIDGETS["이름"] = function (host, site) { ... };
  * HTML: <div data-widget="이름"><p>로드 실패 시에도 읽을 수 있는 정적 설명</p></div>
  * 아래 value-slider는 label + range + output을 연결한 범용 예시입니다.
@@ -56,6 +56,79 @@ window.WIDGETS = window.WIDGETS || {};
     panel.append(heading, label, input, output, meter, note);
     update();
     host.replaceChildren(panel);
+  };
+
+
+  // 주차 선택과 이전·다음은 ready 페이지에만 연결합니다.
+  // coming 페이지를 직접 열었을 때 이전·다음은 비활성 상태입니다.
+  window.WIDGETS["week-navigation"] = function (host, site) {
+    const levels = Array.isArray(site.levels) ? site.levels : [];
+    const slug = document.body.dataset.level;
+    const current = levels.find(function (level) { return level.slug === slug; });
+    if (!current) return;
+    const ready = levels.filter(function (level) { return level.status === "ready"; });
+    const currentIndex = ready.indexOf(current);
+    const nav = node("nav", "week-navigation");
+    nav.setAttribute("aria-label", "주차 이동");
+    const form = node("form", "week-picker");
+    const label = node("label", "week-picker-label", "주차 선택");
+    const select = node("select", "week-select");
+    select.id = "week-select-" + (++serial);
+    label.htmlFor = select.id;
+    levels.forEach(function (level) {
+      const option = node("option", "", level.badge + " · " + level.title
+        + (level.status === "ready" ? "" : " · 준비 중"));
+      option.value = level.slug;
+      option.disabled = level.status !== "ready";
+      option.selected = level.slug === slug;
+      select.append(option);
+    });
+    select.disabled = ready.length === 0;
+    const go = node("button", "button", "이동");
+    go.type = "submit";
+    function selectedReady() {
+      return ready.find(function (level) { return level.slug === select.value; });
+    }
+    function update() {
+      go.disabled = !selectedReady() || select.value === slug;
+    }
+    select.addEventListener("change", update);
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      const target = selectedReady();
+      if (target && target.slug !== slug) {
+        window.location.assign("../" + encodeURIComponent(target.slug) + "/index.html");
+      }
+    });
+    form.append(label, select, go);
+    update();
+
+    const steps = node("div", "week-steps");
+    function step(level, label) {
+      if (!level) {
+        const disabled = node("button", "button", label);
+        disabled.type = "button";
+        disabled.disabled = true;
+        return disabled;
+      }
+      const link = node("a", "button", label + " · " + level.badge);
+      link.href = "../" + encodeURIComponent(level.slug) + "/index.html";
+      link.setAttribute("aria-label", label + ": " + level.badge + " " + level.title);
+      return link;
+    }
+    steps.append(
+      step(currentIndex > 0 ? ready[currentIndex - 1] : undefined, "← 이전 주차"),
+      step(currentIndex >= 0 ? ready[currentIndex + 1] : undefined, "다음 주차 →")
+    );
+    const status = node("p", "week-navigation-status", ready.length === 0
+      ? "공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다."
+      : current.status === "ready"
+        ? "공개된 주차 사이에서 이동할 수 있습니다."
+        : "이 주차는 준비 중입니다. 주차 선택에서 공개된 자료로 이동할 수 있습니다.");
+    status.id = select.id + "-status";
+    select.setAttribute("aria-describedby", status.id);
+    nav.append(form, steps, status);
+    host.replaceChildren(nav);
   };
 
   const mounted = new WeakSet();
