@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="1주차 · 1–3차시 · 학습 자료 준비 중">
+  <meta name="description" content="1주차 · 1–3차시 · 따릉이 353일을 Orange3와 Python으로 함께 살펴보는 데이터 과학 첫 수업">
   <meta name="color-scheme" content="light dark">
   <title>오리엔테이션과 Orange3·Colab 시작</title>
   <link rel="icon" href="data:,">
@@ -31,6 +31,7 @@
       <nav class="section-nav" aria-label="강의 섹션" data-section-nav></nav>
       <div class="header-actions">
         <button class="button button-primary" type="button" data-open-instructor>선생님 소개 보기</button>
+        <button class="button" type="button" data-presentation-toggle aria-pressed="false">발표 모드</button>
         <button class="button button-icon" type="button" data-theme-toggle aria-label="테마 전환">
           <svg data-theme-icon width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
         </button>
@@ -44,91 +45,433 @@
         <p class="kicker" data-lecture-kicker>1주차</p>
         <h1 id="lecture-title" data-lecture-title>오리엔테이션과 Orange3·Colab 시작</h1>
         <p class="hero-subtitle" data-lecture-subtitle>1–3차시</p>
-        <p class="section-description">이번 주는 Orange3와 Google Colab을 함께 준비합니다. 같은 데이터를 두 도구에서 확인하고, Orange3의 결과를 Python으로 재현하는 수업을 시작합니다.</p>
-        <p class="section-description">현재는 설치·접속 안내를 볼 수 있습니다. CSV를 사용하는 실습은 준비 중입니다.</p>
+        <p class="section-description">따릉이 대여건수는 왜 날마다 다를까요? 서울의 353일을 Orange3로 살펴보고, 같은 결과를 Python으로 확인하며 데이터 과학을 시작합니다.</p>
+        <nav class="lesson-jump" aria-label="차시 바로가기">
+          <a class="button" href="#lesson-1">1차시 · 질문과 관찰</a>
+          <a class="button" href="#lesson-2">2차시 · Orange3</a>
+          <a class="button" href="#lesson-3">3차시 · Colab</a>
+        </nav>
       </section>
 
       <section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
-        <div class="section-heading"><h2 id="objectives-title">학습목표</h2></div>
-        <ul class="week-objectives">
-          <li>Orange3와 Google Colab을 함께 열어 실습을 시작할 수 있다.</li>
-          <li>따릉이 일별 대여 건수 CSV를 두 도구에서 불러와 같은 데이터를 확인할 수 있다.</li>
-          <li>기본 워크플로우를 실행하며 데이터 과학의 활동을 살펴볼 수 있다.</li>
-        </ul>
-      </section>
-
-
-      <section class="lecture-section" id="lesson-plan" aria-labelledby="lesson-plan-title">
-        <div class="section-heading"><h2 id="lesson-plan-title">1–3차시 구성</h2></div>
-        <div class="card-grid">
-          <article class="card"><h3>1차시 · 함께 시작하기</h3><p>Orange3와 Colab을 열고 실습 환경을 확인합니다.</p></article>
-          <article class="card"><h3>2차시 · 같은 데이터 확인</h3><p>CSV 활동 준비 중</p></article>
-          <article class="card"><h3>3차시 · 워크플로우와 결과 비교</h3><p>CSV 활동 준비 중</p></article>
+        <div class="section-heading"><h2 id="objectives-title">이번 주의 목표</h2></div>
+        <div class="lesson-panel" data-slide data-slide-title="1주차 학습목표">
+          <ul class="week-objectives">
+            <li>Orange3와 Google Colab을 함께 열어 실습을 시작할 수 있다.</li>
+            <li>따릉이 일별 대여 건수 CSV를 두 도구에서 불러와 같은 데이터를 확인할 수 있다.</li>
+            <li>기본 워크플로우를 실행하며 데이터 과학의 활동을 살펴볼 수 있다.</li>
+          </ul>
         </div>
-      </section>
-
-      <section class="lecture-section" id="orange-setup" aria-labelledby="orange-setup-title">
-        <div class="section-heading">
-          <h2 id="orange-setup-title">Orange3 설치·실행</h2>
-          <p class="section-description">Windows 기준 안내입니다. 이미 설치되어 있으면 실행 단계부터 확인합니다.</p>
-        </div>
-        <div class="example-stack">
-          <ol class="week-objectives">
-            <li><a href="https://orangedatamining.com/download/" target="_blank" rel="noopener noreferrer">Orange 공식 다운로드 페이지(새 탭)</a>를 엽니다.</li>
-            <li>Windows의 Standalone installer를 내려받아 설치 화면의 안내에 따라 설치합니다. 다른 운영체제에서는 같은 페이지에서 맞는 설치 프로그램을 선택합니다.</li>
-            <li>설치가 끝나면 시작 메뉴나 설치된 바로가기에서 Orange를 실행합니다.</li>
-            <li>빈 작업 화면을 열어 왼쪽 위젯 목록과 가운데 작업 공간을 확인합니다. 현재는 내장 데이터와 예제 워크플로우를 불러오지 않습니다.</li>
-          </ol>
-          <aside class="callout"><div><strong>준비 확인</strong><p>Orange의 빈 작업 화면이 열리면 설치·실행 준비가 끝났습니다. 따릉이 CSV를 연결하는 활동은 자료가 준비된 뒤 진행합니다.</p></div></aside>
-          <p>조작 참고: <a href="https://orangedatamining.com/getting-started/" target="_blank" rel="noopener noreferrer">Orange 시작 안내(새 탭)</a></p>
-        </div>
-      </section>
-
-      <section class="lecture-section" id="colab-setup" aria-labelledby="colab-setup-title">
-        <div class="section-heading"><h2 id="colab-setup-title">Google Colab 접속·기본 사용</h2></div>
-        <div class="example-stack">
-          <ol class="week-objectives">
-            <li><a href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer">Google Colab(새 탭)</a>에 접속하고 수업에서 사용할 Google 계정으로 로그인합니다.</li>
-            <li>새 노트북을 만들고 제목을 week-01-ready.ipynb로 바꿉니다.</li>
-            <li>코드 셀에는 실행할 Python 코드를, 텍스트 셀에는 설명과 관찰 내용을 적습니다. 텍스트 셀에 ‘1주차 환경 준비’라고 적어 봅니다.</li>
-            <li>런타임을 연결하고 코드 셀에 아래 연결 확인 코드를 입력합니다. 셀 왼쪽 실행 버튼이나 Ctrl+Enter로 실행합니다.</li>
-          </ol>
-          <pre data-code data-language="python" data-label="Colab 연결 확인"><code>print("Colab 준비 완료")</code></pre>
-          <aside class="callout"><div><strong>준비 확인</strong><p>셀 아래에 ‘Colab 준비 완료’가 출력되는지 확인합니다. 이 코드는 실행 환경만 확인하며 CSV를 읽거나 데이터를 생성하지 않습니다.</p></div></aside>
-          <p>노트북은 Google Drive에 저장됩니다. 이름과 저장 상태를 확인합니다. 런타임이 종료되면 실행 상태가 사라질 수 있으므로 다시 연결한 뒤 필요한 셀을 실행합니다.</p>
-          <p>조작 참고: <a href="https://research.google.com/colaboratory/faq.html" target="_blank" rel="noopener noreferrer">Google Colab 공식 FAQ(새 탭)</a></p>
-        </div>
-      </section>
-
-      <section class="lecture-section" id="csv-practice" aria-labelledby="csv-practice-title">
-        <div class="section-heading"><h2 id="csv-practice-title">CSV 실습 · 준비 중</h2></div>
-        <div class="example-stack">
-          <div id="orange-csv-practice"><h3>Orange3 실습</h3><p>CSV 준비 후 공개합니다.</p></div>
-          <div id="python-csv-practice"><h3>Python 실습</h3><p>CSV 준비 후 공개합니다.</p></div>
-          <div id="workflow-comparison"><h3>워크플로우 실행·결과 비교</h3><p>CSV 준비 후 공개합니다.</p></div>
+        <div class="lesson-panel" data-slide data-slide-title="세 차시, 같은 탐구 순서">
+          <div class="card-grid">
+            <article class="card"><h3>1차시 · 오리엔테이션</h3><p>교사의 표 시연을 보며 데이터로 답할 질문을 찾습니다. 관찰한 활동에 ‘데이터 과학’이라는 이름을 붙입니다.</p></article>
+            <article class="card"><h3>2차시 · Orange3</h3><p>설치부터 표·분포·산점도까지 직접 연결합니다. 교사가 Python으로 그린 그래프와 비교합니다.</p></article>
+            <article class="card"><h3>3차시 · Colab</h3><p>완성 코드를 실행해 같은 표와 산점도를 만듭니다. 변수와 조건을 바꾸어 결과를 비교합니다.</p></article>
+          </div>
+          <p class="lesson-note">매 차시: 질문 제기 → Orange3에서 결과 확인 → 개념에 이름 붙이기 → Python으로 재현 → 결과 비교</p>
         </div>
       </section>
 
       <section class="lecture-section" id="materials" aria-labelledby="materials-title">
-        <div class="section-heading"><h2 id="materials-title">사용 데이터와 교재</h2></div>
-        <dl class="week-materials">
-          <dt>사용 데이터</dt><dd>따릉이 일별 대여 건수 CSV · bike-daily.csv (준비 중)</dd>
-          <dt>대상 기간</dt><dd>2024-03-01 ~ 2025-02-16</dd>
-          <dt>자료 범위</dt><dd>서울 전체 일별 대여건수와 기상청 서울(108) 일자료</dd>
-          <dt>교재 쪽수</dt><dd>관련 교재 p.11</dd>
-        </dl>
+        <div class="section-heading"><h2 id="materials-title">사용 자료</h2></div>
+        <div class="lesson-panel" data-slide data-slide-title="서울의 353일을 담은 CSV">
+          <div class="dataset-download">
+            <a class="button button-primary" href="../data/weather-bike/bike-daily.csv" download="bike-daily.csv" aria-describedby="dataset-size">bike-daily.csv 내려받기</a>
+            <p id="dataset-size">2024-03-01 ~ 2025-02-16 · <strong>353행 × 8열</strong></p>
+          </div>
+          <p>한 행은 하루입니다. 서울 전체의 일별 따릉이 대여건수와 기상청 서울(108)의 날씨가 날짜별로 나란히 담겨 있습니다. 날짜 누락은 없습니다.</p>
+          <p>파일 인코딩은 UTF-8 BOM입니다. Orange3에서는 내려받은 파일을 열고, Colab에서는 같은 배포 파일의 URL을 코드에 넣어 읽습니다.</p>
+          <p><strong>관련 교재 p.11</strong> (Ⅰ-1-1 데이터 과학이란?)</p>
+        </div>
+        <div class="lesson-panel" data-slide data-slide-title="날짜·요일·공휴일여부">
+          <div class="lesson-table-scroll" role="region" aria-label="날짜와 달력 컬럼" tabindex="0">
+            <table class="lesson-table">
+              <caption>컬럼 읽기 · 날짜와 달력</caption>
+              <thead><tr><th scope="col">컬럼</th><th scope="col">읽는 방법</th><th scope="col">확인된 값</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">날짜</th><td>YYYY-MM-DD</td><td>2024-03-01 ~ 2025-02-16</td></tr>
+                <tr><th scope="row">요일</th><td>월~일</td><td>각 날짜의 요일</td></tr>
+                <tr><th scope="row">공휴일여부</th><td>법정공휴일 1, 그 외 0</td><td>1인 날 19일. 일요일이라는 이유로 1을 추가하지 않음</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="lesson-panel" data-slide data-slide-title="기온·강수량·대여건수">
+          <div class="lesson-table-scroll" role="region" aria-label="날씨와 대여건수 컬럼" tabindex="0">
+            <table class="lesson-table">
+              <caption>컬럼 읽기 · 이 파일의 실측값</caption>
+              <thead><tr><th scope="col">컬럼</th><th scope="col">단위</th><th scope="col">최소 ~ 최대</th><th scope="col">함께 확인할 값</th></tr></thead>
+              <tbody>
+                <tr><th scope="row">평균기온</th><td>°C</td><td>-9.7 ~ 31.8</td><td>평균 15.0</td></tr>
+                <tr><th scope="row">최고기온</th><td>°C</td><td>-6.1 ~ 36.4</td><td>—</td></tr>
+                <tr><th scope="row">최저기온</th><td>°C</td><td>-12.2 ~ 28.2</td><td>—</td></tr>
+                <tr><th scope="row">강수량</th><td>mm</td><td>0 ~ 128.8</td><td>빈 값 200개</td></tr>
+                <tr><th scope="row">대여건수</th><td>건/일</td><td>14,293 ~ 194,244</td><td>평균 119,928 · 빈 값 0개</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p class="lesson-note">평균은 반올림한 값입니다. 강수량 컬럼에 빈 값이 있다는 사실만 기록합니다. 그 의미와 처리 방법은 4주차에서 다룹니다.</p>
+        </div>
       </section>
 
-      <section class="lecture-section" id="preparation" aria-labelledby="preparation-title">
-        <div class="section-heading"><h2 id="preparation-title">준비 중 안내</h2></div>
-        <aside class="callout" aria-label="학습 자료 준비 중">
-          <div><strong>이 주차의 학습 자료는 준비 중입니다</strong><p>설치·접속 안내만 먼저 제공합니다. CSV 실습 자료는 준비 후 공개합니다.</p></div>
-        </aside>
-        <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+      <section class="lecture-section" id="lesson-1" aria-labelledby="lesson-1-title">
+        <div class="section-heading">
+          <p class="kicker">1차시 · 과목 오리엔테이션</p>
+          <h2 id="lesson-1-title">데이터로 무엇을 물을 수 있을까?</h2>
+          <p class="section-description">교사가 준비한 Orange3·Colab 화면을 함께 봅니다. 학생은 관찰과 질문을 기록합니다.</p>
+        </div>
+        <div class="lesson-step" id="l1-question">
+          <div class="lesson-panel" data-slide data-slide-title="1차시 ① 질문 제기">
+            <h3><span class="step-number">01</span> 질문 제기</h3>
+            <p class="lesson-question">“내일 따릉이를 타는 사람이 많을지, 무엇을 보고 판단할 수 있을까?”</p>
+            <p>각자 근거가 될 만한 정보를 하나 적어 봅니다. 날씨, 날짜처럼 이 파일에서 확인할 수 있는 정보와, 아직 없는 정보를 구분해 봅시다.</p>
+            <p>이 과목은 주 3차시씩 15주, 총 45차시입니다. Orange3에서 결과를 먼저 보고 Python으로 재현합니다. 6주차와 11주차의 미니 프로젝트를 거쳐 14~15주차에는 자신의 질문으로 분석합니다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l1-orange">
+          <div class="lesson-panel" data-slide data-slide-title="1차시 ② Orange3에서 표 관찰">
+            <h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+            <p>교사는 <a href="#orange-file">File 불러오기</a>와 <a href="#orange-table">Data Table 확인</a>을 시연합니다. 아직 설치하지 않은 학생은 화면을 보며 다음을 찾습니다.</p>
+            <ul class="week-objectives">
+              <li>353개의 행과 8개의 컬럼 이름을 확인합니다.</li>
+              <li>서로 다른 두 날짜를 골라 평균기온과 대여건수를 읽습니다.</li>
+              <li>대여건수가 날마다 같지 않다는 사실을 확인하고, 처음 적은 질문을 표로 살펴볼 수 있을지 말합니다.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="lesson-step" id="l1-concept">
+          <div class="lesson-panel" data-slide data-slide-title="1차시 ③ 데이터 과학이라는 이름">
+            <h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+            <p><strong>데이터 과학</strong>은 질문에 답하기 위해 데이터를 모으고 정리하고 분석하여, 근거를 설명하는 활동입니다. 방금 우리는 질문에 필요한 기록을 찾고 비교하는 일을 했습니다.</p>
+            <p>이 표의 <strong>행</strong>은 관찰한 하루이고, <strong>컬럼</strong>은 그날에 대해 기록한 속성입니다. 한두 날을 본 생각은 출발점입니다. 더 많은 날을 함께 살펴보고 생각이 맞는지 확인해야 합니다.</p>
+            <p>이번 주에는 표와 그래프를 살펴봅니다. 정리 방법, 통계, 예측 모델은 이후 주차에서 차례로 배웁니다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l1-python">
+          <div class="lesson-panel" data-slide data-slide-title="1차시 ④ 같은 표를 Python으로">
+            <h3><span class="step-number">04</span> Python으로 재현</h3>
+            <p>교사는 Colab에서 <a href="#python-load">CSV 읽기 코드</a>를 실행합니다. 화면에 처음 다섯 행과 <code>(353, 8)</code>이 나타나는지 함께 봅니다.</p>
+            <p>Python 문법을 다시 배우는 시간이 아닙니다. 같은 파일을 다른 도구로 읽었을 때 같은 자료가 나타나는지에 집중합니다. 학생은 3차시에 이 코드를 직접 실행합니다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l1-compare">
+          <div class="lesson-panel" data-slide data-slide-title="1차시 ⑤ 같은 날짜, 같은 값">
+            <h3><span class="step-number">05</span> 결과 비교</h3>
+            <ul class="week-objectives">
+              <li>Orange3와 Colab에서 행·컬럼 수가 일치하는지 확인합니다.</li>
+              <li>같은 날짜 하나를 찾아 평균기온과 대여건수를 대조합니다. 화면의 행 번호가 달라도 날짜가 같아야 합니다.</li>
+              <li>“이 자료로 ______을 알아보고 싶다. ______ 컬럼을 사용할 수 있다.”를 완성합니다.</li>
+            </ul>
+            <p class="lesson-note">한 행은 자전거 한 대나 대여소 한 곳이 아닙니다. 하루의 서울 전체 대여건수를 담고 있습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="lesson-2" aria-labelledby="lesson-2-title">
+        <div class="section-heading">
+          <p class="kicker">2차시 · Orange3 설치와 첫 워크플로우</p>
+          <h2 id="lesson-2-title">표에서 보이지 않던 관계 찾기</h2>
+          <p class="section-description">한 번 불러온 파일을 표·분포·산점도 위젯에 각각 연결합니다.</p>
+        </div>
+        <div class="lesson-step" id="l2-question">
+          <div class="lesson-panel" data-slide data-slide-title="2차시 ① 기온과 대여건수">
+            <h3><span class="step-number">01</span> 질문 제기</h3>
+            <p class="lesson-question">“기온이 높은 날에는 따릉이 대여건수도 많을까?”</p>
+            <p>예상과 이유를 한 문장으로 적습니다. 353일을 한눈에 볼 방법을 생각해 봅시다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l2-orange">
+          <div class="lesson-panel" id="orange-setup" data-slide data-slide-title="2차시 ② Orange3 설치·실행">
+            <h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+            <h4>설치하고 빈 작업 화면 열기</h4>
+            <ol class="week-objectives">
+              <li><a href="https://orangedatamining.com/download/" target="_blank" rel="noopener noreferrer">Orange 공식 다운로드(새 탭)</a>에서 운영체제에 맞는 설치 프로그램을 받습니다. Windows는 Standalone installer를 선택합니다.</li>
+              <li>설치 안내에 따라 완료한 뒤 Orange를 실행하고 새 워크플로우를 엽니다. 이미 설치되어 있으면 여기서 시작합니다.</li>
+              <li>왼쪽 위젯 목록과 가운데 작업 공간을 찾습니다. <a href="#materials">이 주차의 CSV</a>를 내려받아 저장 위치를 확인합니다.</li>
+            </ol>
+            <p class="lesson-note">학교 PC에서 설치 권한이 필요하면 교사에게 요청합니다. 아래 실습에는 내려받은 bike-daily.csv를 사용합니다.</p>
+          </div>
+          <div class="lesson-panel" id="orange-file" data-slide data-slide-title="File · 같은 CSV 불러오기">
+            <h4>File · 데이터의 출발점</h4>
+            <ol class="week-objectives">
+              <li>Data 범주의 <strong>File</strong> 위젯을 작업 공간에 놓고 더블클릭합니다.</li>
+              <li>파일 열기 버튼으로 <code>bike-daily.csv</code>를 선택합니다. 한글 컬럼 이름과 데이터 정보가 나타나는지 확인합니다.</li>
+              <li>컬럼 설정에서 <strong>평균기온</strong>과 <strong>대여건수</strong>가 숫자형 <strong>Continuous</strong>인지 확인합니다. 필요하면 타입을 바꾸고 적용합니다.</li>
+            </ol>
+            <p>글자가 깨지면 내려받은 원본 파일인지 확인하고, 가져오기 창의 인코딩 선택이 보이면 UTF-8로 설정합니다. 파일 내용을 고쳐 저장하기 전에 교사와 확인합니다.</p>
+          </div>
+          <div class="lesson-panel" data-slide data-slide-title="File에서 세 갈래로 연결">
+            <h4>세 위젯이 같은 전체 데이터를 받게 연결하기</h4>
+            <div class="workflow-map" role="group" aria-label="File의 Data 출력을 Data Table, Distributions, Scatter Plot의 Data 입력에 각각 연결">
+              <div class="workflow-source"><strong>File</strong><span>Data 출력</span></div>
+              <ul class="workflow-targets">
+                <li><span aria-hidden="true">→</span><div><strong>Data Table</strong><span>Data 입력 · 날짜별 값 확인</span></div></li>
+                <li><span aria-hidden="true">→</span><div><strong>Distributions</strong><span>Data 입력 · 대여건수 분포</span></div></li>
+                <li><span aria-hidden="true">→</span><div><strong>Scatter Plot</strong><span>Data 입력 · 기온과 대여건수</span></div></li>
+              </ul>
+            </div>
+            <p>위젯을 추가하고 File의 오른쪽 연결점에서 각 위젯의 왼쪽 연결점으로 끕니다. 연결 선택 창이 뜨면 <strong>Data → Data</strong>를 선택합니다.</p>
+            <p class="lesson-note">세 연결선의 출발점은 모두 File입니다. Data Table의 선택된 행 출력을 사용하면 선택한 날짜만 그래프에 나타날 수 있습니다.</p>
+          </div>
+          <div class="lesson-panel" id="orange-table" data-slide data-slide-title="Data Table · 353행 확인">
+            <h4>Data Table · 표에서 확인할 것</h4>
+            <ol class="week-objectives">
+              <li>Data Table을 열어 정보 영역에서 <strong>353개 데이터 행</strong>을 확인합니다.</li>
+              <li>가로로 살펴보며 날짜부터 대여건수까지 <strong>8개의 컬럼 이름</strong>을 확인합니다. 날짜나 요일은 별도 역할로 표시될 수 있어 Features 수만으로 전체 컬럼 수를 판단하지 않습니다.</li>
+              <li>날짜별 평균기온과 대여건수를 읽습니다. 강수량 컬럼에는 빈 값이 있다는 점만 관찰합니다.</li>
+            </ol>
+            <p class="lesson-note">Python의 처음 다섯 행과 비교할 때는 정렬을 원래대로 되돌리거나, 같은 날짜를 기준으로 비교합니다.</p>
+          </div>
+          <div class="lesson-panel" id="orange-distribution" data-slide data-slide-title="Distributions · 대여건수 분포">
+            <h4>Distributions · 어느 구간에 날이 많이 모일까?</h4>
+            <ol class="week-objectives">
+              <li>Distributions를 열고 변수에서 <strong>대여건수</strong>를 선택합니다. Split by는 선택하지 않고 확률·누적 표시도 끕니다.</li>
+              <li>가로축은 대여건수 구간, 세로축은 그 구간에 속하는 날짜 수입니다. 가장 높은 막대가 있는 구간을 화면에서 읽어 기록합니다.</li>
+              <li><strong>Bin width</strong>를 바꾸어 막대의 모습을 비교합니다. 그래프 모습이 달라져도 원래 353일의 값은 같습니다.</li>
+            </ol>
+            <p>이 데이터의 대여건수는 최소 <strong>14,293건</strong>, 최대 <strong>194,244건</strong>입니다. 한 날짜의 수치와 여러 날짜가 모인 모습은 어떻게 다른가요?</p>
+          </div>
+          <div class="lesson-panel" id="orange-scatter" data-slide data-slide-title="Scatter Plot · 평균기온과 대여건수">
+            <h4>Scatter Plot · 353일을 점으로 보기</h4>
+            <ol class="week-objectives">
+              <li>Scatter Plot을 열고 <strong>X: 평균기온</strong>, <strong>Y: 대여건수</strong>로 설정합니다. 점 하나는 하루입니다.</li>
+              <li>색상과 크기는 변수별 구분 없이 일정하게 두고, <strong>Jittering은 0</strong>으로 설정합니다. 숫자형 지터 옵션도 끕니다. 회귀선은 켜지 않습니다.</li>
+              <li>차가운 날의 점들과 따뜻한 날의 점들을 비교합니다. 기온이 비슷해도 대여건수가 다른 점들을 찾아봅니다.</li>
+            </ol>
+            <p>축에 컬럼이 없으면 File에서 평균기온·대여건수를 Continuous로, 역할을 Feature로 설정하고 다시 확인합니다.</p>
+            <p>관찰의 출발점: <strong>“기온이 높으면 대여가 많다.”</strong> 이 그림에서 전반적인 경향을 찾아 설명하되, 모든 날에 그대로 맞는 규칙인지도 점들을 보며 살펴봅니다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l2-concept">
+          <div class="lesson-panel" data-slide data-slide-title="2차시 ③ 방금 본 결과에 이름 붙이기">
+            <h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+            <dl class="week-materials">
+              <dt>워크플로우</dt><dd>데이터가 읽히고 표시되기까지의 작업과 연결입니다. 이번에는 File이 읽은 데이터를 세 위젯이 함께 받습니다.</dd>
+              <dt>분포</dt><dd>값들이 어느 구간에 얼마나 모여 있는지 나타낸 모습입니다. 막대 하나가 자전거 한 대를 뜻하지 않습니다.</dd>
+              <dt>산점도</dt><dd>두 수치의 짝을 점의 가로·세로 위치로 나타낸 그림입니다. 여기서는 하루의 평균기온과 대여건수가 한 점을 만듭니다.</dd>
+            </dl>
+          </div>
+        </div>
+        <div class="lesson-step" id="l2-python">
+          <div class="lesson-panel" data-slide data-slide-title="2차시 ④ Python 그래프로 재현">
+            <h3><span class="step-number">04</span> Python으로 재현</h3>
+            <p>교사는 <a href="#python-load">CSV 읽기</a> → <a href="#python-font">한글 폰트 준비</a> → <a href="#python-scatter">산점도 코드</a>를 차례로 실행하여 같은 두 축을 보여 줍니다. 학생은 Orange3 화면을 옆에 두고 비교합니다.</p>
+            <p>분포도 Python으로 확인합니다. 아래 셀은 CSV와 폰트 준비 셀을 실행한 뒤 사용합니다. <code>bins=12</code>는 화면을 나누는 구간 수이며 데이터의 측정값이 아닙니다.</p>
+            <pre data-code data-language="python" data-label="대여건수 분포 · 교사 시연 / 학생 재현"><code>plt.figure(figsize=(8, 5))
+plt.hist(df["대여건수"], bins=12, edgecolor="white")
+plt.xlabel("일별 대여건수 (건)")
+plt.ylabel("날짜 수 (일)")
+plt.title("353일의 따릉이 대여건수 분포")
+plt.tight_layout()
+plt.show()</code></pre>
+          </div>
+        </div>
+        <div class="lesson-step" id="l2-compare">
+          <div class="lesson-panel" data-slide data-slide-title="2차시 ⑤ 관계와 예외 함께 기록">
+            <h3><span class="step-number">05</span> 결과 비교</h3>
+            <ul class="week-objectives">
+              <li>산점도는 두 도구 모두 평균기온이 가로축, 대여건수가 세로축인지 확인합니다. 축 눈금과 점 크기는 달라도 데이터의 위치 관계를 비교할 수 있습니다.</li>
+              <li>분포의 막대 경계는 Bin width와 bins 설정에 따라 다를 수 있습니다. 가장 많이 모인 구간과 전체 범위를 비교합니다.</li>
+              <li>“기온이 높으면 대여가 많다”를 뒷받침하는 모습과, 기온만으로 설명하기 어려운 모습을 각각 기록합니다.</li>
+            </ul>
+            <aside class="callout"><div><strong>다음 탐구로 이어지는 질문</strong><p>같은 기온에서도 대여건수가 다른 이유는 무엇일까요? 9~11주차에는 기온과 다른 정보를 입력해 대여건수를 예측하고, 그 예측이 얼마나 맞는지 평가합니다. 지금의 그림만으로 기온이 대여 증가의 원인이라고 단정하지 않습니다.</p></div></aside>
+            <p>Orange의 파일 메뉴에서 워크플로우를 <code>week-01.ows</code>로 저장합니다. 다시 열 때를 위해 내려받은 CSV도 같은 위치에 보관합니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="lesson-3" aria-labelledby="lesson-3-title">
+        <div class="section-heading">
+          <p class="kicker">3차시 · Colab 접속과 Python 재현</p>
+          <h2 id="lesson-3-title">같은 데이터, 같은 결과일까?</h2>
+          <p class="section-description">코드를 셀 단위로 복사해 위에서부터 실행합니다. 파이썬 문법 설명 대신 변수·조건을 바꾼 결과를 비교합니다.</p>
+        </div>
+        <div class="lesson-step" id="l3-question">
+          <div class="lesson-panel" data-slide data-slide-title="3차시 ① 같은 결과의 기준">
+            <h3><span class="step-number">01</span> 질문 제기</h3>
+            <p class="lesson-question">“도구를 바꾸어도 같은 결과라고 말하려면 무엇이 같아야 할까?”</p>
+            <p>행 수, 날짜, 컬럼, 축 중에서 먼저 확인할 것을 골라 봅니다. 색이나 점의 크기가 다르면 데이터까지 달라졌다고 할 수 있을까요?</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l3-orange">
+          <div class="lesson-panel" data-slide data-slide-title="3차시 ② Orange3 결과를 비교 기준으로">
+            <h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+            <p>저장한 워크플로우를 열고 File에 같은 CSV가 연결되어 있는지 확인합니다. Data Table의 <strong>353행·8컬럼</strong>과 Scatter Plot의 <strong>평균기온–대여건수</strong> 두 축을 기록합니다.</p>
+            <p>선택한 일부 날짜가 아니라 전체 데이터를 보고 있어야 합니다. 이 화면을 Python 결과의 비교 기준으로 남깁니다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l3-concept">
+          <div class="lesson-panel" data-slide data-slide-title="3차시 ③ 표와 재현에 이름 붙이기">
+            <h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+            <p>Orange3에서 본 표를 pandas에서는 <strong>데이터프레임(DataFrame)</strong>으로 다룹니다. 이 수업의 코드에서는 그 표를 <code>df</code>라는 이름으로 사용합니다.</p>
+            <p><strong>재현</strong>은 사용한 자료와 작업 조건을 밝혀 결과를 다시 확인하는 일입니다. 같은 파일, 같은 행, 같은 축을 사용했는지 기록해야 두 도구의 결과를 비교할 수 있습니다.</p>
+          </div>
+        </div>
+        <div class="lesson-step" id="l3-python">
+          <div class="lesson-panel" id="colab-setup" data-slide data-slide-title="3차시 ④ Colab 노트북 준비">
+            <h3><span class="step-number">04</span> Python으로 재현</h3>
+            <h4>Colab에 접속하고 노트북 만들기</h4>
+            <ol class="week-objectives">
+              <li><a href="https://colab.research.google.com/" target="_blank" rel="noopener noreferrer">Google Colab(새 탭)</a>에 접속해 수업용 Google 계정으로 로그인합니다.</li>
+              <li>새 노트북을 만들고 이름을 <code>week-01.ipynb</code>로 바꿉니다. 런타임을 연결합니다. 이 실습은 기본 CPU 환경으로 진행합니다.</li>
+              <li>아래 코드 블록마다 <strong>코드 셀</strong>을 하나씩 만들고 복사 버튼으로 코드를 옮깁니다. 위에서부터 셀 왼쪽 실행 버튼 또는 Ctrl+Enter로 실행합니다.</li>
+              <li><strong>텍스트 셀</strong>에는 관찰과 비교 내용을 씁니다. 노트북의 저장 상태와 Google Drive의 저장 위치를 확인합니다.</li>
+            </ol>
+          </div>
+          <div class="lesson-panel" id="python-load" data-slide data-slide-title="셀 1 · 배포 CSV를 URL로 읽기">
+            <h4>셀 1 · 같은 CSV 읽기</h4>
+            <p>파일 업로드 없이 배포 URL에서 읽습니다. 처음 다섯 행과 전체 크기를 확인합니다.</p>
+            <pre id="code-load" data-code data-language="python" data-label="셀 1 · CSV 읽기, head(), shape"><code>import pandas as pd
+from IPython.display import display
+
+DATA_URL = "https://kimjinhyuk1984.github.io/ds-2026/data/weather-bike/bike-daily.csv"
+df = pd.read_csv(DATA_URL, encoding="utf-8-sig")
+display(df.head())
+print("행과 열:", df.shape)</code></pre>
+            <p><strong>확인 기준:</strong> <code>행과 열: (353, 8)</code>과 한글 컬럼 이름이 표시되어야 합니다. <code>head()</code>는 전체 중 처음 다섯 행만 보여 줍니다.</p>
+          </div>
+          <div class="lesson-panel" id="python-summary" data-slide data-slide-title="셀 2 · 숫자 요약과 빈 값 관찰">
+            <h4>셀 2 · 숫자와 빈 값 살펴보기</h4>
+            <pre data-code data-language="python" data-label="셀 2 · describe()와 빈 값 개수"><code>display(df.describe().round(1))
+display(df.isna().sum().rename("빈 값 개수").to_frame())</code></pre>
+            <p><code>describe()</code>에서 <code>mean</code>은 평균, <code>min</code>과 <code>max</code>는 최소·최대입니다. 숫자형 컬럼의 요약을 보고 대여건수 최소 <strong>14,293</strong>, 최대 <strong>194,244</strong>와 평균기온 평균 <strong>15.0</strong>을 확인합니다.</p>
+            <p>두 번째 표에서는 <strong>강수량 200개, 다른 컬럼 0개</strong>의 빈 값을 확인합니다. 화면에서 빈 값이 <code>NaN</code>이나 <code>?</code>로 보일 수 있습니다. 이번 주에는 관찰 내용만 기록합니다.</p>
+          </div>
+          <div class="lesson-panel" id="python-font" data-slide data-slide-title="셀 3 · Colab 한글 폰트 준비">
+            <h4>셀 3 · 한글이 네모로 보이지 않도록 준비하기</h4>
+            <p>Colab 기본 환경에서는 Matplotlib의 한글이 깨질 수 있습니다. 아래 셀로 나눔 글꼴을 설치하고 현재 실행 환경의 Matplotlib에 등록합니다.</p>
+            <pre data-code data-language="python" data-label="셀 3 · Colab용 한글 폰트"><code>import subprocess
+import matplotlib.pyplot as plt
+from matplotlib import font_manager
+
+subprocess.run(["apt-get", "-qq", "update"], check=True)
+subprocess.run(["apt-get", "-qq", "install", "-y", "fonts-nanum"], check=True)
+font_path = "/usr/share/fonts/truetype/nanum/NanumGothic.ttf"
+font_manager.fontManager.addfont(font_path)
+plt.rcParams["font.family"] = font_manager.FontProperties(fname=font_path).get_name()
+plt.rcParams["axes.unicode_minus"] = False</code></pre>
+            <p class="lesson-note">이 셀은 Colab용입니다. 새 런타임에서는 다시 실행합니다. 네모가 계속 보이면 이 셀의 성공 여부를 확인한 뒤 그래프 셀을 다시 실행합니다. 설치가 실패하면 인터넷 연결과 오류 메시지를 확인해 재시도합니다.</p>
+          </div>
+          <div class="lesson-panel" id="python-scatter" data-slide data-slide-title="셀 4 · Orange3와 같은 산점도">
+            <h4>셀 4 · 평균기온–대여건수 산점도</h4>
+            <p>Orange3와 같은 353일, 같은 두 축으로 그립니다. 점 하나가 하루라는 점도 같습니다.</p>
+            <pre data-code data-language="python" data-label="셀 4 · 평균기온과 대여건수"><code>x_column = "평균기온"
+y_column = "대여건수"
+
+plt.figure(figsize=(8, 5))
+plt.scatter(df[x_column], df[y_column], s=24, alpha=0.65)
+plt.xlabel(f"{x_column} (°C)")
+plt.ylabel(f"{y_column} (건)")
+plt.title(f"{x_column}과 따릉이 대여건수")
+plt.grid(alpha=0.25)
+plt.tight_layout()
+plt.show()</code></pre>
+          </div>
+        </div>
+        <div class="lesson-step" id="l3-compare">
+          <div class="lesson-panel" data-slide data-slide-title="3차시 ⑤ 두 도구의 결과 비교">
+            <h3><span class="step-number">05</span> 결과 비교</h3>
+            <div class="lesson-table-scroll" role="region" aria-label="Orange3와 Python 결과 비교 기준" tabindex="0">
+              <table class="lesson-table">
+                <caption>먼저 전체 데이터 결과를 비교합니다</caption>
+                <thead><tr><th scope="col">확인할 것</th><th scope="col">같아야 하는 기준</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">표</th><td>353행 × 8열, 같은 날짜의 같은 값</td></tr>
+                  <tr><th scope="row">자료 범위</th><td>2024-03-01 ~ 2025-02-16의 전체 데이터</td></tr>
+                  <tr><th scope="row">산점도</th><td>X 평균기온, Y 대여건수. 기온 범위 -9.7 ~ 31.8°C, 대여건수 범위 14,293 ~ 194,244건</td></tr>
+                  <tr><th scope="row">해석</th><td>기온이 높을 때 대여가 많은 경향과, 같은 기온에서도 값이 다른 모습</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>점이 겹치면 눈에 보이는 점 개수가 행 수보다 적어 보일 수 있습니다. 축 여백·색·크기 대신 자료와 점의 위치 관계를 비교합니다.</p>
+          </div>
+          <div class="lesson-panel" data-slide data-slide-title="비교 실험 A · 축 변수 바꾸기">
+            <h4>비교 실험 A · 한 변수만 바꾸기</h4>
+            <ol class="week-objectives">
+              <li>셀 4의 <code>x_column</code>을 <code>"최고기온"</code> 또는 <code>"최저기온"</code>으로 바꾸어 다시 실행합니다.</li>
+              <li>Orange3 Scatter Plot의 X도 같은 컬럼으로 바꿉니다. Y는 두 도구 모두 대여건수로 유지합니다.</li>
+              <li>처음 그림과 비교해 달라진 점을 한 문장으로 씁니다. 완료하면 X를 평균기온으로 되돌립니다.</li>
+            </ol>
+            <p class="lesson-note">한 번에 한 조건을 바꾸면 어떤 변경이 그림을 바꾸었는지 설명하기 쉽습니다. Python의 축 이름과 제목은 선택한 컬럼에 맞춰 바뀝니다.</p>
+          </div>
+          <div class="lesson-panel" id="python-condition" data-slide data-slide-title="비교 실험 B · 공휴일 조건 바꾸기">
+            <h4>비교 실험 B · 조건으로 날짜 고르기</h4>
+            <p>새 코드 셀에서 실행합니다. <code>holiday_value</code>를 1과 0으로 바꾸어 선택한 날의 수와 그림을 비교합니다. 1일 때는 <strong>19일</strong>입니다.</p>
+            <pre data-code data-language="python" data-label="비교 실험 B · 공휴일여부 조건"><code>holiday_value = 1
+selected = df.loc[df["공휴일여부"].eq(holiday_value)]
+print("선택한 날짜 수:", len(selected))
+
+plt.figure(figsize=(8, 5))
+plt.scatter(selected["평균기온"], selected["대여건수"], s=24, alpha=0.65)
+plt.xlabel("평균기온 (°C)")
+plt.ylabel("대여건수 (건)")
+plt.title(f"공휴일여부 {holiday_value}인 날")
+plt.xlim(df["평균기온"].min() - 2, df["평균기온"].max() + 2)
+plt.ylim(0, df["대여건수"].max() * 1.05)
+plt.tight_layout()
+plt.show()</code></pre>
+            <p>두 조건의 축 범위를 같게 두었습니다. 이 그림은 선택한 날짜만 보여 주므로 전체 353일의 그림과 구분합니다. 원래 <code>df</code>는 그대로이며 셀 4를 실행하면 전체 그림으로 돌아갑니다.</p>
+          </div>
+          <div class="lesson-panel" data-slide data-slide-title="Colab에서 막혔을 때" data-slide-skip>
+            <h4>실행이 막혔을 때</h4>
+            <ul class="week-objectives">
+              <li><strong>df 또는 plt를 찾을 수 없음:</strong> 셀 1부터 순서대로 다시 실행합니다. 새 런타임에서는 앞서 실행한 상태가 사라질 수 있습니다.</li>
+              <li><strong>URL을 읽지 못함:</strong> 셀 1의 전체 URL과 인터넷 연결을 확인합니다. 수업 사이트의 CSV 다운로드가 열리는지 확인합니다.</li>
+              <li><strong>한글이 네모로 표시됨:</strong> 셀 3이 오류 없이 끝났는지 확인하고 셀 4를 다시 실행합니다.</li>
+              <li><strong>353행이 아님:</strong> 다른 파일이나 일부 데이터인지 확인하고 셀 1의 배포 URL로 다시 읽습니다.</li>
+            </ul>
+            <details class="lesson-details">
+              <summary>보조 방법 · URL 접속이 어려울 때만 파일 업로드</summary>
+              <p>이 페이지에서 CSV를 내려받은 뒤 Colab 왼쪽 파일 패널의 업로드 버튼으로 올립니다. 셀 1에서 파일을 읽는 줄만 아래처럼 바꿉니다. 파일 이름이 같아야 하며 런타임이 초기화되면 다시 업로드해야 합니다.</p>
+              <pre data-code data-language="python" data-label="보조 · 업로드한 동일 CSV 읽기"><code>df = pd.read_csv("/content/bike-daily.csv", encoding="utf-8-sig")</code></pre>
+            </details>
+          </div>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="assignment" aria-labelledby="assignment-title">
+        <div class="section-heading"><h2 id="assignment-title">과제와 돌아보기</h2></div>
+        <div class="lesson-panel" data-slide data-slide-title="1주차 산출물과 관찰 기록">
+          <h3>같은 데이터를 확인했다는 근거 남기기</h3>
+          <ul class="week-objectives">
+            <li><strong>Orange3:</strong> 네 위젯을 연결한 <code>week-01.ows</code>와 평균기온–대여건수 산점도 화면을 저장합니다.</li>
+            <li><strong>Colab:</strong> 셀 1~4의 출력이 있는 <code>week-01.ipynb</code>를 저장합니다. 비교 실험 A 또는 B 하나의 변경 전·후 결과도 남깁니다.</li>
+            <li><strong>텍스트 셀:</strong> 아래 세 문장을 자기 관찰로 완성합니다. 제출 경로는 수업 공지를 따릅니다.</li>
+          </ul>
+          <ol class="week-objectives">
+            <li>두 도구가 같은 데이터를 읽었다고 판단한 근거는 ______이다.</li>
+            <li>평균기온과 대여건수의 관계에서 ______을 관찰했다. 하지만 ______은 기온만으로 설명하기 어렵다.</li>
+            <li>______을 바꾸었더니 ______이 달라졌다. 다음에는 ______을 알아보고 싶다.</li>
+          </ol>
+        </div>
+        <div class="lesson-panel" data-slide data-slide-title="이번 주 확인, 다음 주 질문">
+          <h3>스스로 확인하기</h3>
+          <ul class="week-objectives">
+            <li>표의 한 행과 산점도의 한 점이 무엇을 나타내는지 설명할 수 있나요?</li>
+            <li>행 수·날짜·축을 확인하여 두 도구의 결과를 비교할 수 있나요?</li>
+            <li>관찰한 사실과 아직 확인하지 못한 설명을 나누어 말할 수 있나요?</li>
+          </ul>
+          <aside class="callout"><div><strong>다음 주의 질문</strong><p>이번에는 준비된 CSV를 받았습니다. 우리 학교의 정보와 급식 자료는 어떻게 직접 모을 수 있을까요? 2주차에는 데이터의 형태·속성과 NEIS 데이터 수집을 다룹니다.</p></div></aside>
+          <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+        </div>
+      </section>
+
+      <section class="lecture-section" id="references" aria-labelledby="references-title">
+        <div class="section-heading"><h2 id="references-title">도구 조작 참고</h2></div>
+        <div class="lesson-panel" data-slide data-slide-title="공식 도구 안내" data-slide-skip>
+          <p>본문의 질문과 활동은 이 과목을 위해 작성했습니다. 설치·위젯·코드 기능은 아래 공식 안내를 참고합니다. 교재는 관련 교재 p.11 (Ⅰ-1-1 데이터 과학이란?)을 함께 봅니다.</p>
+          <ul class="week-objectives">
+            <li>Orange3: <a href="https://orangedatamining.com/download/" target="_blank" rel="noopener noreferrer">설치</a>, <a href="https://orangedatamining.com/widget-catalog/data/file/" target="_blank" rel="noopener noreferrer">File</a>, <a href="https://orangedatamining.com/widget-catalog/data/datatable/" target="_blank" rel="noopener noreferrer">Data Table</a></li>
+            <li>그래프: <a href="https://orangedatamining.com/widget-catalog/visualize/distributions/" target="_blank" rel="noopener noreferrer">Distributions</a>, <a href="https://orangedatamining.com/widget-catalog/visualize/scatterplot/" target="_blank" rel="noopener noreferrer">Scatter Plot</a></li>
+            <li>실행 환경: <a href="https://research.google.com/colaboratory/faq.html" target="_blank" rel="noopener noreferrer">Google Colab FAQ</a></li>
+            <li>Python: <a href="https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html" target="_blank" rel="noopener noreferrer">pandas CSV 읽기</a>, <a href="https://matplotlib.org/stable/api/font_manager_api.html" target="_blank" rel="noopener noreferrer">Matplotlib 글꼴 등록</a></li>
+          </ul>
+          <p class="lesson-note">참고 링크는 새 탭에서 열립니다.</p>
+        </div>
       </section>
 
       <div data-widget="week-navigation">
-        <p>공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다.</p>
+        <p>현재 1주차 학습 자료를 보고 있습니다. 주차 목록은 학기 홈에서 확인할 수 있습니다.</p>
         <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
       </div>
     </div>

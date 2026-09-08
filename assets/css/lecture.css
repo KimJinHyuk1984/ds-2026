@@ -41,3 +41,46 @@
 @media (max-width: 479px) {
   .week-steps { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* 차시별 질문 → Orange3 → 개념 → Python → 비교: 이후 주차에도 재사용합니다. */
+.lesson-jump { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-7); }
+.header-actions { flex-wrap: wrap; }
+.lesson-step { margin-top: var(--space-8); padding-top: var(--space-7); border-top: 1px solid var(--border); }
+.section-heading + .lesson-step { margin-top: 0; padding-top: 0; border-top: 0; }
+.lesson-panel { display: grid; gap: var(--space-5); min-width: 0; }
+.lesson-panel + .lesson-panel { margin-top: var(--space-7); }
+.lesson-panel h3, .lesson-panel h4, .lesson-panel p { margin: 0; }
+.lesson-panel h4 { font-size: var(--font-card); line-height: var(--leading-heading); }
+.lesson-panel h3 { display: flex; align-items: baseline; gap: var(--space-3); }
+.lesson-panel .card h3 { display: block; }
+.lesson-panel .card p { margin-top: var(--space-3); }
+.step-number { flex-shrink: 0; color: var(--accent-text); font-family: var(--font-mono); font-size: var(--font-small); }
+.lesson-question { font-size: var(--font-card); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
+.lesson-note { color: var(--text-muted); font-size: var(--font-small); }
+.dataset-download { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-2); }
+.lesson-table-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-md); }
+.lesson-table-scroll:focus-visible, .lesson-details summary:focus-visible { outline: 3px solid var(--accent-text); outline-offset: var(--space-1); }
+.lesson-table { width: 100%; border-collapse: collapse; text-align: left; font-variant-numeric: tabular-nums; }
+.lesson-table caption { padding: var(--space-4); text-align: left; font-weight: var(--weight-heading); background: var(--surface-2); }
+.lesson-table th, .lesson-table td { padding: var(--space-3) var(--space-4); border-top: 1px solid var(--border); vertical-align: top; }
+.lesson-table thead { background: var(--surface-2); }
+.lesson-table th[scope="row"] { white-space: nowrap; }
+.workflow-map { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); align-items: center; gap: var(--space-5); }
+.workflow-source { display: grid; gap: var(--space-2); padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-2); }
+.workflow-source span, .workflow-targets div span { display: block; color: var(--text-muted); }
+.workflow-targets { display: grid; gap: var(--space-3); margin: 0; padding: 0; list-style: none; }
+.workflow-targets li { display: flex; align-items: center; gap: var(--space-4); }
+.workflow-targets li > div { flex: 1; padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); }
+.lesson-details { padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); }
+.lesson-details summary { min-height: 44px; cursor: pointer; font-weight: var(--weight-heading); }
+.lesson-details[open] > * + * { margin-top: var(--space-4); }
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  body[data-level="week-01"] .header-inner { flex-wrap: wrap; }
+}
+
+@media (max-width: 767px) {
+  .lesson-table { min-width: 540px; }
+  .workflow-map { grid-template-columns: minmax(0, 1fr); }
+  .dataset-download { padding: var(--space-4); }
+}

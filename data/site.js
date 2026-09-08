@@ -30,7 +30,7 @@ window.SITE = {
 
   // CURRICULUM.md의 15주 구조를 반영합니다. 폴더명과 body[data-level]은 slug와 같습니다.
   // textbook은 사용자 지정 인쇄 쪽수이며 범위를 추정하지 않습니다.
-  // 전 주차 coming: 준비 중 안내 페이지입니다. 본문 완성 후에만 ready로 전환합니다.
+  // 본문을 완성한 주차만 ready로 전환합니다. 나머지는 coming 안내 페이지를 유지합니다.
   levels: [
     {
       "slug": "week-01",
@@ -48,7 +48,7 @@ window.SITE = {
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "1–3차시",
       "dataName": "따릉이 일별 대여 건수 CSV",
       "textbook": [

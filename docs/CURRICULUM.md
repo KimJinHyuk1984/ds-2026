@@ -184,7 +184,7 @@ NEIS 급식식단정보의 메뉴 텍스트를 장바구니(transaction) 형태�
 - `levels`는 처음부터 15개를 유지하며 2단계에서는 **전부 `status: "coming"`**으로 둔다. 1주차도 3단계 본문 완성 후 `ready`로 바꾼다.
 - `coming` 주차는 목록에 링크 없는 **준비 중 카드**로 표시한다.
 - 2단계 개별 URL에는 주차 번호·제목·차시 범위·학습목표·사용 데이터·교재 쪽수·준비 중 안내·학기 홈 링크만 있는 완성된 안내 페이지를 둔다. 미완성 원고를 HTML에 숨겨 넣지 않는다.
-- 사용자 승인 2.5단계에서는 1주차에 주차 안내·차시 구성 틀·Orange3 설치/실행·Colab 접속/기본 사용 안내만 추가한다. CSV 실습은 빈 자리로 남기고 status는 계속 coming이다.
+- 2.5단계에서는 1주차의 설치·접속 안내만 먼저 작성했다. 사용자 승인 3단계에서는 아래 8절에 따라 1주차 본문과 CSV 실습을 완성하고 `week-01`만 `ready`로 전환한다. 나머지 14주는 `coming` 안내 페이지를 유지한다.
 - 주차 선택은 `ready`만 이동 가능하고, 이전·다음은 현재 주차도 `ready`인 경우에만 다른 `ready` 주차와 연결한다. `coming` 안내 페이지의 이전·다음은 비활성 상태이다.
 - **GitHub Actions 선별 배포를 도입하지 않는다.** 빌드 없는 정적 파일 운영과 `.nojekyll`을 유지한다.
 
@@ -326,10 +326,48 @@ NEIS 급식식단정보의 메뉴 텍스트를 장바구니(transaction) 형태�
 - 선정한 주제와 데이터로 분석 프로젝트를 수행할 수 있다.
 - 분석 과정과 결과를 근거와 함께 발표할 수 있다.
 
-## 8. 1주차의 2.5단계 작성 범위
+## 8. 1주차 완성 범위와 이후 주차의 공통 형식 (3단계 사용자 승인)
 
-- 주차 안내: Orange3와 Colab을 함께 준비하고 같은 CSV를 두 도구에서 다룰 수업임을 안내한다. Python 문법을 재교육하지 않는다.
-- 1차시: 두 도구 열기·환경 확인. 2차시: 같은 CSV 확인 자리. 3차시: 워크플로우 실행·결과 비교 자리. CSV가 필요한 상세 활동은 작성하지 않는다.
-- Orange3: 공식 다운로드에서 운영체제에 맞는 설치 프로그램을 선택하고 실행한 뒤 빈 작업 화면을 확인한다. 내장 데이터나 예제 워크플로우를 실습 데이터로 사용하지 않는다.
-- Colab: 공식 사이트 접속, 새 노트북 생성·이름 변경, 코드/텍스트 셀 구분, 런타임 연결, 실행 버튼, 저장 위치를 안내한다. 데이터 없이 연결을 확인하는 짧은 출력 코드만 둔다.
-- 도구 안내 참고: [Orange 공식 설치 안내](https://orangedatamining.com/download/), [Orange 시작 안내](https://orangedatamining.com/getting-started/), [Google Colab FAQ](https://research.google.com/colaboratory/faq.html). 내용 구성은 이 문서를 기준으로 하며 외부 자료는 도구 조작 사실만 확인한다.
+### 8-1. 차시와 활동 순서
+
+- 1차시: 과목 오리엔테이션 / 데이터 과학이란 무엇인가.
+- 2차시: Orange3 설치와 첫 워크플로우.
+- 3차시: Colab 접속과 같은 데이터를 Python으로 열기.
+- 각 차시는 **질문 제기 → Orange3에서 결과 확인 → 개념에 이름 붙이기 → Python으로 재현 → 결과 비교** 순서를 지킨다.
+- 설치 전인 1차시는 교사가 준비된 Orange3·Colab으로 표를 시연하고 학생이 관찰한다. 2차시에는 학생이 Orange3를 직접 조작하고 교사가 Python 그래프를 시연한다. 3차시에는 학생이 완성 코드를 직접 실행·변경한다. 교사는 수업 전에 아래 실습 환경과 코드 셀을 준비한다.
+- 중심 질문은 일별 대여건수의 차이와 평균기온과의 관계다. 산점도에서 “기온이 높으면 대여가 많다”는 관찰을 출발점으로 삼되, 모든 날에 성립하는 규칙이나 인과관계로 단정하지 않는다. 9~11주차 회귀에서 이 관계를 예측에 사용하고 평가한다.
+
+### 8-2. 실습과 데이터 설명
+
+- Orange3 공식 설치 프로그램으로 설치한다. File에서 `bike-daily.csv`를 열고 **File의 Data 출력을 Data Table·Distributions·Scatter Plot에 각각 연결**한다. Data Table에서 353행과 8개 컬럼, Distributions에서 대여건수 분포, Scatter Plot에서 평균기온–대여건수 관계를 확인한다. 내장 데이터는 사용하지 않는다.
+- 학생은 Python 문법을 이미 이수했다. 문법을 다시 가르치지 않고 pandas의 CSV 읽기·`head()`·`shape`·`describe()`와 Matplotlib 산점도 완성 코드를 제공한다. 축 변수와 공휴일여부 조건을 바꾸어 결과를 비교한다.
+- Colab 접속·새 노트북·코드/텍스트 셀·실행·저장을 안내한다. CSV는 `pd.read_csv()`에 배포 URL `https://kimjinhyuk1984.github.io/ds-2026/data/weather-bike/bike-daily.csv`를 직접 넣어 `encoding="utf-8-sig"`로 읽는다. 파일 업로드는 접속 문제 시 보조 안내로만 둔다.
+- Colab의 한글 표시를 위해 `fonts-nanum`을 설치한 뒤 Matplotlib `font_manager`에 글꼴 파일을 등록한다. 사이트에는 외부 웹폰트나 런타임 의존성을 추가하지 않는다.
+- 학생 다운로드는 `../data/weather-bike/bike-daily.csv` 상대 경로로 제공하고 **2024-03-01 ~ 2025-02-16 · 353행 × 8열**을 링크 옆에 표시한다. 날짜 누락은 없다. 일별 서울 전체 대여건수와 기상청 서울(108) 관측 자료이며 UTF-8 BOM이다.
+- **1주차에서는 강수량 컬럼에 빈 값 200개가 있다는 관찰까지만 다룬다. 그 의미와 처리 방법은 설명하지 않는다.** 처리 코드를 제공하거나 교사용 데이터 설명으로 정답을 연결하지 않는다. 의미와 처리 판단은 4주차에 다룬다.
+- 관련 교재는 **p.11 (Ⅰ-1-1 데이터 과학이란?)**만 참조한다. 본문·도식·이미지를 옮기지 않고 새로 작성한다.
+
+아래 수치는 사용자가 확인한 실측값이다. 평균은 사용자 제공 반올림 값이며 다른 값은 추정하지 않는다.
+
+| 컬럼 | 단위·값 | 확정 범위·개수 |
+|---|---|---|
+| 날짜 | YYYY-MM-DD | 2024-03-01 ~ 2025-02-16, 날짜 누락 0일 |
+| 요일 | 월~일 | 각 날짜의 요일 |
+| 공휴일여부 | 1 / 0 | 법정공휴일 19일. 일요일 자체를 공휴일로 추가하지 않음 |
+| 평균기온 | °C | -9.7 ~ 31.8, 평균 15.0 |
+| 최고기온 | °C | -6.1 ~ 36.4 |
+| 최저기온 | °C | -12.2 ~ 28.2 |
+| 강수량 | mm | 0 ~ 128.8, 빈 값 200개 |
+| 대여건수 | 건/일 | 14,293 ~ 194,244, 평균 119,928, 빈 값 0개 |
+
+### 8-3. 주차 페이지의 반복 구조
+
+1. 주차 안내: 제목·차시 범위·학습목표·차시 바로가기.
+2. 사용 자료: CSV 다운로드·기간·크기·컬럼 설명·해당 주차 교재 쪽수.
+3. 차시별 본문: 위 다섯 단계, Orange3 조작·확인 기준, 완성 Python 코드, 같은 조건에서의 비교와 변수·조건 변경 활동.
+4. 과제와 돌아보기: 도구별 산출물, 관찰 근거, 비교 기록, 다음 학습으로 이어지는 질문. 제출 경로는 수업 공지로 정한다.
+5. 도구 조작 참고 링크와 공통 주차 이동. 준비 중 주차에는 이동 링크를 만들지 않는다.
+
+코드는 `pre[data-code]`, 메뉴·코드 복사·테마·선생님 소개·발표 기능은 기존 공통 구현을 사용한다. 발표 조각은 한 질문·작업·코드 셀 단위로 나누며 공통 파일은 수정하지 않는다.
+
+도구 조작 사실만 공식 문서로 확인한다: [Orange 설치](https://orangedatamining.com/download/), [File](https://orangedatamining.com/widget-catalog/data/file/), [Data Table](https://orangedatamining.com/widget-catalog/data/datatable/), [Distributions](https://orangedatamining.com/widget-catalog/visualize/distributions/), [Scatter Plot](https://orangedatamining.com/widget-catalog/visualize/scatterplot/), [Colab FAQ](https://research.google.com/colaboratory/faq.html), [pandas CSV 읽기](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html), [Matplotlib 글꼴 등록](https://matplotlib.org/stable/api/font_manager_api.html).
