@@ -131,6 +131,75 @@ window.WIDGETS = window.WIDGETS || {};
     host.replaceChildren(nav);
   };
 
+  // 본문 바로가기는 공통 목차와 별도로 처리합니다.
+  // 발표 모드는 원래 노드를 옮기므로 같은 링크의 상태를 바꾸고 종료 시 복원합니다.
+  function initLessonAnchors() {
+    const links = new Map();
+    const panels = new Set();
+    document.querySelectorAll('main a[href^="#"]').forEach(function (link) {
+      const href = link.getAttribute("href");
+      let id;
+      try { id = decodeURIComponent(href.slice(1)); } catch (_) { return; }
+      const target = id && document.getElementById(id);
+      if (!target) return;
+      const attributes = {};
+      ["href", "tabindex", "role", "aria-disabled"].forEach(function (name) {
+        attributes[name] = link.getAttribute(name);
+      });
+      links.set(link, { target, href, attributes });
+      link.dataset.lessonAnchor = "";
+      const panel = link.closest("[data-slide]");
+      if (panel) panels.add(panel);
+    });
+    if (!links.size) return;
+    panels.forEach(function (panel) {
+      panel.append(node("p", "lesson-anchor-note", "이 바로가기는 일반 화면에서 사용할 수 있습니다. Esc로 발표를 종료한 뒤 선택하세요."));
+    });
+    let disabled = false;
+    function setDisabled(value) {
+      if (disabled === value) return;
+      disabled = value;
+      links.forEach(function (entry, link) {
+        if (value) {
+          link.removeAttribute("href");
+          link.setAttribute("role", "link");
+          link.setAttribute("aria-disabled", "true");
+          link.setAttribute("tabindex", "-1");
+        } else {
+          Object.keys(entry.attributes).forEach(function (name) {
+            const original = entry.attributes[name];
+            if (original === null) link.removeAttribute(name);
+            else link.setAttribute(name, original);
+          });
+        }
+      });
+    }
+    document.addEventListener("click", function (event) {
+      if (!(event.target instanceof Element)) return;
+      const link = event.target.closest("a[data-lesson-anchor]");
+      const entry = links.get(link);
+      if (!entry) return;
+      if (disabled || document.body.classList.contains("is-presenting")) {
+        event.preventDefault();
+        return;
+      }
+      if (event.defaultPrevented || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+      event.preventDefault();
+      if (window.location.hash !== entry.href) {
+        try { window.history.pushState(null, "", entry.href); }
+        catch (_) { window.location.hash = entry.href; }
+      }
+      if (!entry.target.hasAttribute("tabindex")) entry.target.setAttribute("tabindex", "-1");
+      entry.target.focus({ preventScroll: true });
+      entry.target.scrollIntoView({ block: "start", behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    });
+    document.addEventListener("lecture:presentation-enter", function () { setDisabled(true); });
+    // 공통 구현에 종료 이벤트가 없어 body의 발표 상태 클래스로 복원합니다.
+    const sync = function () { setDisabled(document.body.classList.contains("is-presenting")); };
+    new MutationObserver(sync).observe(document.body, { attributes: true, attributeFilter: ["class"] });
+    sync();
+  }
+
   const mounted = new WeakSet();
   function mountWidgets(root = document) {
     const elements = Array.from(root.querySelectorAll("[data-widget]"));
@@ -152,6 +221,10 @@ window.WIDGETS = window.WIDGETS || {};
     });
   }
   window.mountWidgets = mountWidgets;
-  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { mountWidgets(); }, { once: true });
-  else mountWidgets();
+  function init() {
+    mountWidgets();
+    initLessonAnchors();
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", init, { once: true });
+  else init();
 })();

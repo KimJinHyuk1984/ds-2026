@@ -342,7 +342,7 @@ NEIS 급식식단정보의 메뉴 텍스트를 장바구니(transaction) 형태�
 - Orange3 공식 설치 프로그램으로 설치한다. File에서 `bike-daily.csv`를 열고 **File의 Data 출력을 Data Table·Distributions·Scatter Plot에 각각 연결**한다. Data Table에서 353행과 8개 컬럼, Distributions에서 대여건수 분포, Scatter Plot에서 평균기온–대여건수 관계를 확인한다. 내장 데이터는 사용하지 않는다.
 - 학생은 Python 문법을 이미 이수했다. 문법을 다시 가르치지 않고 pandas의 CSV 읽기·`head()`·`shape`·`describe()`와 Matplotlib 산점도 완성 코드를 제공한다. 축 변수와 공휴일여부 조건을 바꾸어 결과를 비교한다.
 - Colab 접속·새 노트북·코드/텍스트 셀·실행·저장을 안내한다. CSV는 `pd.read_csv()`에 배포 URL `https://kimjinhyuk1984.github.io/ds-2026/data/weather-bike/bike-daily.csv`를 직접 넣어 `encoding="utf-8-sig"`로 읽는다. 파일 업로드는 접속 문제 시 보조 안내로만 둔다.
-- Colab의 한글 표시를 위해 `fonts-nanum`을 설치한 뒤 Matplotlib `font_manager`에 글꼴 파일을 등록한다. 사이트에는 외부 웹폰트나 런타임 의존성을 추가하지 않는다.
+- Colab의 한글 표시는 **koreanize-matplotlib**로 통일한다. 1주차와 이후 2~15주차의 모든 Colab 실습은 아래 8-4의 표준 준비 셀을 사용한다. 사이트에는 외부 웹폰트나 런타임 의존성을 추가하지 않는다.
 - 학생 다운로드는 `../data/weather-bike/bike-daily.csv` 상대 경로로 제공하고 **2024-03-01 ~ 2025-02-16 · 353행 × 8열**을 링크 옆에 표시한다. 날짜 누락은 없다. 일별 서울 전체 대여건수와 기상청 서울(108) 관측 자료이며 UTF-8 BOM이다.
 - **1주차에서는 강수량 컬럼에 빈 값 200개가 있다는 관찰까지만 다룬다. 그 의미와 처리 방법은 설명하지 않는다.** 처리 코드를 제공하거나 교사용 데이터 설명으로 정답을 연결하지 않는다. 의미와 처리 판단은 4주차에 다룬다.
 - 관련 교재는 **p.11 (Ⅰ-1-1 데이터 과학이란?)**만 참조한다. 본문·도식·이미지를 옮기지 않고 새로 작성한다.
@@ -368,6 +368,23 @@ NEIS 급식식단정보의 메뉴 텍스트를 장바구니(transaction) 형태�
 4. 과제와 돌아보기: 도구별 산출물, 관찰 근거, 비교 기록, 다음 학습으로 이어지는 질문. 제출 경로는 수업 공지로 정한다.
 5. 도구 조작 참고 링크와 공통 주차 이동. 준비 중 주차에는 이동 링크를 만들지 않는다.
 
-코드는 `pre[data-code]`, 메뉴·코드 복사·테마·선생님 소개·발표 기능은 기존 공통 구현을 사용한다. 발표 조각은 한 질문·작업·코드 셀 단위로 나누며 공통 파일은 수정하지 않는다.
+코드는 `pre[data-code]`, 메뉴·코드 복사·테마·선생님 소개·발표 기능은 기존 공통 구현을 사용한다. 발표 조각은 한 질문·작업·코드 셀 단위로 나누며 공통 파일은 수정하지 않는다. 본문 안의 같은 페이지 바로가기는 일반 화면에서 대상 ID로 스크롤하고 포커스를 옮긴다. 발표 모드에서는 비활성화하고 Esc로 종료한 뒤 사용하도록 안내한다. 이 처리는 강의 전용 widgets.js·lecture.css에서 수행하며, 공통 목차와 발표 순회 구현은 유지한다.
 
-도구 조작 사실만 공식 문서로 확인한다: [Orange 설치](https://orangedatamining.com/download/), [File](https://orangedatamining.com/widget-catalog/data/file/), [Data Table](https://orangedatamining.com/widget-catalog/data/datatable/), [Distributions](https://orangedatamining.com/widget-catalog/visualize/distributions/), [Scatter Plot](https://orangedatamining.com/widget-catalog/visualize/scatterplot/), [Colab FAQ](https://research.google.com/colaboratory/faq.html), [pandas CSV 읽기](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html), [Matplotlib 글꼴 등록](https://matplotlib.org/stable/api/font_manager_api.html).
+### 8-4. 1~15주차 Colab 표준 한글 폰트 처리
+
+설치와 import를 **하나의 코드 셀**에 두고, 그래프를 그리기 전에 셀 전체를 실행한다. Colab용 준비 셀은 다음과 같다.
+
+```python
+!pip install -q koreanize-matplotlib
+
+import matplotlib.pyplot as plt
+import koreanize_matplotlib
+```
+
+- 셀 안에서 설치가 끝난 뒤 import가 순서대로 실행된다. 설치 후 런타임 재시작은 필요 없다.
+- `import koreanize_matplotlib` 자체가 한글 표시 설정을 적용한다. 별도 함수를 호출하지 않는다. 다른 코드에서 이름을 직접 사용하지 않아도 이 import를 지우지 않는다.
+- 새 런타임에서는 설치부터 셀 전체를 다시 실행한 뒤 그래프 셀을 실행한다. 기존 출력 그림은 자동으로 바뀌지 않으므로 그래프도 다시 그린다.
+- 설치 오류나 `ModuleNotFoundError`가 있으면 설치 결과·인터넷 연결·패키지 이름을 확인한 뒤 같은 셀을 다시 실행한다. 1주차에서는 이 준비가 셀 3, 산점도가 셀 4이다.
+- 이전 subprocess·apt-get·fonts-nanum 설치, 직접 폰트 경로 등록과 `axes.unicode_minus` 설정은 학생 코드에서 제거한다. 2~15주차는 해당 본문 작성 시 이 표준을 적용하며 준비 중 페이지에 코드를 미리 넣지 않는다.
+
+도구 조작 사실만 공식 문서로 확인한다: [Orange 설치](https://orangedatamining.com/download/), [File](https://orangedatamining.com/widget-catalog/data/file/), [Data Table](https://orangedatamining.com/widget-catalog/data/datatable/), [Distributions](https://orangedatamining.com/widget-catalog/visualize/distributions/), [Scatter Plot](https://orangedatamining.com/widget-catalog/visualize/scatterplot/), [Colab FAQ](https://research.google.com/colaboratory/faq.html), [pandas CSV 읽기](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html), [koreanize-matplotlib 사용 안내](https://github.com/ychoi-kr/koreanize-matplotlib).

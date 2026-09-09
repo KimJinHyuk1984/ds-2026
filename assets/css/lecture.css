@@ -57,6 +57,10 @@
 .step-number { flex-shrink: 0; color: var(--accent-text); font-family: var(--font-mono); font-size: var(--font-small); }
 .lesson-question { font-size: var(--font-card); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
 .lesson-note { color: var(--text-muted); font-size: var(--font-small); }
+.lesson-panel[id], .lesson-step[id] { scroll-margin-top: var(--space-4); }
+.lesson-anchor-note { display: none; color: var(--text-muted); font-size: var(--font-small); }
+body.is-presenting .lesson-anchor-note { display: block; }
+a[data-lesson-anchor][aria-disabled="true"] { color: var(--text-muted); text-decoration: none; cursor: not-allowed; }
 .dataset-download { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-4) var(--space-6); padding: var(--space-6); border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface-2); }
 .lesson-table-scroll { max-width: 100%; overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-md); }
 .lesson-table-scroll:focus-visible, .lesson-details summary:focus-visible { outline: 3px solid var(--accent-text); outline-offset: var(--space-1); }
