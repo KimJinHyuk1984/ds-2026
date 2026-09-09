@@ -173,3 +173,18 @@ data/site.js는 수정하지 않았다. week-01 ready, week-02~15 coming이다. 
 - 검증 한계: 스크립트·API·도우미 실행, Python import·구문 컴파일, 모의 응답·CSV 생성, 브라우저 검증은 미실행이다. 변경 파일은 수집기·.gitignore·data/README·CURRICULUM·2주차 HTML·상태/이 보고서의 7개이다. 기존 lecture.css 변경은 건드리지 않았다. 추가 주차·커밋·푸시·배포로 진행하지 않았다.
 
 다음 명령: `python scripts/collect-neis.py`. NEIS_API_KEY 환경변수 또는 실행 시 숨김 입력으로 인증키를 전달하고, 저장된 4개교/행 수/메뉴 원문을 사용자 검토한다.
+
+## 후속 완성 — 수집된 CSV로 2주차 실습 공개
+
+2026-09-09. 사용자가 전체 수집 완료와 실측 수치를 확정하고 CSV 실습 작성·week-02 ready 전환을 승인했다. 이 기록이 앞선 ‘CSV 없음/coming’ 상태보다 우선한다.
+
+- 내용: 학교 표 4×8의 속성 비교, 급식 1,504×12를 File·Data Table로 열기, Select Rows의 학교 조건과 Matching Data 연결, Python 배포 URL 읽기·shape·head·value_counts·학교/날짜 선택·고유 급식일 막대그래프를 작성했다. 모든 코드 셀은 pre[data-code]이며 각 차시의 Python 단계 안에 있다. 기존 API 활동을 유지하고 CSV와 API 미리보기의 자료 범위 차이를 구분했다.
+- 관찰: 명덕고 2024-03-04의 조식 60명·중식 759명·석식 55명을 Orange3/Python에서 대조한다. 기숙사생 대상이라는 설명은 추가 확인이 필요한 가설로 둔다. 중식 메뉴 실제 한 칸을 HTML 태그도 문자로 표시하고 원문을 관찰한다. 정규식·텍스트 분리 코드는 없으며 4~5주차 학습 경계를 유지한다.
+- 비교: 학교별 행 302/743/300/159와 고유 날짜 180/286/160/159를 구분한다. 식사종류 전체 분포는 조 271/중 748/석 485. 전체→중식 조건을 바꾸면 명덕고 고유 날짜가 286→249로 바뀌는 활동을 제공한다. 원본 데이터는 변경하지 않는다.
+- 데이터 대조: PowerShell Import-Csv로 실제 파일을 읽어 학교 4행·8열, 급식 1,504행·12열, 각 학교의 기간/일수/식사 건수와 사용자 보고가 일치함을 확인했다. 두 표 모두 빈 셀 0개, 급식 학교×날짜×식사 중복 0개, 학교 연결 코드 불일치 0개, 요일 불일치 0개, UTF-8 BOM EF-BB-BF를 확인했다. 페이지의 HTML 엔티티를 복원한 메뉴 문자열은 실제 중식 DDISH_NM 값과 정확히 일치한다.
+- 문서 정정: 영일고 마지막 기록은 2025-01-02이며 과거 ‘명덕 외 모든 학교의 1~2월 자료 없음’을 정정했다. README·CURRICULUM에 수집 완료, 학교별 실제 기간, 빈 값 0건, 2주차 관찰 범위와 완성 상태를 반영했다. 수집 스크립트와 CSV는 수정하지 않았다.
+- 코드·구조 검사: Node로 HTML 태그 짝·ID 중복·aria-labelledby·내부 앵커/파일 존재·발표 조각 중첩·각 차시의 다섯 단계 순서·코드의 Python 단계 소속을 검사해 오류 0건이었다. CSV 자리 0개, 7섹션/36개 ID/14개 코드 셀, 발표 기본 40조각/S 포함 42조각이다. 코드 엔티티 복원 후 조건식 &가 유지되며, koreanize-matplotlib 설치·import 한 셀을 확인했다. 원문 메뉴 줄바꿈을 위한 CSS 2개 규칙만 lecture.css에 추가했다.
+- 공개 상태: data/site.js의 week-02 status만 ready로 변경했다. week-01 ready, week-03~15 coming을 Node에서 확인했다. 기존 주차 이동 코드는 ready 배열을 사용하므로 소스상 1↔2 이동과 3~15 비활성 규칙이 유지된다. 실제 브라우저 동작과는 구분한다.
+- 미실행: CUA가 ‘No browser is available’을 반환하여 발표 모드 전체 순회·넘침/배율/폰트 실측·모바일·테마·클립보드·다운로드 클릭 검증은 수행하지 못했다. 로컬 Python 경로 접근이 거부되어 Python/Colab 코드 실행도 하지 않았다. 외부 문서는 File·Select Rows·koreanize-matplotlib 공식 안내를 읽었고 페이지에 링크했다. NEIS API/수집기 재실행·가짜 데이터/CSV 생성·커밋·푸시·배포·3주차 작성은 하지 않았다.
+
+변경 파일: week-02/index.html, assets/css/lecture.css, data/site.js, data/README.md, docs/CURRICULUM.md, docs/workflow-state.md, 이 보고서. 다음은 사용자의 Orange3·Colab 실행 및 실제 페이지 검토다.

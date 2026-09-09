@@ -57,6 +57,8 @@
 .step-number { flex-shrink: 0; color: var(--accent-text); font-family: var(--font-mono); font-size: var(--font-small); }
 .lesson-question { font-size: var(--font-card); font-weight: var(--weight-heading); line-height: var(--leading-heading); }
 .lesson-note { color: var(--text-muted); font-size: var(--font-small); }
+.lesson-raw-text { padding: var(--space-5); border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface-2); overflow-wrap: anywhere; }
+.lesson-raw-text samp { font-family: var(--font-mono); }
 .lesson-panel[id], .lesson-step[id] { scroll-margin-top: var(--space-4); }
 .lesson-anchor-note { display: none; color: var(--text-muted); font-size: var(--font-small); }
 body.is-presenting .lesson-anchor-note { display: block; }

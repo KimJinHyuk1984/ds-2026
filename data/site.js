@@ -80,7 +80,7 @@ window.SITE = {
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "4–6차시",
       "dataName": "NEIS 학교기본정보·급식식단정보",
       "textbook": [
