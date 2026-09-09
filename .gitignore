@@ -4,6 +4,8 @@
 # Only the reviewed final weather/bike CSV belongs in Git.
 /data/weather-bike/**/*.csv
 !/data/weather-bike/bike-daily.csv
+# Published NEIS CSVs are commit candidates; raw source files remain ignored.
+!/data/neis/*.csv
 .venv/
 venv/
 __pycache__/

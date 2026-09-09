@@ -80,7 +80,7 @@ a[data-lesson-anchor][aria-disabled="true"] { color: var(--text-muted); text-dec
 .lesson-details[open] > * + * { margin-top: var(--space-4); }
 
 @media (min-width: 768px) and (max-width: 1023px) {
-  body[data-level="week-01"] .header-inner { flex-wrap: wrap; }
+  body[data-level] .header-inner { flex-wrap: wrap; }
 }
 
 @media (max-width: 767px) {
