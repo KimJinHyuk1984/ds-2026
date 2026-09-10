@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="8주차 · 22–24차시 · 학습 자료 준비 중">
+  <meta name="description" content="8주차 · 22–24차시 · 따릉이 정제 데이터의 분포·관계와 그래프 표현의 영향">
   <meta name="color-scheme" content="light dark">
   <title>데이터 시각화 — 분포·산점도·박스플롯</title>
   <link rel="icon" href="data:,">
@@ -31,6 +31,7 @@
       <nav class="section-nav" aria-label="강의 섹션" data-section-nav></nav>
       <div class="header-actions">
         <button class="button button-primary" type="button" data-open-instructor>선생님 소개 보기</button>
+        <button class="button" type="button" data-presentation-toggle aria-pressed="false">발표 모드</button>
         <button class="button button-icon" type="button" data-theme-toggle aria-label="테마 전환">
           <svg data-theme-icon width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
         </button>
@@ -44,34 +45,273 @@
         <p class="kicker" data-lecture-kicker>8주차</p>
         <h1 id="lecture-title" data-lecture-title>데이터 시각화 — 분포·산점도·박스플롯</h1>
         <p class="hero-subtitle" data-lecture-subtitle>22–24차시</p>
+        <p class="section-description">7주차에서 숫자로 요약한 353일을 그림으로 다시 봅니다. 분포와 관계를 읽고, 같은 데이터도 표현에 따라 다르게 보이는 이유를 확인합니다.</p>
+        <nav class="lesson-jump" aria-label="차시 바로가기"><a class="button" href="#lesson-1">22차시 · 분포</a><a class="button" href="#lesson-2">23차시 · 관계</a><a class="button" href="#lesson-3">24차시 · 선택과 오해</a></nav>
       </section>
+<section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
+<div class="section-heading"><h2 id="objectives-title">이번 주의 목표</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="8주차 목표와 차시 구성">
+<ul class="week-objectives"><li>히스토그램·박스플롯으로 대여건수 분포의 치우침과 퍼짐을 설명할 수 있다.</li><li>산점도로 기온·강수량·요일에 따른 대여건수의 모습을 비교하고 한글 제목·축 이름·단위·범례를 갖춘 그래프를 만들 수 있다.</li><li>변수의 유형과 질문에 맞는 그래프를 고르고 축 범위·색·크기가 해석에 미치는 영향을 설명할 수 있다.</li></ul><div class="card-grid"><article class="card"><h3>22차시 · 분포</h3><p>숫자 요약을 그림으로 다시 봅니다.</p></article><article class="card"><h3>23차시 · 관계</h3><p>두 컬럼을 함께 놓고 해석합니다.</p></article><article class="card"><h3>24차시 · 선택과 오해</h3><p>그래프의 표현이 주는 인상을 점검합니다.</p></article></div>
+<p class="lesson-note">각 차시: 질문 → Orange3 → 개념 → Python → 비교. 완성 코드에서 구간 너비·컬럼·축 범위·점 크기를 바꾸며 비교합니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="materials" aria-labelledby="materials-title">
+<div class="section-heading"><h2 id="materials-title">실습 데이터와 그래프의 기본 약속</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="7주차와 같은 정제 파일로 시작">
 
-      <section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
-        <div class="section-heading"><h2 id="objectives-title">학습목표</h2></div>
-        <ul class="week-objectives">
-          <li>분포·산점도·박스플롯으로 따릉이 데이터를 시각화할 수 있다.</li>
-          <li>Orange3와 Python의 시각화 결과를 비교하고 데이터의 특징을 설명할 수 있다.</li>
-        </ul>
-      </section>
+<div class="dataset-download"><a class="button button-primary" href="../data/weather-bike/bike-daily-clean.csv" download>bike-daily-clean.csv 내려받기</a><span>2024-03-01~2025-02-16 · 353행 × 8열 · UTF-8 BOM</span></div>
+<p>4주차 처리 결과를 7주차에 이어 사용합니다. 1주차 원본과 평균기온·대여건수는 같고, 강수량의 무강수 공백은 0으로 반영되어 있습니다.</p>
+<p>Orange3에서는 내려받은 파일을 열고, Colab에서는 배포 URL을 직접 읽습니다. 노트북 이름은 <code>week-08.ipynb</code>로 정하고 셀을 위에서부터 실행합니다. <strong>관련 교재 p.88 (Ⅱ-2-2)</strong></p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="모든 그래프에 들어갈 것">
 
-      <section class="lecture-section" id="materials" aria-labelledby="materials-title">
-        <div class="section-heading"><h2 id="materials-title">사용 데이터와 교재</h2></div>
-        <dl class="week-materials">
-          <dt>사용 데이터</dt><dd>따릉이</dd>
-          <dt>교재 쪽수</dt><dd>관련 교재 p.88</dd>
-        </dl>
-      </section>
+<ul class="week-objectives"><li><strong>제목:</strong> 어떤 대상의 무엇을 보여 주는지 적습니다.</li><li><strong>축 이름과 단위:</strong> 평균기온(°C), 강수량(mm), 대여건수(건), 날짜 수(일)처럼 한글로 씁니다. 요일 같은 범주에는 수치 단위가 없습니다.</li><li><strong>필요한 범례:</strong> 선·색·모양이 여러 뜻을 가지면 설명을 붙입니다. 연속된 수치를 색으로 나타내면 컬러바에 이름과 단위를 씁니다.</li></ul>
+<p>koreanize-matplotlib로 한글을 표시합니다. 그림만 보는 사람도 축·제목·범례를 통해 내용을 알 수 있어야 합니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="lesson-1" aria-labelledby="lesson-1-title">
+<div class="section-heading"><p class="kicker">이번 주 1차시 · 22차시</p><h2 id="lesson-1-title">숫자 세 개로 분포를 그릴 수 있을까?</h2></div>
+<div class="lesson-step" id="l1-question">
+<div class="lesson-panel" data-slide data-slide-title="22차시 ① 7주차 숫자를 다시 보기">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“평균 119,928건, 중앙값 126,749건, 표준편차 49,526건. 이 세 숫자만으로 날짜들이 어떻게 모였는지 알 수 있을까?”</p>
+<p>어느 대여건수 구간에 날짜가 많이 모일지, 좌우가 비슷할지 먼저 간단히 예상해 봅니다. 7주차의 숫자와 이번 그래프에서 각각 알 수 있는 것을 구별합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-orange">
+<div class="lesson-panel" data-slide data-slide-title="22차시 ② 히스토그램과 박스플롯">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>File에서 정제 CSV를 읽고 Data Table로 353행을 확인합니다. 평균기온·강수량·대여건수는 Numeric, 요일·공휴일여부는 Categorical로 둡니다.</li><li>File → Distributions를 연결해 대여건수를 선택합니다. Fitted distribution은 None, Split by도 None으로 둡니다.</li><li>Bin width를 바꿔가며 어느 구간에 날짜가 모이는지, 적은 값 쪽과 큰 값 쪽의 모양이 같은지 봅니다.</li><li>File → Box Plot에서 대여건수, Subgroups=None, Annotated boxes를 선택해 평균·중앙값·박스와 양 끝을 확인합니다.</li></ol>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="22차시 관찰 · 구간을 바꾸어도 남는 특징">
 
-      <section class="lecture-section" id="preparation" aria-labelledby="preparation-title">
-        <div class="section-heading"><h2 id="preparation-title">준비 중 안내</h2></div>
-        <aside class="callout" aria-label="학습 자료 준비 중">
-          <div><strong>이 주차의 학습 자료는 준비 중입니다</strong><p>8주차 · 22–24차시</p></div>
-        </aside>
-        <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
-      </section>
+<p>구간을 넓히면 세부 봉우리가 합쳐지고, 좁히면 작은 차이가 많이 드러납니다. 설정 하나의 모습만 보고 결론을 정하지 않습니다.</p>
+<ul class="week-objectives"><li>날짜가 많이 모인 쪽과 꼬리가 이어지는 쪽은 어디인가?</li><li>평균과 중앙값의 위치 차이가 분포와 어떻게 연결되는가?</li><li>박스플롯만 보았을 때 히스토그램의 구간별 봉우리를 알 수 있는가?</li></ul>
+</div>
+</div>
+<div class="lesson-step" id="l1-concept">
+<div class="lesson-panel" data-slide data-slide-title="22차시 ③ 두 그래프가 요약하는 것">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3><div class="lesson-table-scroll" role="region" aria-label="수치형 변수 하나의 분포" tabindex="0"><table class="lesson-table"><caption>수치형 변수 하나의 분포</caption><thead><tr><th scope="col">그래프</th><th scope="col">보여 주는 것</th><th scope="col">읽을 때 주의</th></tr></thead><tbody><tr><th scope="row">히스토그램</th><td>값을 구간으로 묶고 각 구간의 날짜 수를 표시</td><td>구간 너비를 확인합니다. 각 막대가 하루를 뜻하지 않습니다.</td></tr><tr><th scope="row">박스플롯</th><td>중앙값·가운데 절반의 범위·수염 등으로 분포를 요약</td><td>세부 봉우리와 빈 구간은 직접 드러나지 않습니다.</td></tr></tbody></table></div><p>이 데이터는 큰 값 쪽에 날짜가 많이 모인 구간이 있고, 적은 값 쪽으로 꼬리가 이어져 좌우 대칭이 아닙니다. 평균이 중앙값보다 작다는 것은 그 모양을 살펴볼 단서이며, 숫자만으로 전체 모양을 확정할 수는 없습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="22차시 개념 · 박스와 수염 읽기">
 
+<p>박스는 1사분위수부터 3사분위수까지, 가운데 선은 중앙값입니다. 평균 표식을 추가할 수도 있습니다. 박스 길이 자체가 표준편차는 아닙니다.</p>
+<p>아래 Python 박스플롯은 기본적으로 박스 길이(IQR)의 1.5배 범위 안에 있는 관측값까지 수염을 그립니다. 도구마다 수염·표식 방식이 다를 수 있으므로 범례와 설정을 확인합니다. 별도 점으로 보인다는 이유만으로 오류라고 판단하거나 삭제하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-python">
+<div class="lesson-panel" data-slide data-slide-title="22차시 ④ 준비 · 배포 URL 읽기">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 1 · 정제 CSV와 7주차 통계량"><code>import pandas as pd
+
+url = "https://kimjinhyuk1984.github.io/ds-2026/data/weather-bike/bike-daily-clean.csv"
+bike = pd.read_csv(url, encoding="utf-8-sig", parse_dates=["날짜"])
+rentals = bike["대여건수"]
+print(bike.shape)
+print(rentals.agg(["mean", "median", "std"]).round(2))</code></pre><p>(353, 8)인지 확인합니다. std는 7주차와 같은 pandas 기본 기준입니다. 새 런타임에서는 준비 셀부터 다시 실행합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="22차시 준비 · 한글 제목과 축">
+<pre data-code data-language="python" data-label="셀 2 · 한글 폰트 준비"><code>!pip install -q koreanize-matplotlib
+
+import matplotlib.pyplot as plt
+import koreanize_matplotlib</code></pre><p>설치와 import를 한 셀에서 위에서부터 실행합니다. <code>import koreanize_matplotlib</code>만으로 적용되므로 따로 함수를 부르지 않으며, 사용하지 않는 것처럼 보여도 지우지 않습니다.</p><p>설치 후 런타임 재시작은 필요 없습니다. 새 런타임에서는 설치부터 다시 실행합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="22차시 코드 · 히스토그램에 평균과 중앙값 표시">
+<pre data-code data-language="python" data-label="셀 3 · 구간 너비를 바꾸어 보기"><code>bin_width = 10000
+plt.figure(figsize=(8, 4))
+plt.hist(rentals, bins=range(0, 210001, bin_width), edgecolor="white")
+plt.axvline(rentals.mean(), color="tab:red", linestyle="--", label="평균")
+plt.axvline(rentals.median(), color="black", linestyle=":", label="중앙값")
+plt.xlabel("대여건수(건)")
+plt.ylabel("날짜 수(일)")
+plt.title("353일 대여건수의 분포")
+plt.legend()
+plt.tight_layout()
+plt.show()</code></pre><p><code>bin_width</code>를 <code>5000</code>·<code>10000</code>·<code>20000</code>으로 바꿔 봅니다. 1만 건 구간에서는 18만~19만 건 구간에 35일이 모여 있습니다. 세부 봉우리와 전체의 치우침을 구별해 봅니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="22차시 코드 · 같은 값들의 박스플롯">
+<pre data-code data-language="python" data-label="셀 4 · 중심과 퍼짐을 압축해 보기"><code>plt.figure(figsize=(6, 4))
+parts = plt.boxplot(rentals, showmeans=True)
+plt.xticks([1], ["전체 353일"])
+plt.xlabel("분석 대상")
+plt.ylabel("대여건수(건)")
+plt.title("353일 대여건수의 박스플롯")
+plt.legend([parts["means"][0], parts["medians"][0]], ["평균", "중앙값"])
+plt.tight_layout()
+plt.show()</code></pre><p>두 그래프는 같은 353개 값을 사용합니다. 표식을 읽을 때 평균과 중앙값의 범례를 확인합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-compare">
+<div class="lesson-panel" data-slide data-slide-title="22차시 ⑤ 숫자에는 없던 정보 찾기">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives"><li>두 도구에서 큰 값 쪽의 밀집 구간과 적은 값 쪽으로 이어지는 꼬리가 보이는가?</li><li>구간 너비가 다르면 막대 모양이 달라질 수 있다. 비슷한 너비로 맞추었을 때 공통으로 남는 특징은 무엇인가?</li><li>평균·중앙값 위치는 일치하는가? 박스플롯은 어떤 세부 모습을 보여 주지 못하는가?</li></ul>
+<p><strong>숫자 요약에 더해 구간별 밀집·빈 곳·치우침을 그림에서 확인할 수 있습니다.</strong> “평균이 약 12만 건이다”에 분포의 특징 한 문장을 덧붙입니다.</p>
+</div>
+</div>
+</section>
+<section class="lecture-section" id="lesson-2" aria-labelledby="lesson-2-title">
+<div class="section-heading"><p class="kicker">이번 주 2차시 · 23차시</p><h2 id="lesson-2-title">같은 산점도에서 무엇을 더 읽을 수 있을까?</h2></div>
+<div class="lesson-step" id="l2-question">
+<div class="lesson-panel" data-slide data-slide-title="23차시 ① 1주차의 산점도로 돌아가기">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“1주차에 보았던 평균기온–대여건수 그림에서, 이제 어떤 근거를 읽을 수 있을까?”</p>
+<p>그때는 점들을 보고 “기온이 높으면 대여가 많아 보인다”고 관찰했습니다. 이제는 축의 단위, 점 하나의 의미, 전체 경향과 퍼짐, 눈에 띄는 날짜를 나누어 설명합니다.</p>
+<p>강수량과 대여건수, 요일별 대여건수로 바꾸면 어떤 모습일지도 예상합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-orange">
+<div class="lesson-panel" data-slide data-slide-title="23차시 ② 축을 바꾸며 관계 관찰">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>File → Scatter Plot을 연결해 x=평균기온, y=대여건수로 둡니다. Color·Size는 우선 별도 변수를 지정하지 않습니다.</li><li>Jittering은 0으로, 회귀선은 꺼 둡니다. 전체적인 방향과 같은 기온에서의 세로 퍼짐을 확인합니다.</li><li>x만 강수량으로 바꾸어 0mm 부근의 점 겹침과 비가 많은 날을 봅니다. 점 크기와 Opacity를 조절하며 확인합니다.</li><li>x를 요일로 바꿉니다. 요일을 범주로 읽었는지, 표시 순서가 무엇인지 확인합니다.</li></ol>
+<p>점 하나는 하루입니다. 궁금한 점을 선택해 Selected Data → Data Table로 날짜를 확인합니다. 그림에서 점이 적어 보인다고 원본 날짜 수가 줄었다고 단정하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-concept">
+<div class="lesson-panel" data-slide data-slide-title="23차시 ③ 산점도로 읽는 관계">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+<p><strong>산점도</strong>는 한 관측값의 두 속성을 가로·세로 위치로 함께 표시합니다. 전체 방향, 같은 x에서의 y 퍼짐, 따로 떨어진 점을 구별해 읽습니다.</p>
+<p>“기온이 높은 쪽에 대여가 많은 날이 보인다”는 관찰과 “기온 때문에 늘었다”는 원인 설명은 다릅니다. 계절·강수·요일 같은 다른 조건도 함께 달라질 수 있습니다.</p>
+<p>요일은 범주이므로 가로 간격이 수치 차이를 뜻하지 않습니다. 요일별 점 구름을 비교하고, 월요일에서 일요일까지의 기울기나 점을 잇는 선으로 해석하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-python">
+<div class="lesson-panel" data-slide data-slide-title="23차시 ④ 같은 두 컬럼으로 다시 그리기">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 5 · 평균기온과 대여건수"><code>plt.figure(figsize=(7, 4))
+plt.scatter(bike["평균기온"], rentals, s=24, alpha=0.55)
+plt.xlabel("평균기온(°C)")
+plt.ylabel("대여건수(건)")
+plt.title("평균기온과 일별 대여건수")
+plt.tight_layout()
+plt.show()</code></pre><p>1주차와 같은 두 컬럼이므로 기본 점의 위치도 같습니다. 같은 기온에서도 대여건수가 얼마나 퍼져 있는지 관찰합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="23차시 코드 · 강수량으로 x축 바꾸기">
+<pre data-code data-language="python" data-label="셀 6 · 겹쳐 있는 무강수일"><code>plt.figure(figsize=(7, 4))
+plt.scatter(bike["강수량"], rentals, s=24, alpha=0.4)
+plt.xlabel("강수량(mm)")
+plt.ylabel("대여건수(건)")
+plt.title("강수량과 일별 대여건수")
+plt.tight_layout()
+plt.show()</code></pre><p>0mm에 모인 날짜들이 겹칩니다. alpha를 0.2·0.8로 바꿔 보되, 점의 진하기를 정확한 날짜 수로 읽지 않습니다. 정제 파일에서는 무강수 공백도 0으로 들어가 있습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="23차시 코드 · 요일별 하루의 값 보기">
+<pre data-code data-language="python" data-label="셀 7 · 요일 순서를 정한 점 그래프"><code>day_order = ["월", "화", "수", "목", "금", "토", "일"]
+day_position = bike["요일"].map({day: i for i, day in enumerate(day_order)})
+plt.figure(figsize=(8, 4))
+plt.scatter(day_position, rentals, s=20, alpha=0.4)
+plt.xticks(range(7), day_order)
+plt.xlabel("요일")
+plt.ylabel("대여건수(건)")
+plt.title("요일별 일별 대여건수")
+plt.tight_layout()
+plt.show()</code></pre><p>353일을 모두 그린 그림입니다. 각 요일의 낮은 값·높은 값과 퍼짐을 비교합니다. Orange3의 범주 순서가 다르면 요일 이름을 기준으로 대조합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-compare">
+<div class="lesson-panel" data-slide data-slide-title="23차시 ⑤ 경향과 한계를 함께 적기">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives"><li>평균기온이 높은 쪽에 큰 대여건수가 보이는 경향과, 같은 기온에서의 퍼짐을 두 도구에서 확인합니다. 언제나 계속 증가한다고 말할 수 있는지도 점검합니다.</li><li>강수량 산점도의 0mm 점 겹침이 두 도구에서 같은가? 비가 많은 날과 적은 날을 선택해 실제 날짜를 확인합니다.</li><li>요일별 그림에서 집단 간 차이와 집단 안 차이를 각각 한 가지씩 적습니다. 요일 평균만으로는 보이지 않을 정보는 무엇인가?</li></ul>
+<p>“축과 단위 → 전체 경향 → 예외나 퍼짐 → 그림만으로 말할 수 없는 것” 순서로 산점도를 설명합니다. <a href="../week-01/index.html">1주차</a>의 첫 관찰보다 근거가 구체적이어야 합니다.</p>
+</div>
+</div>
+</section>
+<section class="lecture-section" id="lesson-3" aria-labelledby="lesson-3-title">
+<div class="section-heading"><p class="kicker">이번 주 3차시 · 24차시</p><h2 id="lesson-3-title">같은 값인데 왜 다르게 보일까?</h2></div>
+<div class="lesson-step" id="l3-question">
+<div class="lesson-panel" data-slide data-slide-title="24차시 ① 표현이 판단을 바꾸는가?">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“요일별 대여건수 차이가 커 보이도록 그림을 만들 수 있을까? 숫자는 그대로 두고도 가능할까?”</p>
+<p>먼저 어떤 질문에 답할지 정합니다. 하루 값들의 분포인지, 두 수치의 관계인지, 요일별 대표값의 비교인지에 따라 필요한 그래프가 달라집니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-orange">
+<div class="lesson-panel" data-slide data-slide-title="24차시 ② 확대와 색·크기 관찰">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>Scatter Plot을 평균기온–대여건수로 돌립니다. 전체를 본 뒤 일부 영역을 확대하고, 눈금과 화면 밖으로 나간 점을 확인합니다. Reset zoom으로 전체를 다시 봅니다.</li><li>Color를 공휴일여부로 바꾸고 Show legend를 켭니다. 0·1의 뜻이 구별되는지 확인합니다. 다음으로 강수량을 색으로 표현해 범주 색과 연속 수치 색의 차이를 봅니다.</li><li>Size를 강수량으로 바꾸어 큰 점에 가려진 날짜가 있는지 봅니다. 다시 고정 크기로 되돌리고 Opacity를 조절해 비교합니다.</li></ol>
+<p>여기서는 표현을 바꿀 때 인상이 달라지는 것을 관찰합니다. 아래 Python에서는 <strong>같은 평균값·색·그림 크기를 유지하고 y축 범위만 바꾸어</strong> 원인을 분명하게 비교합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-concept">
+<div class="lesson-panel" data-slide data-slide-title="24차시 ③ 질문과 변수에 맞는 그래프">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3><div class="lesson-table-scroll" role="region" aria-label="변수의 유형과 개수로 선택하기" tabindex="0"><table class="lesson-table"><caption>변수의 유형과 개수로 선택하기</caption><thead><tr><th scope="col">변수</th><th scope="col">보고 싶은 것</th><th scope="col">그래프와 예</th></tr></thead><tbody><tr><th scope="row">수치형 하나</th><td>값의 분포·치우침·퍼짐</td><td>히스토그램·박스플롯: 대여건수</td></tr><tr><th scope="row">수치형 둘</th><td>함께 변하는 경향과 퍼짐</td><td>산점도: 평균기온–대여건수</td></tr><tr><th scope="row">범주형 하나</th><td>범주별 개수</td><td>막대그래프: 요일별 기록된 날짜 수</td></tr><tr><th scope="row">범주형 + 수치형</th><td>집단별 분포 또는 대표값</td><td>집단별 점·박스플롯 또는 평균 막대: 요일별 대여건수</td></tr></tbody></table></div><p>요일별 <strong>평균</strong> 막대는 요일별 하루 값들의 분포를 대신하지 않습니다. 합계·평균·날짜 수 중 무엇을 그리는지 제목과 축에 표시합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="24차시 개념 · 축 절단과 색·크기의 의미">
+
+<p><strong>막대의 길이로 크기를 비교할 때는 0 기준선이 중요합니다.</strong> 아래쪽을 잘라 표시하면 작은 차이도 큰 비율 차이처럼 보일 수 있습니다. 산점도에서 세부를 확대할 수는 있지만, 확대 범위와 화면 밖 데이터가 있음을 밝혀야 합니다.</p>
+<ul class="week-objectives"><li><strong>색:</strong> 범주를 구별하는 색과 수치가 커질수록 변하는 색을 구별합니다. 여러 그림을 비교할 때 색의 값 범위도 맞추고, 색만 의존하지 말고 범례·이름·필요한 모양을 함께 씁니다.</li><li><strong>크기:</strong> 큰 점이 다른 점을 가리지 않는지 확인합니다. 크기에 변수를 담으면 무엇을 나타내는지와 크기 기준을 범례로 밝혀야 합니다.</li></ul>
+</div>
+</div>
+<div class="lesson-step" id="l3-python">
+<div class="lesson-panel" data-slide data-slide-title="24차시 ④ 요일별 평균을 한 번만 계산">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 8 · 두 그림에 공통으로 쓸 값"><code>weekday_mean = bike.groupby("요일")["대여건수"].mean().reindex(day_order)
+print(weekday_mean.round(1))</code></pre><p>이제 요일마다 하나의 평균을 그립니다. 셀 7의 353개 점과 관측 단위가 다릅니다. 다음 두 그래프는 이 평균값을 똑같이 사용합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="24차시 코드 · y축 범위만 다른 두 그림">
+<pre data-code data-language="python" data-label="셀 9 · 축 절단 실험"><code>limits = [(0, 140000), (90000, 140000)]
+fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharex=True)
+for ax, ylim in zip(axes, limits):
+    ax.bar(day_order, weekday_mean, color="steelblue")
+    ax.set_ylim(*ylim)
+    ax.set(xlabel="요일", ylabel="평균 대여건수(건)", title="요일별 평균 대여건수")
+    ax.ticklabel_format(axis="y", style="plain", useOffset=False)
+plt.tight_layout()
+plt.show()</code></pre><p><strong>오해를 부르는 표현을 분석하기 위한 비교입니다.</strong> 왼쪽은 0, 오른쪽은 90,000건에서 시작합니다. 오른쪽만 보면 차이가 훨씬 커 보이지만 요일별 평균은 바뀌지 않았습니다.</p>
+<p>오른쪽 하한을 <code>50000</code>·<code>90000</code>으로 바꿔 봅니다. 그래프를 공유할 때는 오해를 줄이는 축을 선택하고, 확대가 필요하면 범위를 설명합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="24차시 코드 · 색으로 강수량 더하기">
+<pre data-code data-language="python" data-label="셀 10 · 색의 의미와 점의 겹침"><code>point_size = 24
+plt.figure(figsize=(7, 4))
+plt.scatter(bike["평균기온"], rentals, c=bike["강수량"], cmap="viridis",
+            vmin=0, vmax=128.8, s=point_size, alpha=0.7, edgecolors="none")
+plt.colorbar(label="강수량(mm)")
+plt.xlabel("평균기온(°C)")
+plt.ylabel("대여건수(건)")
+plt.title("강수량을 색으로 표시한 평균기온–대여건수")
+plt.tight_layout()
+plt.show()</code></pre><p>컬러바는 0~128.8mm를 같은 기준으로 표시합니다. point_size를 24·120으로 바꿔 점이 가려지는지 봅니다. 이 셀의 크기는 모든 점에 같아 추가 변수를 뜻하지 않습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="24차시 크기 표현 · 수치와 면적을 구별">
+
+<p>matplotlib의 <code>s</code>는 점의 면적을 정하는 값입니다. 지름을 두 배로 키우면 면적은 네 배가 되므로, 지름과 수치의 비례를 혼동하지 않습니다.</p>
+<p>강수량처럼 0이 많은 값을 크기로 직접 쓰면 0인 날의 점이 사라질 수 있습니다. 크기 범례·최소 크기·겹침을 점검하고, 최소 크기를 더했다면 그 기준도 설명합니다. 복잡해지면 고정 크기와 색 표현만으로 질문에 답할 수 있는지 다시 생각합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-compare">
+<div class="lesson-panel" data-slide data-slide-title="24차시 ⑤ 그래프가 전하는 주장 점검">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives"><li>Orange3에서 확대 전후 보이던 점과 범위가 달라졌는가? 같은 인상을 Python의 축 절단 비교에서도 경험했는가?</li><li>셀 9 두 그림의 값·색·제목·크기는 같다. y축만 달라졌는데 어느 쪽이 차이를 더 크게 느끼게 했는가?</li><li>색이나 점 크기를 더해서 새로 알게 된 정보와 오히려 가려진 정보는 무엇인가?</li></ul>
+<p><strong>그래프는 사실을 보여 주기도 하고 왜곡하기도 합니다.</strong> 제목·축·범례·표현 범위를 읽고, 그림이 주는 인상을 원래 값과 대조해야 합니다.</p>
+</div>
+</div>
+</section>
+<section class="lecture-section" id="assignment" aria-labelledby="assignment-title">
+<div class="section-heading"><h2 id="assignment-title">학습 기록과 시각화 점검</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="8주차 학습 기록">
+
+<p>Colab 노트북에 실행한 그림과 설명을 함께 남깁니다. 각 그래프에 질문 한 문장과 그림에서 확인한 근거를 적습니다.</p>
+<ol class="week-objectives"><li><strong>분포:</strong> 구간 너비를 바꾼 히스토그램과 박스플롯을 비교하고, 7주차 숫자 요약만으로 보이지 않던 특징을 씁니다.</li><li><strong>관계:</strong> 기온·강수량·요일 그림에서 경향과 퍼짐을 구별해 설명합니다. 어떤 그래프를 선택했고 왜 적절한지 적습니다.</li><li><strong>표현:</strong> 같은 평균값의 y축 비교 두 그림을 붙이고 차이가 과장되는 이유를 설명합니다. 공유할 때 사용할 그래프와 그 이유를 정합니다.</li></ol>
+<p>축 절단 그림에는 오해를 분석하기 위한 실험임을 적고 원래 값·비교 그림·설명을 함께 둡니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="그래프를 공유하기 전 확인">
+
+<ul class="week-objectives"><li><strong>제목:</strong> 대상과 표현한 값이 드러나는가?</li><li><strong>한글 축과 단위:</strong> 기온(°C), 강수량(mm), 대여건수(건), 날짜 수(일)가 맞는가?</li><li><strong>범례:</strong> 선·색·모양의 의미가 구별되는가? 수치 색에는 단위가 있는 컬러바를 달았는가?</li><li><strong>비교 조건:</strong> 같은 데이터·집계 기준인가? 축 범위·구간 너비·색 범위가 달라 인상을 바꾸지 않았는가?</li><li><strong>해석:</strong> 가려진 점·화면 밖 데이터·평균이 감추는 분포를 확인했는가? 관찰을 원인으로 단정하지 않았는가?</li></ul>
+</div>
+</section>
+<section class="lecture-section" id="references" aria-labelledby="references-title">
+<div class="section-heading"><h2 id="references-title">다시 볼 내용과 도구 참고</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="앞선 수업과 연결">
+
+<p><a href="../week-01/index.html">1주차 · 첫 산점도</a>와 <a href="../week-07/index.html">7주차 · 기술통계와 추론통계</a>를 다시 보며 설명이 얼마나 구체적이 되었는지 비교합니다.</p>
+<p>한글이 네모로 보이면 셀 2의 설치·import가 끝났는지 확인한 뒤 그래프 셀을 다시 실행합니다. 앞선 변수나 요일 순서가 없다는 오류가 나면 셀을 위에서부터 실행합니다.</p>
+<p><strong>관련 교재 p.88 (Ⅱ-2-2)</strong></p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="공식 도구 문서" data-slide-skip>
+
+<ul class="week-objectives"><li><a href="https://orangedatamining.com/widget-catalog/visualize/distributions/" target="_blank" rel="noopener noreferrer">Orange3 Distributions</a> · <a href="https://orangedatamining.com/widget-catalog/visualize/boxplot/" target="_blank" rel="noopener noreferrer">Box Plot</a> · <a href="https://orangedatamining.com/widget-catalog/visualize/scatterplot/" target="_blank" rel="noopener noreferrer">Scatter Plot</a></li><li><a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hist.html" target="_blank" rel="noopener noreferrer">matplotlib hist</a> · <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.boxplot.html" target="_blank" rel="noopener noreferrer">boxplot</a> · <a href="https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.scatter.html" target="_blank" rel="noopener noreferrer">scatter와 점 크기</a></li></ul>
+<p>도구 문서는 기능 확인용입니다. 실습은 이 페이지의 따릉이 정제 데이터로 진행합니다.</p>
+<p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+</div>
+</section>
       <div data-widget="week-navigation">
-        <p>공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다.</p>
+        <p><a href="../week-07/index.html">← 7주차</a> · 현재 8주차 · 다음 주차 준비 중</p>
         <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
       </div>
     </div>
