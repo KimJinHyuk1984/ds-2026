@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="5주차 · 13–15차시 · 학습 자료 준비 중">
+  <meta name="description" content="5주차 · 13–15차시 · 메뉴 분리, 정규식 실패 사례, 파생변수와 학교별 비율 비교">
   <meta name="color-scheme" content="light dark">
-  <title>텍스트 전처리와 파생변수</title>
+  <title>텍스트 전처리·파생변수·데이터 편향</title>
   <link rel="icon" href="data:,">
   <link rel="stylesheet" href="../assets/css/tokens.css">
   <link rel="stylesheet" href="../assets/css/base.css">
@@ -25,12 +25,13 @@
         <span class="brand-mark" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v15M3 4h5a4 4 0 0 1 4 2 4 4 0 0 1 4-2h5v14h-5a4 4 0 0 0-4 2 4 4 0 0 0-4-2H3Z"/></svg>
         </span>
-        <span class="brand-title" data-lecture-title>텍스트 전처리와 파생변수</span>
+        <span class="brand-title" data-lecture-title>텍스트 전처리·파생변수·데이터 편향</span>
       </a>
       <!-- shared.js가 본문의 .lecture-section을 수집해 링크를 생성합니다. -->
       <nav class="section-nav" aria-label="강의 섹션" data-section-nav></nav>
       <div class="header-actions">
         <button class="button button-primary" type="button" data-open-instructor>선생님 소개 보기</button>
+        <button class="button" type="button" data-presentation-toggle aria-pressed="false">발표 모드</button>
         <button class="button button-icon" type="button" data-theme-toggle aria-label="테마 전환">
           <svg data-theme-icon width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
         </button>
@@ -42,36 +43,281 @@
     <div class="container">
       <section class="hero" id="top" aria-labelledby="lecture-title">
         <p class="kicker" data-lecture-kicker>5주차</p>
-        <h1 id="lecture-title" data-lecture-title>텍스트 전처리와 파생변수</h1>
+        <h1 id="lecture-title" data-lecture-title>텍스트 전처리·파생변수·데이터 편향</h1>
         <p class="hero-subtitle" data-lecture-subtitle>13–15차시</p>
+        <p class="section-description">한 칸에 모인 메뉴를 나누고, 지우면 안 되는 정보를 찾아냅니다. 새 변수를 만들 때도 무엇을 한 개로 세고 무엇으로 나눌지 묻습니다.</p>
+        <nav class="lesson-jump" aria-label="차시 바로가기"><a class="button" href="#lesson-1">13차시 · 텍스트 나누기</a><a class="button" href="#lesson-2">14차시 · 괄호의 함정</a><a class="button" href="#lesson-3">15차시 · 변수와 편향</a></nav>
       </section>
+<section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
+<div class="section-heading"><h2 id="objectives-title">이번 주의 목표</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="5주차 · 표의 모양과 비교 기준 바꾸기">
 
-      <section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
-        <div class="section-heading"><h2 id="objectives-title">학습목표</h2></div>
-        <ul class="week-objectives">
-          <li>메뉴와 알레르기 정보를 분리하고 정규화·메뉴 개수·요일 구분 등 파생변수를 만들 수 있다.</li>
-          <li>전처리 과정에서 데이터 편향을 살펴보고 결과에 미치는 영향을 설명할 수 있다.</li>
-        </ul>
-      </section>
+<ul class="week-objectives"><li>메뉴를 한 행씩 나누고, 실패 사례를 대조해 메뉴 설명을 보존하며 알레르기 번호를 분리할 수 있다.</li><li>급식별 메뉴 개수와 알레르기 번호 표기 비율을 만들 수 있다.</li><li>학교별 빈도와 비율을 비교하고 데이터 양·식사 종류·기간에 따른 편향을 설명할 수 있다.</li></ul>
+<div class="card-grid"><article class="card"><h3>13차시 · 텍스트 나누기</h3><p>한 급식에서 메뉴별 행으로</p></article><article class="card"><h3>14차시 · 괄호의 함정</h3><p>작동하는 코드도 틀릴 수 있다</p></article><article class="card"><h3>15차시 · 변수와 편향</h3><p>개수와 비율은 다른 질문이다</p></article></div>
+<p class="lesson-note">13차시는 Orange3에서 문제를 관찰한 뒤 Python으로 변환을 주도합니다. 각 실패 실험의 결과를 먼저 기록하고 다음 개선안을 확인합니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="materials" aria-labelledby="materials-title">
+<div class="section-heading"><h2 id="materials-title">급식 원문으로 시작하기</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="실습 파일과 교재 참조">
 
-      <section class="lecture-section" id="materials" aria-labelledby="materials-title">
-        <div class="section-heading"><h2 id="materials-title">사용 데이터와 교재</h2></div>
-        <dl class="week-materials">
-          <dt>사용 데이터</dt><dd>NEIS 급식 + 기상·따릉이</dd>
-          <dt>교재 쪽수</dt><dd>관련 교재 p.67</dd>
-        </dl>
-      </section>
+<div class="dataset-download"><a class="button button-primary" href="../data/neis/meals.csv" download>meals.csv 내려받기</a><span>1,504행 × 12열 · 실제 기록 2024-03-04~2025-02-28 · UTF-8 BOM</span></div>
+<p>한 행은 한 학교·한 날짜·한 식사입니다. Colab 노트북을 <code>week-05.ipynb</code>로 만들고 아래 셀을 위에서부터 실행합니다. 원본 CSV는 덮어쓰지 않습니다. <strong>관련 교재 p.67 (Ⅱ-1-2)</strong></p>
+<p>Orange3는 원문 확인과 결과 대조에 사용합니다. 교사 참고용 결과를 먼저 받아 시작하지 않고 자신의 변환 결과를 만듭니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="lesson-1" aria-labelledby="lesson-1-title">
+<div class="section-heading"><p class="kicker">이번 주 1차시 · 13차시</p><h2 id="lesson-1-title">한 칸의 메뉴를 여러 행으로</h2></div>
+<div class="lesson-step" id="l1-question">
+<div class="lesson-panel" data-slide data-slide-title="13차시 ① 메뉴가 가장 자주 나오는 학교는?">
+<h3><span class="step-number">01</span> 질문 제기</h3><p class="lesson-question">“요리명 컬럼의 빈도를 세면 가장 자주 나온 메뉴를 알 수 있을까?”</p>
+<p>한 셀에는 밥·국·반찬이 함께 있습니다. 지금의 한 행과 우리가 세고 싶은 한 항목이 같은 단위인지 먼저 살펴봅니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-orange">
+<div class="lesson-panel" data-slide data-slide-title="13차시 ② Orange3에서 원문 관찰">
+<h3><span class="step-number">02</span> Orange3에서 문제 확인</h3><ol class="week-objectives"><li>File → Data Table로 meals.csv를 열어 1,504행을 확인합니다.</li><li>Select Rows로 명덕고등학교·2024-03-04·중식을 선택하고 요리명 셀을 살펴봅니다.</li><li>메뉴 사이에 반복되는 표시와 메뉴 이름 안의 기호를 찾아 적습니다.</li></ol>
+<p>기본 위젯만으로 문자열을 나눠 행까지 늘리는 작업은 번거롭습니다. 이번에는 Python으로 표를 변환하고 Orange3로 돌아와 결과를 확인합니다. 도구 선택도 문제 해결의 일부입니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-python">
+<div class="lesson-panel" data-slide data-slide-title="13차시 ③ 원문 읽고 첫 시도">
+<h3><span class="step-number">03</span> Python으로 변환하기</h3><pre data-code data-language="python" data-label="셀 1 · 배포 URL과 급식 단위 확인"><code>import pandas as pd
+from IPython.display import display
 
-      <section class="lecture-section" id="preparation" aria-labelledby="preparation-title">
-        <div class="section-heading"><h2 id="preparation-title">준비 중 안내</h2></div>
-        <aside class="callout" aria-label="학습 자료 준비 중">
-          <div><strong>이 주차의 학습 자료는 준비 중입니다</strong><p>5주차 · 13–15차시</p></div>
-        </aside>
-        <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
-      </section>
+url = "https://kimjinhyuk1984.github.io/ds-2026/data/neis/meals.csv"
+meals = pd.read_csv(url, encoding="utf-8-sig", dtype={"표준학교코드": str})
+keys = ["표준학교코드", "급식일자", "식사종류"]
+meta = ["학교명", "표준학교코드", "급식일자", "요일", "식사종류", "급식인원"]
+print(meals.shape, "급식 키 중복:", meals.duplicated(keys).sum())
+display(meals["요리명"].value_counts().head())</code></pre><p>(1504, 12), 키 중복 0을 확인합니다. 빈도표의 이름은 한 메뉴인가요, 여러 메뉴가 묶인 식단인가요? 다음 셀 전에 첫 시도의 한계를 적습니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="13차시 코드 · 구간을 리스트로 만들기">
+<pre data-code data-language="python" data-label="셀 2 · split과 explode"><code>parts = meals["요리명"].str.split("&lt;br/&gt;", regex=False)
+display(parts.head(2))
+long = meals[meta].copy()
+long["메뉴원문"] = parts
+long = long.explode("메뉴원문", ignore_index=True)
+long["메뉴원문"] = long["메뉴원문"].str.strip()
+print("분리 전 / 후:", len(meals), len(long))
+print("빈 메뉴 구간:", long["메뉴원문"].eq("").sum())
+display(long.head(8))</code></pre><p>원문 구간 수를 대조하면 1,504급식 → <strong>10,274메뉴 항목</strong>, 빈 구간 0개가 예상됩니다. 학교·날짜·식사·급식인원이 각 메뉴 행에 함께 반복됩니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="13차시 실패 실험 · 별표도 구분자일까?">
+<pre data-code data-language="python" data-label="셀 3 · 별표로 나눠 보는 비교용 실험"><code>star_rows = long.loc[long["메뉴원문"].str.contains("*", regex=False)].copy()
+star_rows["별표로나눈결과"] = star_rows["메뉴원문"].str.split("*", regex=False)
+print("별표 포함 메뉴 행:", len(star_rows))
+display(star_rows[["메뉴원문", "별표로나눈결과"]].head(12))</code></pre><p>훈제오리*야채무침(참깨소스), 일식샐러드*흑임자드레싱, 귀리밥*를 원문에서 찾아 봅니다. 별표 뒤 조각을 독립 메뉴라고 세어도 될까요? 끝에 별표가 있는 경우 무엇이 생기는지 기록합니다. 아직 <code>long</code>을 바꾸지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-concept">
+<div class="lesson-panel" data-slide data-slide-title="13차시 ④ long format과 구분자의 의미">
+<h3><span class="step-number">04</span> 개념에 이름 붙이기</h3><p><strong>long format</strong>으로 바꾸어 한 행이 메뉴 항목 하나를 나타내게 했습니다. split은 셀을 구간의 목록으로 나누고, explode는 그 목록을 여러 행으로 펼칩니다.</p>
+<p>별표 포함 항목은 <strong>1,297개</strong>입니다. 결합 음식·드레싱 표시·끝의 표시처럼 용도가 달라, 같은 기호라고 항상 경계가 되는 것은 아닙니다. 이번 결과에서는 <strong>&lt;br/&gt;만 경계로 쓰고 별표는 보존</strong>합니다.</p>
+<p>여기서 메뉴 하나는 원문이 구분한 제공 항목입니다. 한 요리의 재료나 구성 요소 개수는 아닙니다. 경계가 달라지면 다음 차시의 메뉴 개수와 비율도 달라집니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-compare">
+<div class="lesson-panel" data-slide data-slide-title="13차시 ⑤ 자기 결과를 Orange3로 되가져오기">
+<h3><span class="step-number">05</span> 결과 비교</h3><pre data-code data-language="python" data-label="셀 4 · 학생의 중간 결과 내려받기"><code>from google.colab import files
 
+long.to_csv("week-05-split.csv", index=False, encoding="utf-8-sig")
+files.download("week-05-split.csv")</code></pre><p>자신이 만든 중간 파일을 File → Data Table로 엽니다. 원본과 나란히 놓고 같은 학교·날짜·식사를 골라, 여러 메뉴가 각각 행이 되었는지 확인합니다. 10,274행과 빈 구간 0개를 대조합니다.</p>
+<p>이 파일은 아직 알레르기 표시를 분리하지 않은 개인 중간 결과입니다. Colab 실행 결과가 다르면 원문·구분자·빈 구간을 조사하고, 숫자를 맞추려고 행을 지우거나 복제하지 않습니다.</p>
+</div>
+</div>
+
+</section>
+
+<section class="lecture-section" id="lesson-2" aria-labelledby="lesson-2-title">
+<div class="section-heading"><p class="kicker">이번 주 2차시 · 14차시</p><h2 id="lesson-2-title">정규식이 지운 것은 정말 번호였을까?</h2></div>
+<div class="lesson-step" id="l2-question">
+<div class="lesson-panel" data-slide data-slide-title="14차시 ① 괄호를 모두 지우면 깔끔해질까?">
+<h3><span class="step-number">01</span> 질문 제기</h3><p class="lesson-question">“괄호 안은 전부 알레르기 번호이니 지워도 될까?”</p>
+<p>코드가 오류 없이 실행되는 것과 정보가 올바르게 남는 것은 다릅니다. 지우기 전 원문과 결과를 반드시 나란히 비교합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-orange">
+<div class="lesson-panel" data-slide data-slide-title="14차시 ② 원문에서 서로 다른 괄호 찾기">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3><p>13차시에 만든 week-05-split.csv를 File → Select Rows → Data Table로 연결합니다. Select Rows에서 메뉴원문에 스페셜K외·깍둑·국내산바질향·호박죽 중 한 단어가 포함되는 조건을 차례로 적용합니다. 시리얼(스페셜K외), 감자샐러드(깍둑)-조식, 갈치구이(국내산바질향 갈치토막), 호박죽(조식)을 찾습니다.</p>
+<p>어떤 괄호는 메뉴의 종류·형태·식사 구분을 설명합니다. 원문에 있는 괄호마다 무엇을 뜻하는지 가설을 적고, 다음 실패 코드를 실행합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-concept">
+<div class="lesson-panel" data-slide data-slide-title="14차시 ③ 정규식은 의미를 이해할까?">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3><p><strong>정규식</strong>은 문자 배열의 규칙으로 찾을 부분을 지정하는 표현입니다. 아래 패턴은 완성된 코드로 제공합니다. 패턴을 처음부터 쓰는 대신 어떤 정보가 사라지는지 찾아냅니다.</p>
+<p>찾기·추출·제거는 다른 작업입니다. 먼저 찾힌 원문을 보고, 추출할 정보와 남길 정보를 판단한 뒤 제거합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-python">
+<div class="lesson-panel" data-slide data-slide-title="14차시 ④ 실패 1 · 모든 괄호 삭제">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 5 · 비교용 실패 코드"><code>mask = long["메뉴원문"].str.contains(
+    r"\(스페셜K외\)|\(깍둑\)|국내산바질향|\(조식\)", regex=True)
+cases = long.loc[mask, ["메뉴원문"]].drop_duplicates().copy()
+cases["모든괄호삭제"] = cases["메뉴원문"].str.replace(
+    r"\([^)]*\)", "", regex=True).str.strip()
+display(cases.head(12))</code></pre><p>설명 중 무엇을 잃었나요? 시리얼 종류·깍둑 형태·갈치 설명·조식 구분을 지운 결과가 원래 메뉴와 같은 의미인지 기록합니다. <code>long</code>은 그대로 두고 사본에서만 실험합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="14차시 실패 2 · 숫자와 점만 골랐는데?">
+<pre data-code data-language="python" data-label="셀 6 · 숫자 괄호 패턴의 반례"><code>numeric_pattern = r"\(([0-9]+(?:\.[0-9]+)*)\)"
+probe = long.loc[long["메뉴원문"].str.count(numeric_pattern).gt(1),
+                 ["메뉴원문"]].drop_duplicates().copy()
+probe["첫숫자추출"] = probe["메뉴원문"].str.extract(numeric_pattern, expand=False)
+probe["숫자괄호모두삭제"] = probe["메뉴원문"].str.replace(
+    numeric_pattern, "", regex=True).str.strip()
+display(probe)</code></pre><p>냉이된장국(24.03), 마늘보쌈(23.06), 등심돈까스(100)&amp;소스^가 실제 원문에 있습니다. 숫자·점 모양만 맞는다고 모두 알레르기 번호인가요? 원문 9개 메뉴 항목에서 숫자 괄호가 두 번 등장합니다.</p>
+<p>첫 숫자 괄호만 추출하면 무엇을 가져왔는지, 모든 숫자 괄호를 지우면 무엇을 잃는지 먼저 설명합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="14차시 개선 · 위치와 번호 범위를 함께 확인">
+<h4>실패 기록 후 적용할 규칙</h4>
+<p>현재 자료의 알레르기 번호 표시는 메뉴 <strong>끝의 숫자·점 괄호</strong>에 있습니다. 학교급식 번호 목록의 <strong>1~19</strong> 범위도 확인합니다. (24.03)·(23.06)·(100)은 앞쪽 메뉴 정보로 남깁니다.</p>
+<p>다음 코드는 끝의 후보 하나를 확인하고 그 부분만 떼어 냅니다. 설명 괄호·별표·내부 공백·다른 문장부호는 보존하고, 양 끝 공백만 정리합니다. 이것이 이번 실습의 정규화 범위입니다.</p><pre data-code data-language="python" data-label="셀 7 · 완성된 후보 패턴"><code>import re
+
+tail_pattern = re.compile(r"\(([0-9]+(?:\.[0-9]+)*)\)\s*$")
+allowed_codes = set(range(1, 20))</code></pre><p><code>$</code>로 끝을 제한했습니다. 이 패턴도 문자의 뜻을 판별하지는 못합니다. 설명용 숫자가 1~19 범위로 끝에 놓이는 자료에서는 원문 확인이 더 필요합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="14차시 코드 · 번호와 메뉴 이름을 분리">
+<pre data-code data-language="python" data-label="셀 8 · 보존할 부분을 남기는 함수"><code>def parse_menu(text):
+    text = text.strip()
+    match = tail_pattern.search(text)
+    if match is None:
+        return text, ""
+    numbers = [int(value) for value in match[1].split(".")]
+    if not all(value in allowed_codes for value in numbers):
+        raise ValueError("끝의 번호 범위 확인: " + text)
+    codes = ",".join(str(value) for value in dict.fromkeys(numbers))
+    return text[:match.start()].strip(), codes</code></pre><p>번호는 쉼표로 연결한 문자열로 만들며 같은 번호의 중복만 첫 등장 순서로 정리합니다. 번호 표시가 없으면 빈 문자열로 남깁니다. 표시 없음이 실제 유발 성분 없음이라는 뜻은 아닙니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="14차시 코드 · long 결과와 반례 대조">
+<pre data-code data-language="python" data-label="셀 9 · 8개 컬럼으로 정리"><code>pairs = long["메뉴원문"].map(parse_menu)
+parsed = long[meta].copy()
+parsed[["메뉴명", "알레르기번호"]] = pd.DataFrame(pairs.tolist(), index=long.index)
+print(parsed.shape, "번호 미표기:", parsed["알레르기번호"].eq("").sum())
+review = pd.concat([long["메뉴원문"], parsed[["메뉴명", "알레르기번호"]]], axis=1)
+display(review.loc[mask].drop_duplicates().head(12))
+display(review.loc[long["메뉴원문"].str.count(numeric_pattern).gt(1)].drop_duplicates())</code></pre><p>예상 결과는 (10274, 8), 번호 미표기 1,629개입니다. 앞서 잃었던 메뉴 설명과 (24.03)·(100)이 살아 있고, 끝의 알레르기 번호만 분리되었는지 직접 대조합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-compare">
+<div class="lesson-panel" data-slide data-slide-title="14차시 ⑤ 성공한 사례와 남은 한계">
+<h3><span class="step-number">05</span> 결과 비교</h3><ul class="week-objectives"><li>시리얼·샐러드·갈치·호박죽의 설명 괄호가 메뉴명에 남아 있는지 확인합니다.</li><li>별표와 메뉴 안 숫자를 임의로 없애지 않았는지 확인합니다.</li><li>괄호 누락·중첩, 쉼표형 번호, 번호 범위 밖 값, 표시가 끝에 없는 경우에는 어떤 부분이 실패할지 적습니다.</li></ul>
+<p>현재 코드가 처리하지 못할 원문을 발견하면 결과를 고치는 대신 원문과 조건을 기록해 교사와 검토합니다. 같은 음식의 별칭을 합치는 일도 별도의 근거가 필요합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="14차시 결과 · 다음 차시에 쓸 개인 파일">
+<pre data-code data-language="python" data-label="셀 10 · 개인 처리 결과 내려받기"><code>parsed.to_csv("week-05-my-menus.csv", index=False, encoding="utf-8-sig")
+files.download("week-05-my-menus.csv")</code></pre><p>Orange3 File → Data Table에서 자기 파일의 8개 컬럼과 행 수를 대조합니다. 메뉴명·알레르기번호는 Text, 학교코드는 식별용 Text, 식사종류는 Categorical, 급식인원은 Numeric으로 지정합니다. 번호 목록을 하나의 수량으로 읽지 않습니다.</p>
+<p>Colab에서 이 파일을 다시 읽을 때는 학교코드·알레르기번호를 문자열로 지정하고 <code>keep_default_na=False</code>를 사용하면 미표기 빈 문자열을 유지할 수 있습니다.</p>
+</div>
+</div>
+
+</section>
+
+<section class="lecture-section" id="lesson-3" aria-labelledby="lesson-3-title">
+<div class="section-heading"><p class="kicker">이번 주 3차시 · 15차시</p><h2 id="lesson-3-title">새 변수를 만들고 공정하게 비교하기</h2></div>
+<div class="lesson-step" id="l3-question">
+<div class="lesson-panel" data-slide data-slide-title="15차시 ① 많이 기록된 학교가 항상 1등일까?">
+<h3><span class="step-number">01</span> 질문 제기</h3><p class="lesson-question">“명덕고 메뉴가 전체 빈도표에 많이 보이면 더 자주 제공하는 학교라고 말할 수 있을까?”</p>
+<p>원본 급식은 명덕고 743행, 세현고 159행입니다. 기록할 기회 자체가 다릅니다. 무엇으로 나눠 비교해야 질문에 맞는지 먼저 생각합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-orange">
+<div class="lesson-panel" data-slide data-slide-title="15차시 ② 두 단위의 행 수 확인">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3><ol class="week-objectives"><li>원본 meals.csv와 개인 결과 week-05-my-menus.csv를 각각 File → Data Table로 엽니다.</li><li>Select Rows로 같은 학교를 골라 급식 행 수와 메뉴 행 수를 비교합니다. 명덕고는 743급식에서 5,600메뉴, 세현고는 159급식에서 1,080메뉴가 예상됩니다.</li><li>개인 결과를 Distributions에 연결해 식사종류 분포를 보고, Select Rows의 학교 조건을 바꿉니다. 명덕고에는 조식이 있고 세현고에는 중식만 있습니다.</li></ol>
+<p>메뉴명이 Text로 지정되어 있어 빈도 축에서 선택되지 않는다면 값을 수량으로 바꾸지 않습니다. 많은 이름의 빈도·비율 비교는 아래 Python 표로 확인합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-concept">
+<div class="lesson-panel" data-slide data-slide-title="15차시 ③ 파생변수의 정의">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3><p><strong>파생변수</strong>는 기존 자료를 질문에 맞게 계산해 만든 새 속성입니다. 한 급식은 학교코드·급식일자·식사종류의 조합으로 구분합니다. 날짜만 묶으면 여러 학교와 식사가 섞입니다.</p>
+<p><strong>메뉴 개수</strong>는 그 급식의 메뉴 행 수입니다. <strong>알레르기 유발 표시가 있는 메뉴 비율</strong>은 번호가 표기된 메뉴 수 ÷ 전체 메뉴 수 × 100입니다.</p>
+<p>번호가 5개인 메뉴도 ‘번호가 표기된 메뉴’ 1개로 셉니다. 미표기 메뉴에 유발 성분이 없다고 단정하지 않으며, 이 변수는 원문의 표시 상태를 요약합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="15차시 개념 · 빈도와 비율, 데이터 편향">
+<h4>분모를 적어야 비교가 된다</h4>
+<p><strong>빈도</strong>는 등장 횟수입니다. 학교별 <strong>메뉴 비중</strong>은 해당 메뉴 행 수를 그 학교 전체 메뉴 행 수로 나눈 비율입니다. 전체 합계만 비교하면 기록량이 큰 학교가 과대 대표됩니다.</p>
+<p><strong>데이터 편향</strong>은 수집·구성·처리 과정에서 일부 대상이 더 많이 반영되거나 비교 조건이 달라지는 문제입니다. 비율로 크기 차이를 줄여도 식사 종류·기간·표기 방식 차이는 남습니다.</p>
+<p>급식인원은 메뉴마다 반복된 메타데이터입니다. 메뉴 행에서 합산하면 같은 사람 수를 여러 번 더하므로 합산하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-python">
+<div class="lesson-panel" data-slide data-slide-title="15차시 ④ 급식별 메뉴 개수와 표시 비율">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 11 · 급식 단위로 파생변수 만들기"><code>work = parsed.assign(번호표기=parsed["알레르기번호"].ne(""))
+meal_stats = work.groupby(["학교명"] + keys, as_index=False).agg(
+    메뉴개수=("메뉴명", "size"), 표기메뉴수=("번호표기", "sum"),
+    급식인원=("급식인원", "first"))
+meal_stats["알레르기표기비율(%)"] = (
+    meal_stats["표기메뉴수"] / meal_stats["메뉴개수"] * 100)
+print("급식별 요약 행:", len(meal_stats))
+display(meal_stats.head())</code></pre><p>1,504급식으로 돌아오는지 확인합니다. 급식인원은 반복값 중 첫 값을 가져오며 합산하지 않습니다. 날짜·학교 조건으로 같은 급식을 골라 원문에서 직접 센 메뉴 수와 대조합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="15차시 코드 · 학교별 빈출 메뉴">
+<pre data-code data-language="python" data-label="셀 12 · 학교와 식사 조건 바꾸기"><code>meal_kind = "전체"
+scope = parsed if meal_kind == "전체" else parsed.loc[parsed["식사종류"].eq(meal_kind)]
+school = "명덕고등학교"
+display(scope.loc[scope["학교명"].eq(school), "메뉴명"].value_counts().head(10))
+display(scope.groupby("학교명")["메뉴명"].value_counts().groupby(level=0).head(5))</code></pre><p>학교를 세현고등학교로 바꾸어 상위 메뉴를 비교합니다. 처음에는 전체 식사를 사용하고, 이후 <code>meal_kind</code>를 중식으로 바꿔 셀 12 이후를 다시 실행합니다. 현재 표기 그대로의 이름 기준이므로 별칭·별표 차이도 다른 이름으로 셉니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="15차시 코드 · 같은 메뉴를 빈도와 비율로">
+<pre data-code data-language="python" data-label="셀 13 · 학교별 전체 메뉴 수로 나누기"><code>menu = "배추김치"
+denominator = scope.groupby("학교명").size()
+frequency = scope.loc[scope["메뉴명"].eq(menu)].groupby("학교명").size()
+comparison = pd.DataFrame({"전체메뉴수": denominator,
+    "빈도": frequency.reindex(denominator.index, fill_value=0)})
+comparison["메뉴비중(%)"] = comparison["빈도"] / comparison["전체메뉴수"] * 100
+display(comparison.round(2))</code></pre><p><code>menu</code>를 빈도표의 다른 실제 메뉴명으로 바꿉니다. 여기의 0은 결측 대체가 아니라 해당 학교의 선택 범위에서 <strong>그 이름의 메뉴가 0번 등장했다</strong>는 집계값입니다.</p>
+<p>학교별 전체 메뉴를 분모로 삼았습니다. ‘학교가 그 메뉴를 제공한 급식의 비율’이나 ‘학생의 선호도’와 같지 않습니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="15차시 코드 · 한글 그래프 준비">
+<pre data-code data-language="python" data-label="셀 14 · 설치와 import를 한 셀에서"><code>!pip install -q koreanize-matplotlib
+
+import matplotlib.pyplot as plt
+import koreanize_matplotlib</code></pre><p>설치가 끝난 뒤 두 import까지 같은 셀에서 실행합니다. <code>import koreanize_matplotlib</code>만으로 한글이 적용되므로 지우거나 별도 함수를 호출하지 않습니다. 런타임 재시작은 필요 없고, 새 런타임에서는 설치부터 다시 실행합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="15차시 코드 · 빈도와 비중을 나란히 그리기">
+<pre data-code data-language="python" data-label="셀 15 · 분모가 있는 비교"><code>fig, axes = plt.subplots(1, 2, figsize=(12, 4))
+comparison["빈도"].plot.bar(ax=axes[0], rot=30)
+comparison["메뉴비중(%)"].plot.bar(ax=axes[1], rot=30)
+axes[0].set_ylabel("메뉴 등장 횟수(건)")
+axes[1].set_ylabel("학교 내 전체 메뉴 대비 비중(%)")
+fig.suptitle(menu + " · " + meal_kind + " · 빈도와 비율")
+plt.tight_layout()
+plt.show()</code></pre><p>순위가 바뀌는지뿐 아니라 막대의 차이가 어떻게 달라지는지도 봅니다. 순위가 그대로여도 빈도와 비율의 질문은 다릅니다. 한글이 네모면 셀 14의 성공 여부를 확인하고 이 셀을 다시 실행합니다.</p>
+</div><div class="lesson-panel" data-slide data-slide-title="보충 · 급식 중에 몇 번 등장했는가?" data-slide-skip>
+<h4>분모를 급식 수로 바꾸면</h4><pre data-code data-language="python" data-label="보충 셀 · 급식 등장률"><code>meal_total = scope[["학교명"] + keys].drop_duplicates(keys).groupby("학교명").size()
+present = scope.loc[scope["메뉴명"].eq(menu)].drop_duplicates(keys)
+meal_hits = present.groupby("학교명").size().reindex(meal_total.index, fill_value=0)
+display((meal_hits / meal_total * 100).rename("급식등장률(%)").round(2))</code></pre><p>이제 분모는 전체 식사 기준 동양 302·명덕 743·영일 300·세현 159급식입니다. 같은 급식에 같은 메뉴가 반복돼도 한 번만 셉니다. 메뉴 비중과 급식 등장률 중 질문에 맞는 지표를 고릅니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-compare">
+<div class="lesson-panel" data-slide data-slide-title="15차시 ⑤ 비율로 바꾸면 모든 문제가 해결될까?">
+<h3><span class="step-number">05</span> 결과 비교</h3><ul class="week-objectives"><li>Orange3에서 센 학교별 메뉴 행 수와 Python의 전체메뉴수가 같은지 확인합니다.</li><li>선택한 메뉴의 빈도와 메뉴 비중을 비교하고 각 분모를 문장으로 적습니다.</li><li>전체 식사 → 중식으로 조건을 바꿔 결과를 대조합니다. 학교별 제공 기간 차이도 남아 있음을 설명합니다.</li><li>메뉴 개수·알레르기 표기 비율이 별표 분리 여부에 왜 영향을 받는지 말합니다.</li></ul>
+<p>비율은 자료량의 차이를 고려하게 합니다. 이름 표준화·기간·대상 집단까지 자동으로 같게 만들지는 않습니다. 어떤 선택을 했는지 결과와 함께 남깁니다.</p>
+</div>
+</div>
+
+</section>
+
+<section class="lecture-section" id="assignment" aria-labelledby="assignment-title">
+<div class="section-heading"><h2 id="assignment-title">과제와 돌아보기</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="5주차 산출물 · 실패에서 규칙으로">
+<h3>코드가 실행됐다는 사실을 넘어 검증하기</h3>
+<p>Orange3 워크플로우를 <code>week-05.ows</code>, Colab 노트북을 <code>week-05.ipynb</code>로 저장합니다. 원본 meals.csv는 유지합니다.</p>
+<ul class="week-objectives"><li>별표 분리와 모든 괄호 삭제의 실패 사례를 원문·결과와 함께 각각 기록합니다.</li><li>숫자·점 괄호만 고른 개선안의 반례와, 보존한 메뉴 정보를 설명합니다.</li><li>한 급식의 메뉴 개수·번호 표기 비율을 직접 세어 계산과 대조합니다.</li><li>한 메뉴의 학교별 빈도와 비율을 비교하고, 분모·식사 조건·남은 편향을 적습니다.</li></ul>
+</div><div class="lesson-panel" data-slide data-slide-title="제출 전 확인 · 원본과 결과 연결">
+<pre data-code data-language="python" data-label="셀 16 · 행 단위와 보존 여부 확인"><code>print("메뉴 표:", parsed.shape)
+print("비어 있는 메뉴명:", parsed["메뉴명"].eq("").sum())
+print("보존한 급식 수:", len(parsed[keys].drop_duplicates()))
+print("알레르기번호 미표기:", parsed["알레르기번호"].eq("").sum())
+display(parsed.groupby("학교명").size().rename("메뉴 행 수"))</code></pre><p>예상 기준은 10,274행 × 8열, 빈 메뉴명 0개, 1,504급식 보존, 번호 미표기 1,629개입니다. 중복 메뉴를 임의로 삭제하지 않습니다. 이 표는 나중에 학교코드·날짜·식사종류로 묶어 13주차의 트랜잭션으로 바꿀 수 있습니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="after-class" aria-labelledby="after-class-title">
+<div class="section-heading"><h2 id="after-class-title">수업 후 참고용 결과</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="수업 후 공개 · 다음 프로젝트로 이어가기" data-slide-skip>
+<aside class="callout"><div><strong>수업 후 공개</strong><p><code>meals-parsed.csv</code>는 교사가 생성·검토한 뒤 이 영역에서 제공할 참고용 파일입니다. 현재는 생성 전이므로 다운로드 링크를 제공하지 않습니다.</p></div></aside>
+<p>한 행에 메뉴 항목 하나를 담는 long format입니다. 컬럼은 <strong>학교명, 표준학교코드, 급식일자, 요일, 식사종류, 급식인원, 메뉴명, 알레르기번호</strong> 순서입니다. 설명 괄호는 메뉴명에 남고, 알레르기번호는 쉼표로 구분한 문자열이며 미표기는 빈 값입니다.</p>
+<p>실습을 끝내지 못한 학생도 이 결과로 6주차 미니 프로젝트에 참여할 수 있고, 완주한 학생은 자기 결과와 대조할 수 있습니다. 수업 도입에서는 원문으로 시작합니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="references" aria-labelledby="references-title">
+<div class="section-heading"><h2 id="references-title">도구 참고와 다음 주</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="공식 참고 자료" data-slide-skip>
+<ul class="week-objectives"><li><a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.split.html" target="_blank" rel="noopener noreferrer">pandas str.split</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.explode.html" target="_blank" rel="noopener noreferrer">explode</a></li><li><a href="https://school.jje.go.kr/andeok-m/ad/fm/foodmenu/selectFoodMenuView.do?mi=100509" target="_blank" rel="noopener noreferrer">학교 공개 급식의 알레르기 번호표</a> · 번호 범위 참고용이며 이 학교의 식단은 실습에 사용하지 않습니다.</li></ul>
+<p>Colab 변수 오류는 앞 셀 실행 여부를, 한글 그래프는 설치·import 셀을 확인합니다. 원문이 새 패턴을 포함하면 자동 제거를 늘리기 전에 실패 사례를 기록합니다.</p>
+<p>6주차에는 전처리 선택과 근거를 보고서로 정리합니다. 학습 자료는 준비 중입니다.</p><p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+</div>
+</section>
       <div data-widget="week-navigation">
-        <p>공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다.</p>
+        <p><a href="../week-04/index.html">← 4주차</a> · 현재 5주차 · 다음 주차 준비 중</p>
         <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
       </div>
     </div>

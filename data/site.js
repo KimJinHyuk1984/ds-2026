@@ -172,21 +172,21 @@ window.SITE = {
       "slug": "week-05",
       "week": 5,
       "badge": "5주차",
-      "title": "텍스트 전처리와 파생변수",
+      "title": "텍스트 전처리·파생변수·데이터 편향",
       "subtitle": "13–15차시",
       "kicker": "5주차",
       "duration": "3차시",
       "target": "고등학교",
       "difficulty": "",
       "tags": [
-        "NEIS 급식 + 기상·따릉이"
+        "NEIS 급식"
       ],
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "13–15차시",
-      "dataName": "NEIS 급식 + 기상·따릉이",
+      "dataName": "NEIS 급식",
       "textbook": [
         {
           "unit": "Ⅱ-1-2",
@@ -194,8 +194,9 @@ window.SITE = {
         }
       ],
       "objectives": [
-        "메뉴와 알레르기 정보를 분리하고 정규화·메뉴 개수·요일 구분 등 파생변수를 만들 수 있다.",
-        "전처리 과정에서 데이터 편향을 살펴보고 결과에 미치는 영향을 설명할 수 있다."
+        "메뉴를 한 행씩 나누고, 실패 사례를 대조해 메뉴 설명을 보존하며 알레르기 번호를 분리할 수 있다.",
+        "급식별 메뉴 개수와 알레르기 번호 표기 비율을 만들 수 있다.",
+        "학교별 빈도와 비율을 비교하고 데이터 양·식사 종류·기간에 따른 편향을 설명할 수 있다."
       ],
       "compressible": false
     },
