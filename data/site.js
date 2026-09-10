@@ -111,14 +111,14 @@ window.SITE = {
       "target": "고등학교",
       "difficulty": "",
       "tags": [
-        "NEIS + 기상"
+        "NEIS + 기상·따릉이"
       ],
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "7–9차시",
-      "dataName": "NEIS + 기상",
+      "dataName": "NEIS + 기상·따릉이",
       "textbook": [
         {
           "unit": "Ⅰ-2-1",
@@ -130,8 +130,9 @@ window.SITE = {
         }
       ],
       "objectives": [
-        "빅데이터·데이터베이스·데이터셋의 의미를 설명할 수 있다.",
-        "Orange3의 Merge Data·Concatenate와 Python의 merge·concat으로 데이터를 통합할 수 있다."
+        "빅데이터·데이터베이스·데이터셋의 의미와 집계의 이득·손실을 설명할 수 있다.",
+        "Concatenate와 Merge의 차이를 행·열·키로 설명하고 두 도구에서 재현할 수 있다.",
+        "inner·left·outer가 남기는 행과 새로 생긴 빈 값을 비교할 수 있다."
       ],
       "compressible": false
     },

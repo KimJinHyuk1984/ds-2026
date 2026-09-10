@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="3주차 · 7–9차시 · 학습 자료 준비 중">
+  <meta name="description" content="3주차 · 7–9차시 · 빅데이터·데이터베이스와 Concatenate·Merge 실습">
   <meta name="color-scheme" content="light dark">
   <title>빅데이터·데이터베이스와 데이터 통합</title>
   <link rel="icon" href="data:,">
@@ -31,6 +31,7 @@
       <nav class="section-nav" aria-label="강의 섹션" data-section-nav></nav>
       <div class="header-actions">
         <button class="button button-primary" type="button" data-open-instructor>선생님 소개 보기</button>
+        <button class="button" type="button" data-presentation-toggle aria-pressed="false">발표 모드</button>
         <button class="button button-icon" type="button" data-theme-toggle aria-label="테마 전환">
           <svg data-theme-icon width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
         </button>
@@ -44,36 +45,350 @@
         <p class="kicker" data-lecture-kicker>3주차</p>
         <h1 id="lecture-title" data-lecture-title>빅데이터·데이터베이스와 데이터 통합</h1>
         <p class="hero-subtitle" data-lecture-subtitle>7–9차시</p>
+        <p class="section-description">많은 기록에서 필요한 표를 만들고, 행으로 모으거나 키로 연결합니다. 합치는 방법에 따라 남는 정보가 어떻게 달라지는지 확인합니다.</p>
+        <nav class="lesson-jump" aria-label="차시 바로가기"><a class="button" href="#lesson-1">7차시 · 규모와 구조</a><a class="button" href="#lesson-2">8차시 · Concatenate</a><a class="button" href="#lesson-3">9차시 · Merge</a></nav>
       </section>
+<section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
+<div class="section-heading"><h2 id="objectives-title">이번 주의 목표</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="3주차 목표와 차시 구성">
+<ul class="week-objectives"><li>빅데이터·데이터베이스·데이터셋의 의미와 집계의 이득·손실을 설명할 수 있다.</li><li>Concatenate와 Merge의 차이를 행·열·키로 설명하고 두 도구에서 재현할 수 있다.</li><li>inner·left·outer가 남기는 행과 새로 생긴 빈 값을 비교할 수 있다.</li></ul>
+<div class="card-grid"><article class="card"><h3>7차시 · 규모와 구조</h3><p>38,286,211행에서 353행으로</p></article><article class="card"><h3>8차시 · Concatenate</h3><p>학교별로 나눴다가 세로로</p></article><article class="card"><h3>9차시 · Merge</h3><p>학교코드·날짜로 가로로</p></article></div>
+<p class="lesson-note">매 차시: 질문 → Orange3 → 개념 → Python → 비교. 결측치의 처리 방법과 메뉴 텍스트 분리는 이번 주에 다루지 않습니다.</p>
+</div>
+</section>
 
-      <section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
-        <div class="section-heading"><h2 id="objectives-title">학습목표</h2></div>
-        <ul class="week-objectives">
-          <li>빅데이터·데이터베이스·데이터셋의 의미를 설명할 수 있다.</li>
-          <li>Orange3의 Merge Data·Concatenate와 Python의 merge·concat으로 데이터를 통합할 수 있다.</li>
-        </ul>
-      </section>
+<section class="lecture-section" id="materials" aria-labelledby="materials-title">
+<div class="section-heading"><h2 id="materials-title">같은 세 파일로 실습하기</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="세 데이터셋과 교재 참조">
+<div class="dataset-download"><a class="button button-primary" href="../data/neis/meals.csv" download>meals.csv 내려받기</a><span>급식 · 1,504행 × 12열 · 실제 기록 2024-03-04~2025-02-28</span></div>
+<div class="dataset-download"><a class="button" href="../data/neis/schools.csv" download>schools.csv 내려받기</a><span>학교 정보 · 4행 × 8열 · 수집 시점 현황</span></div>
+<div class="dataset-download"><a class="button" href="../data/weather-bike/bike-daily.csv" download>bike-daily.csv 내려받기</a><span>기상·따릉이 · 353행 × 8열 · 2024-03-01~2025-02-16</span></div>
+<p>모두 UTF-8 BOM입니다. Orange3는 내려받은 파일, Colab은 준비 셀의 배포 URL을 사용합니다. <strong>관련 교재 p.23 (Ⅰ-2-1), p.29 (Ⅰ-2-2)</strong></p>
+</div>
+</section>
 
-      <section class="lecture-section" id="materials" aria-labelledby="materials-title">
-        <div class="section-heading"><h2 id="materials-title">사용 데이터와 교재</h2></div>
-        <dl class="week-materials">
-          <dt>사용 데이터</dt><dd>NEIS + 기상</dd>
-          <dt>교재 쪽수</dt><dd>관련 교재 p.23, p.29</dd>
-        </dl>
-      </section>
+<section class="lecture-section" id="lesson-1" aria-labelledby="lesson-1-title">
+<div class="section-heading"><p class="kicker">이번 주 1차시 · 7차시</p><h2 id="lesson-1-title">많은 기록을, 질문에 맞는 표로</h2></div>
+<div class="lesson-step" id="l1-question">
+<div class="lesson-panel" data-slide data-slide-title="7차시 ① 3,828만 행을 다 열어야 할까?">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“서울의 하루 대여량을 보려면 원본 38,286,211행이 모두 필요할까?”</p>
+<p>12개월 따릉이 시간대별 원본은 <strong>38,286,211행</strong>이었습니다. 교사가 날짜별로 대여건수를 합산하고 기상과 연결해, 수업에서는 <strong>353행</strong>을 사용합니다.</p>
+<p>38,286,211은 원본의 행 수입니다. 대여 횟수의 합계와 구별합니다. 최종 기간은 원본 제공 범위에 맞춰 2024-03-01~2025-02-16입니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-orange">
+<div class="lesson-panel" data-slide data-slide-title="7차시 ② 일별 표에서 답할 수 있는 질문">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives">
+<li>File에서 <code>bike-daily.csv</code>를 열고 Data Table에 연결해 <strong>353행 × 8컬럼</strong>을 확인합니다.</li>
+<li>날짜·대여건수·평균기온을 찾습니다. 한 행이 어떤 대상을 뜻하는지 설명합니다.</li>
+<li>“어느 날 대여가 많았나?”와 “어느 대여소의 밤 10시 대여가 많았나?” 중 이 표로 답할 수 있는 질문을 고릅니다.</li>
+</ol><p>대여소와 시간대 컬럼은 일별 전체 합계에 없습니다. 같은 합계라도 장소·시간대별 모습은 서로 다를 수 있습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-concept">
+<div class="lesson-panel" data-slide data-slide-title="7차시 ③ 빅데이터와 집계">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+<p><strong>빅데이터</strong>는 규모, 쌓이는 속도, 형태의 다양성 때문에 저장·처리·분석 방법을 함께 설계해야 하는 데이터를 가리킵니다. 몇 행 이상이라는 한 숫자로만 정하지 않습니다.</p>
+<p><strong>집계</strong>는 질문에 맞는 단위로 묶어 합계 같은 요약값을 만드는 일입니다. 일별 서울 전체 대여량이 질문이라면 작은 표로 빠르게 비교할 수 있습니다.</p>
+<p>집계한 합계만으로 대여소·시간대별 원래 값을 되살릴 수는 없습니다. 처리 부담을 줄이는 대신 잃는 세부 정보가 있습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="데이터베이스와 데이터셋">
+<h4>저장하고 관리하는 곳, 분석에 쓰는 묶음</h4>
+<p><strong>데이터베이스</strong>는 자료를 정해진 구조와 관계에 따라 저장하고 관리하는 체계입니다. DBMS는 자료를 검색·추가·수정하고 여러 사용자의 접근과 일관성을 관리하는 소프트웨어입니다.</p>
+<p><strong>데이터셋</strong>은 특정 질문이나 작업을 위해 모은 자료의 묶음입니다. 지금의 CSV 3개는 수업용 데이터셋이며, CSV 파일 자체가 데이터베이스 관리 시스템인 것은 아닙니다.</p>
+<p>학교 표는 한 학교에 한 행, 급식 표는 학교·날짜·식사마다 한 행입니다. 학교의 주소를 한 곳에서 관리하고 학교코드로 연결하면 같은 정보를 매 식사마다 따로 고칠 필요가 줄어듭니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-python">
+<div class="lesson-panel" data-slide data-slide-title="7차시 ④ 배포된 세 데이터셋 읽기">
+<h3><span class="step-number">04</span> Python으로 재현</h3>
+<p>Colab에서 <code>week-03.ipynb</code>를 만들고 아래 준비 셀부터 실행합니다. 이 노트북을 세 차시에 걸쳐 사용합니다. 원본 수천만 행을 내려받거나 수집기를 실행하지 않습니다.</p>
+<pre data-code data-language="python" data-label="준비 셀 · 배포 URL 직접 읽기"><code>import pandas as pd
+from IPython.display import display
 
-      <section class="lecture-section" id="preparation" aria-labelledby="preparation-title">
-        <div class="section-heading"><h2 id="preparation-title">준비 중 안내</h2></div>
-        <aside class="callout" aria-label="학습 자료 준비 중">
-          <div><strong>이 주차의 학습 자료는 준비 중입니다</strong><p>3주차 · 7–9차시</p></div>
-        </aside>
-        <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
-      </section>
+base = "https://kimjinhyuk1984.github.io/ds-2026/data/"
+schools = pd.read_csv(base + "neis/schools.csv", encoding="utf-8-sig", dtype=str)
+meals = pd.read_csv(base + "neis/meals.csv", encoding="utf-8-sig",
+                    dtype={"표준학교코드": str, "식사코드": str})
+bike = pd.read_csv(base + "weather-bike/bike-daily.csv", encoding="utf-8-sig")
+print("학교 / 급식 / 일별:", schools.shape, meals.shape, bike.shape)</code></pre>
+<p>결과는 (4, 8), (1504, 12), (353, 8)입니다. 학교코드는 두 표에서 모두 문자열로 읽습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="7차시 코드 · 단위와 컬럼 확인">
+<h4>보이는 컬럼이 답할 수 있는 질문을 정한다</h4>
+<pre data-code data-language="python" data-label="7차시 셀 · 일별 표 확인"><code>print("원본 기록 수(교사 확인):", 38_286_211)
+print("배포된 일별 행 수:", len(bike))
+print("컬럼:", bike.columns.tolist())
+display(bike[["날짜", "평균기온", "대여건수"]].head())
+print("첫 날짜:", bike["날짜"].min(), "마지막 날짜:", bike["날짜"].max())</code></pre>
+<p>화면에 표시할 컬럼을 최고기온·강수량으로 바꾸어 봅니다. 집계된 표에 없는 대여소·시간대를 선택한다고 원본 정보가 다시 생기지는 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-compare">
+<div class="lesson-panel" data-slide data-slide-title="7차시 ⑤ 편리해진 점·잃은 정보">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives">
+<li>두 도구에서 353행, 같은 날짜의 대여건수와 기온이 일치하는지 대조합니다.</li>
+<li>일별 표로 답할 질문 한 가지와 원본이 있어야 답할 질문 한 가지를 적습니다.</li>
+<li>“데이터는 많을수록 무조건 좋다”는 주장에 처리 비용·세부 정보·질문의 단위로 답해 봅니다.</li>
+</ul><p>원본을 보존하는 일과 수업에서 필요한 크기의 표를 사용하는 일은 함께 할 수 있습니다.</p>
+</div>
+</div>
+</section>
 
-      <div data-widget="week-navigation">
-        <p>공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다.</p>
-        <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
-      </div>
+<section class="lecture-section" id="lesson-2" aria-labelledby="lesson-2-title">
+<div class="section-heading"><p class="kicker">이번 주 2차시 · 8차시</p><h2 id="lesson-2-title">Concatenate · 같은 구조를 세로로</h2></div>
+<div class="lesson-step" id="l2-question">
+<div class="lesson-panel" data-slide data-slide-title="8차시 ① 학교별 표를 다시 모으면?">
+<h3><span class="step-number">01</span> 질문 제기</h3><p class="lesson-question">“네 학교의 급식 표를 붙이면 행과 열 중 무엇이 늘어날까?”</p>
+<p>meals.csv는 이미 네 학교가 합쳐진 표입니다. 학교별로 나눈 뒤 다시 붙여서, 전체를 정확히 되돌릴 수 있는지 확인합니다.</p><p>명덕고에만 있는 조식과 세현고에 없는 석식은 표에 어떤 모습으로 남을까요?</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-orange">
+<div class="lesson-panel" data-slide data-slide-title="8차시 ② 네 학교로 나누기">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>File에서 meals.csv를 열고 Select Rows 네 개로 나눠 연결합니다.</li><li>학교명 조건을 각각 동양·명덕·영일·세현고등학교로 정합니다. 다른 조건은 넣지 않습니다.</li><li>각 <strong>Matching Data</strong>를 Data Table로 확인합니다. 순서대로 <strong>302·743·300·159행</strong>입니다.</li></ol>
+<p class="lesson-note">Select Rows의 ‘Remove unused values and constant features’와 ‘Remove unused classes’를 끕니다. 원래 12컬럼과 자료형을 유지하고, 조건에 맞는 행만 고릅니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Concatenate 연결과 결과">
+<h4>학교별 네 출력을 하나의 Concatenate로</h4>
+<ol class="week-objectives"><li>네 Matching Data 출력을 Concatenate의 <strong>Additional Data</strong> 입력에 모두 연결합니다. Primary Data 입력은 비워 둡니다.</li><li>모든 입력의 컬럼을 사용하는 옵션을 선택하고 출처 ID 추가는 끕니다. Data Table로 출력을 확인합니다.</li><li>결과는 <strong>1,504행 × 12컬럼</strong>입니다. File의 전체 표와 학교별 행 수가 일치하는지 확인합니다.</li></ol>
+<p>학교명과 식사종류를 함께 봅니다. 명덕고에서 조식을 찾을 수 있지만 세현고에서 석식인 행은 찾을 수 없습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-concept">
+<div class="lesson-panel" data-slide data-slide-title="8차시 ③ Concatenate와 스키마">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+<p><strong>Concatenate</strong>는 같은 의미의 컬럼을 맞추어 행을 아래로 이어 붙이는 결합입니다. 이번에는 302+743+300+159=1,504행이 되고 컬럼은 12개를 유지합니다.</p>
+<p><strong>스키마</strong>는 컬럼 이름·자료형·값의 역할처럼 표의 구조를 정한 것입니다. 이름이 같아도 단위나 의미가 다르면 같은 컬럼으로 취급해도 되는지 먼저 확인해야 합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="기록이 없는 조합과 빈 셀 구별하기">
+<h4>조식 행이 없는 것과 조식 칸이 빈 것은 다르다</h4>
+<p>네 학교의 표는 모두 같은 12컬럼이며 원래 빈 값이 없습니다. 그대로 다시 붙인 표에도 <strong>새 빈 값은 생기지 않습니다.</strong></p>
+<p>세현고에 석식 기록이 없다는 것은 ‘학교명=세현고등학교, 식사종류=석식’인 <strong>행이 없다</strong>는 뜻입니다. 식사종류 컬럼 자체가 비어 있는 것은 아닙니다.</p>
+<p>학교마다 조·중·석을 모두 기록한다는 가정으로 해석하면 틀립니다. 다음 차시에는 날짜를 맞추어 가로로 붙일 때 생기는 실제 빈 셀을 관찰합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-python">
+<div class="lesson-panel" data-slide data-slide-title="8차시 ④ 학교별 표 분리">
+<h3><span class="step-number">04</span> Python으로 재현</h3>
+<p>7차시 준비 셀 뒤에서 실행합니다. 저장 파일을 나누는 대신 메모리 안에서 학교별 표를 만듭니다.</p>
+<pre data-code data-language="python" data-label="Concat 셀 1 · 학교별로 나누기"><code>school_names = ["동양고등학교", "명덕고등학교", "영일고등학교", "세현고등학교"]
+parts = {name: meals.loc[meals["학교명"].eq(name)] for name in school_names}
+for name, table in parts.items():
+    print(name, table.shape)
+    print("식사종류:", sorted(table["식사종류"].unique()))</code></pre>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Concat 셀 2 · 선택한 학교 다시 붙이기">
+<h4>같은 컬럼, 늘어나는 행</h4>
+<pre data-code data-language="python" data-label="Concat 셀 2 · pd.concat"><code>selected_schools = school_names
+combined = pd.concat([parts[name] for name in selected_schools], ignore_index=True)
+print("합친 표:", combined.shape)
+display(combined["학교명"].value_counts())
+print("빈 셀 수:", combined.isna().sum().sum())
+display(combined.head())</code></pre>
+<p>전체 네 학교이면 (1504, 12), 빈 셀 0개입니다. 선택 목록을 명덕고·세현고 두 학교로 바꾸면 몇 행이 될까요? Orange3에서도 같은 두 입력만 연결해 비교합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-compare">
+<div class="lesson-panel" data-slide data-slide-title="8차시 ⑤ 행 수와 운영 차이 확인">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives"><li>네 학교 전체는 1,504행, 명덕고+세현고는 <strong>902행</strong>인지 두 도구에서 확인합니다.</li><li>입력 순서를 바꾸면 행의 순서는 바뀔 수 있습니다. 학교별 건수와 값까지 달라졌는지 구별합니다.</li><li>명덕고만 조식이 있고, 동양·영일고는 중식·석식, 세현고는 중식만 있는 것을 확인합니다.</li></ul>
+<p>“행은 붙일 수 있지만 학교마다 운영 방식이 같다”는 결론은 낼 수 없습니다. 다음 활동을 위해 네 학교를 모두 선택한 상태로 되돌립니다.</p>
+</div>
+</div>
+</section>
+
+<section class="lecture-section" id="lesson-3" aria-labelledby="lesson-3-title">
+<div class="section-heading"><p class="kicker">이번 주 3차시 · 9차시</p><h2 id="lesson-3-title">Merge · 키로 다른 정보를 가로로</h2></div>
+<div class="lesson-step" id="l3-question">
+<div class="lesson-panel" data-slide data-slide-title="9차시 ① 급식 행에 학교 주소를 붙이려면?">
+<h3><span class="step-number">01</span> 질문 제기</h3><p class="lesson-question">“학교는 4행, 급식은 1,504행인데 첫 행끼리 붙이면 될까?”</p>
+<p>학교의 주소를 각 급식 기록에 붙이고 싶습니다. 어느 학교의 급식인지를 알려 주는 컬럼을 두 표에서 찾아봅시다.</p><p>날짜를 기준으로 두 학교를 비교할 때, 한 학교에만 있는 날짜는 결과에 남겨야 할까요?</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-orange">
+<div class="lesson-panel" data-slide data-slide-title="9차시 ② 학교코드로 주소 붙이기">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>meals.csv와 schools.csv를 각각 File로 읽습니다. 양쪽 표준학교코드를 <strong>String·Meta</strong>로 맞춥니다.</li><li>학교 표 뒤에 Select Columns를 연결해 표준학교코드·설립구분·도로명주소만 남깁니다. String 컬럼은 Meta에 두고 다른 컬럼은 Available로 옮깁니다.</li><li>Merge Data의 <strong>Data에는 급식 표</strong>, <strong>Extra Data에는 학교 표</strong>를 연결합니다.</li><li>양쪽 표준학교코드를 매칭 조건으로 지정하고 <strong>Append columns from Extra Data</strong>를 선택합니다. Row index로 맞추지 않습니다.</li></ol><p>Data Table에서 1,504행이 유지되고 각 급식 행에 맞는 학교 주소와 설립구분이 붙는지 확인합니다. 같은 코드가 학교 표에는 한 번, 급식 표에는 여러 번 있습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="날짜 비교 준비 · 학교별 중식만 고르기">
+<h4>이번 비교의 한 행은 학교별 하루 중식</h4>
+<ol class="week-objectives"><li>meals.csv의 File에서 Select Rows 두 개로 나눕니다. 각각 <strong>학교명=동양고등학교 AND 식사종류=중식</strong>, <strong>학교명=세현고등학교 AND 식사종류=중식</strong>으로 정합니다.</li><li>각 Matching Data 뒤에 Select Columns를 두고 급식일자·급식인원만 남깁니다. 급식일자는 양쪽 같은 자료형을 유지합니다.</li><li>Edit Domain에서 급식인원 이름만 각각 <strong>동양고_중식인원</strong>, <strong>세현고_중식인원</strong>으로 바꿉니다. 값은 바꾸지 않습니다.</li></ol>
+<p>동양고 180행, 세현고 159행입니다. 중식만 고른 두 표는 날짜가 한 번씩만 나옵니다. 조·중·석을 모두 둔 표를 날짜만으로 연결하면 같은 날짜의 여러 식사가 서로 중복 연결될 수 있습니다.</p>
+<p class="lesson-note">이 차시의 Select Rows도 앞 차시처럼 두 가지 불필요 값·상수 컬럼 제거 옵션을 끕니다. 값이 일정한 컬럼도 비교 자료에 남겨 둡니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Merge Data · 세 가지 방식 바꾸기">
+<h4>Data=동양고, Extra Data=세현고</h4>
+<p>새 Merge Data에 위 두 표를 연결하고 매칭 조건을 양쪽 <strong>급식일자</strong>로 지정합니다. 아래 모드를 하나씩 바꾸어 Data Table에서 행 수와 빈 칸을 기록합니다.</p>
+<div class="lesson-table-scroll" role="region" aria-label="Orange3의 선택 이름과 확인할 결과" tabindex="0"><table class="lesson-table"><caption>Orange3의 선택 이름과 확인할 결과</caption><thead><tr><th scope="col">선택 이름</th><th scope="col">행 수</th><th scope="col">남는 날짜</th></tr></thead><tbody><tr><th scope="row">Find matching pairs of rows</th><td>155</td><td>두 학교 모두 기록된 날</td></tr><tr><th scope="row">Append columns from Extra Data</th><td>180</td><td>동양고에 기록된 날</td></tr><tr><th scope="row">Concatenate tables</th><td>184</td><td>어느 한 학교라도 기록된 날</td></tr></tbody></table></div>
+<p class="lesson-note">여기의 ‘Concatenate tables’는 <strong>Merge Data 안의 날짜 매칭 모드</strong>입니다. 앞 차시의 독립된 Concatenate 위젯과 다릅니다. 이 날짜 비교에서는 양쪽 날짜가 유일하므로 세 모드를 모두 사용할 수 있습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="기상·따릉이도 날짜로 연결되어 있다">
+<h4>이미 합쳐진 일별 표를 나누어 연결 과정 재현하기</h4>
+<p>bike-daily.csv의 File 하나를 Select Columns 두 개로 나눕니다. 한쪽은 <strong>날짜·요일·공휴일여부·대여건수</strong>, 다른 쪽은 <strong>날짜·평균기온·최고기온·최저기온·강수량</strong>을 남깁니다.</p>
+<p>대여 표를 Data, 기상 표를 Extra Data로 연결하고 날짜끼리 매칭해 왼쪽 기준 모드로 붙입니다. 다시 353일의 정보가 연결되는지 봅니다.</p>
+<p class="lesson-note">지금은 완성된 배포 파일에서 컬럼을 나누어 원리를 재현합니다. 수천만 원본 행을 다시 집계하는 실습은 아닙니다. 강수량에 원래 있던 빈 값도 그대로 두고 확인합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-concept">
+<div class="lesson-panel" data-slide data-slide-title="9차시 ③ Merge와 키">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+<p><strong>Merge</strong>는 키 값이 같은 행을 찾아 서로 다른 컬럼의 정보를 옆으로 붙이는 결합입니다. <strong>키</strong>는 연결할 대상을 판단하는 기준 컬럼 또는 컬럼의 조합입니다.</p>
+<p>학교 표의 표준학교코드는 학교마다 하나인 식별값입니다. 급식 표에서는 같은 학교의 여러 날·식사에서 반복됩니다. 이처럼 여러 급식 기록에 하나의 학교 정보를 붙일 수 있습니다.</p>
+<p>급식 행 자체를 구별하려면 학교코드·급식일자·식사코드를 함께 봅니다. 키의 자료형과 의미, 어느 쪽에서 중복되는지를 확인해야 합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="inner · left · outer">
+<h4>연결되지 않는 행을 어디까지 남길 것인가</h4>
+<div class="lesson-table-scroll" role="region" aria-label="Merge 방식의 기준" tabindex="0"><table class="lesson-table"><caption>Merge 방식의 기준</caption><thead><tr><th scope="col">방식</th><th scope="col">남기는 키</th><th scope="col">짝이 없을 때</th></tr></thead><tbody><tr><th scope="row">inner</th><td>양쪽에 모두 있는 키</td><td>결과에 포함하지 않음</td></tr><tr><th scope="row">left</th><td>왼쪽 표에 있는 키</td><td>오른쪽 정보가 빈 값</td></tr><tr><th scope="row">outer</th><td>양쪽 어느 곳에든 있는 키</td><td>없는 쪽의 정보가 빈 값</td></tr></tbody></table></div>
+<p>left는 어느 표를 왼쪽에 놓는지가 중요합니다. Merge는 열을 붙이는 작업이지만, 방식과 키의 중복에 따라 <strong>행 수도 달라질 수 있습니다.</strong></p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="합쳐서 생긴 빈 값 관찰">
+<h4>행이 없던 자리에 빈 셀이 나타난다</h4>
+<p>세현고의 마지막 기록은 2024-12-30입니다. 다음 날인 <strong>2024-12-31</strong>에는 동양고 중식 380명만 기록되어 있어 outer 결과의 세현고 인원이 빈 값입니다.</p>
+<p>반대로 <strong>2024-05-07</strong>에는 세현고 중식 510명만 있어 동양고 인원이 빈 값입니다. 날짜가 다른 두 기록을 행 순서로 맞추면 같은 날처럼 잘못 비교하게 됩니다.</p>
+<p>이 빈 값은 입력 CSV의 빈 셀과 다르게 <strong>매칭할 기록이 없어서 생긴 값</strong>입니다. 이번 주에는 발생 위치와 이유만 기록합니다. 채우거나 지우는 판단은 4주차에 합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-python">
+<div class="lesson-panel" data-slide data-slide-title="9차시 ④ 학교 정보 Merge">
+<h3><span class="step-number">04</span> Python으로 재현</h3>
+<p>7차시 준비 셀의 schools·meals·bike를 사용합니다. 새 런타임이면 준비 셀부터 다시 실행합니다.</p>
+<pre data-code data-language="python" data-label="Merge 셀 1 · 학교 정보 붙이기"><code>school_info = schools[["표준학교코드", "설립구분", "도로명주소"]]
+with_school = pd.merge(
+    meals, school_info, on="표준학교코드",
+    how="left", validate="many_to_one"
+)
+print(with_school.shape)
+display(with_school[["학교명", "급식일자", "설립구분", "도로명주소"]].head())
+print("주소 빈 값:", with_school["도로명주소"].isna().sum())</code></pre>
+<p>(1504, 14), 주소 빈 값 0개입니다. validate는 기대한 키의 중복 관계가 다르면 멈추게 합니다. 임의로 행을 없애지는 않습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Merge 셀 2 · 날짜가 한 번씩 나오는 두 표">
+<h4>Orange3와 같은 학교·중식·두 컬럼 선택</h4>
+<pre data-code data-language="python" data-label="Merge 셀 2 · 날짜 비교 준비"><code>lunch = meals.loc[meals["식사종류"].eq("중식")]
+cols = ["급식일자", "급식인원"]
+left = lunch.loc[lunch["학교명"].eq("동양고등학교"), cols].rename(
+    columns={"급식인원": "동양고_중식인원"}
+)
+right = lunch.loc[lunch["학교명"].eq("세현고등학교"), cols].rename(
+    columns={"급식인원": "세현고_중식인원"}
+)
+print(left.shape, right.shape)
+print("날짜가 각각 유일한가:", left["급식일자"].is_unique, right["급식일자"].is_unique)</code></pre>
+<p>결과는 (180, 2), (159, 2), True·True입니다. 학교별 중식이라는 비교 범위를 정한 것이며 결측 행을 제거한 것이 아닙니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Merge 셀 3 · 방식별 결과 비교">
+<h4>입력은 그대로, how만 바꾸기</h4>
+<pre data-code data-language="python" data-label="Merge 셀 3 · inner / left / outer"><code>results = {
+    how: pd.merge(left, right, on="급식일자", how=how, validate="one_to_one")
+    for how in ["inner", "left", "outer"]
+}
+for how, table in results.items():
+    print(how, table.shape)
+    display(table.isna().sum())</code></pre>
+<p>inner 155행·left 180행·outer 184행입니다. 출력에서 어느 인원 컬럼에 빈 값이 생기는지 비교합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Merge 셀 4 · 한쪽에만 있는 날짜">
+<h4>실제 두 날짜를 찾아보기</h4>
+<pre data-code data-language="python" data-label="Merge 셀 4 · 빈 값이 생긴 행 관찰"><code>outer = results["outer"]
+dates = ["2024-05-07", "2024-12-31"]
+display(outer.loc[outer["급식일자"].isin(dates)].sort_values("급식일자"))
+
+reversed_left = pd.merge(right, left, on="급식일자",
+                         how="left", validate="one_to_one")
+print("세현고를 왼쪽에 놓은 left:", reversed_left.shape)</code></pre>
+<p>날짜 선택 목록을 바꾸어 다른 빈 값도 찾아봅니다. 왼쪽을 세현고로 바꾸면 left 결과는 <strong>159행</strong>입니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Merge 셀 5 · 기상과 대여 컬럼 나누기">
+<h4>배포 파일에서 두 역할의 표 만들기</h4>
+<pre data-code data-language="python" data-label="Merge 셀 5 · 날짜를 양쪽에 남기기"><code>bike_part = bike[["날짜", "요일", "공휴일여부", "대여건수"]]
+weather_part = bike[["날짜", "평균기온", "최고기온", "최저기온", "강수량"]]
+print(bike_part.shape, weather_part.shape)
+display(weather_part.head())</code></pre>
+<p>353×4와 353×5입니다. 날짜는 두 표에 공통으로 남겨야 합니다. 최종 파일의 분리이므로 날짜 범위도 같습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="Merge 셀 6 · 날짜로 원래 표 복원">
+<h4>353일의 정보가 다시 맞게 붙었는가</h4>
+<pre data-code data-language="python" data-label="Merge 셀 6 · 기상과 따릉이 재결합"><code>restored = pd.merge(bike_part, weather_part, on="날짜",
+                    how="left", validate="one_to_one")
+restored = restored[bike.columns]
+print("복원한 표:", restored.shape)
+print("원래 표와 같은가:", restored.equals(bike))
+print("강수량 빈 값 · 전 / 후:",
+      bike["강수량"].isna().sum(), restored["강수량"].isna().sum())</code></pre>
+<p>(353, 8), True, 강수량 빈 값은 전·후 모두 200개입니다. 날짜를 연결하면서 새로 생긴 빈 값이 아닙니다. 강수량 빈 값의 의미와 처리 방법은 다음 주에 다룹니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="보충 · 한글 그래프 준비" data-slide-skip>
+<h4>결합 방식별 행 수를 그림으로 비교하고 싶다면</h4>
+<p>아래 설치와 두 import를 한 셀에서 실행합니다. import만으로 한글이 적용되므로 사용하지 않는 코드처럼 보여도 지우지 않습니다. 런타임 재시작은 필요 없고, 새 런타임에서는 설치부터 다시 실행합니다.</p>
+<pre data-code data-language="python" data-label="보충 셀 1 · 한글 폰트"><code>!pip install -q koreanize-matplotlib
+
+import matplotlib.pyplot as plt
+import koreanize_matplotlib</code></pre>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="보충 · 결합 방식별 행 수" data-slide-skip>
+<h4>같은 두 입력, 다른 결과 범위</h4>
+<p>Merge 셀 3과 한글 폰트 셀 실행 후 그립니다.</p>
+<pre data-code data-language="python" data-label="보충 셀 2 · 결과 행 수 막대그래프"><code>row_counts = pd.Series({how: len(table) for how, table in results.items()})
+ax = row_counts.plot.bar(rot=0, figsize=(7, 4))
+ax.set_ylabel("결과 행 수")
+ax.set_title("동양고·세현고 중식 날짜 결합")
+ax.set_ylim(0, 210)
+ax.bar_label(ax.containers[0])
+plt.tight_layout()
+plt.show()</code></pre>
+<p>그림에 빈 값의 의미까지 담긴 것은 아닙니다. 원래 표와 키, 보존 범위를 함께 기록합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-compare">
+<div class="lesson-panel" data-slide data-slide-title="9차시 ⑤ 같은 키·같은 방식·같은 결과">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<div class="lesson-table-scroll" role="region" aria-label="두 도구에서 대조할 날짜 Merge 결과" tabindex="0"><table class="lesson-table"><caption>두 도구에서 대조할 날짜 Merge 결과</caption><thead><tr><th scope="col">방식</th><th scope="col">행 수</th><th scope="col">동양고 인원 빈 값</th><th scope="col">세현고 인원 빈 값</th></tr></thead><tbody><tr><th scope="row">inner</th><td>155</td><td>0</td><td>0</td></tr><tr><th scope="row">left · 동양 기준</th><td>180</td><td>0</td><td>25</td></tr><tr><th scope="row">outer</th><td>184</td><td>4</td><td>25</td></tr></tbody></table></div>
+<p>빈 값이 25개라고 모두 12월 30일 이후인 것은 아닙니다. 두 학교의 운영 일정 차이가 학기 중에도 있습니다. 날짜를 찾아 확인한 범위까지만 설명합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="말로 설명하기 · 세로와 가로">
+<h4>두 문장을 자신의 예로 완성하기</h4>
+<p>“학교별 급식 표를 <strong>Concatenate</strong>하면 같은 컬럼 아래로 행을 모은다. 그래서 네 학교의 기록 수가 합쳐진다.”</p>
+<p>“급식과 학교 표를 <strong>Merge</strong>하면 학교코드가 같은 행에 학교 정보를 붙인다. 날짜로 두 학교를 비교할 때는 어떤 날짜를 남길지도 정해야 한다.”</p>
+<p>기상·따릉이 재결합은 353행 × 8컬럼과 날짜별 값을 대조합니다. 컬럼의 화면 순서가 달라도 이름으로 확인하고, 원래 있던 빈 값과 결합으로 생긴 빈 값을 구별합니다.</p>
+</div>
+</div>
+</section>
+
+<section class="lecture-section" id="assignment" aria-labelledby="assignment-title">
+<div class="section-heading"><h2 id="assignment-title">과제와 돌아보기</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="3주차 산출물">
+<h3>합친 결과와 선택한 기준을 함께 남기기</h3>
+<p>Orange3 워크플로우를 <code>week-03.ows</code>, Colab 노트북을 <code>week-03.ipynb</code>로 저장합니다. 원본 CSV는 덮어쓰지 않습니다.</p>
+<ul class="week-objectives"><li>집계해서 편리해진 점과 잃은 세부 정보를 한 가지씩 적습니다.</li><li>네 학교를 Concatenate한 결과와 두 학교만 선택한 결과의 행 수를 비교합니다.</li><li>날짜 Merge의 inner·left·outer 결과 행 수와 빈 셀 수를 기록합니다.</li><li>12월 31일의 빈 값이 생긴 이유와 기상·따릉이 복원 결과를 설명합니다.</li></ul>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="다음 주의 질문 · 빈 값마다 이유가 같을까?">
+<aside class="callout"><div><strong>4주차로 이어지는 질문</strong><p>파일을 처음 열었을 때부터 빈 값이었던 경우와, 다른 표를 합치면서 빈 값이 생긴 경우를 같은 방법으로 다뤄도 될까요? 다음 주에는 데이터 맥락을 확인하며 결측치를 다룹니다.</p></div></aside>
+<p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+</div>
+</section>
+
+<section class="lecture-section" id="references" aria-labelledby="references-title">
+<div class="section-heading"><h2 id="references-title">도구 참고와 실행 안내</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="도구별 공식 안내" data-slide-skip>
+<ul class="week-objectives">
+<li><a href="https://orangedatamining.com/widget-catalog/transform/concatenate/" target="_blank" rel="noopener noreferrer">Orange3 Concatenate</a> · <a href="https://orangedatamining.com/widget-catalog/transform/mergedata/" target="_blank" rel="noopener noreferrer">Merge Data</a></li>
+<li><a href="https://orangedatamining.com/widget-catalog/transform/selectcolumns/" target="_blank" rel="noopener noreferrer">Select Columns</a> · <a href="https://orangedatamining.com/widget-catalog/data/editdomain/" target="_blank" rel="noopener noreferrer">Edit Domain</a></li>
+<li><a href="https://pandas.pydata.org/docs/user_guide/merging.html" target="_blank" rel="noopener noreferrer">pandas 결합 안내</a> · <a href="https://github.com/ychoi-kr/koreanize-matplotlib" target="_blank" rel="noopener noreferrer">koreanize-matplotlib</a></li></ul>
+<p>도구의 선택 이름은 설치 버전에 따라 다를 수 있습니다. 입력 방향과 남기는 행의 기준으로 확인합니다. 교재는 p.23·p.29만 참조하며 본문과 실습은 새로 작성했습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="실행이 막혔을 때" data-slide-skip>
+<h4>조건과 연결 순서부터 확인하기</h4>
+<ul class="week-objectives"><li>변수가 없으면 7차시 준비 셀부터 실행합니다. CSV 읽기 오류는 URL·인터넷 연결을 확인합니다. 필요할 때만 동일 CSV를 Colab 파일 패널에 올려 파일 경로를 사용합니다.</li>
+<li>학교코드 매칭이 안 되면 양쪽의 값과 자료형을 확인합니다. 날짜 Merge의 키는 학교코드가 아닌 급식일자입니다.</li>
+<li>키 중복 오류가 나면 날짜 비교의 학교·중식 조건을 확인합니다. 오류를 피하려고 행을 임의로 삭제하지 않습니다.</li>
+<li>한글 그래프가 깨지면 보충 폰트 셀의 설치와 import를 끝까지 실행한 뒤 그래프 셀을 다시 실행합니다.</li></ul>
+</div>
+</section>
+      <div data-widget="week-navigation"><p><a href="../week-02/index.html">← 2주차</a> · 현재 3주차 · 다음 주차는 준비 중입니다.</p><p><a href="../index.html">학기 홈으로 돌아가기</a></p></div>
     </div>
   </main>
 
