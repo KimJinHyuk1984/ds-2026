@@ -204,25 +204,26 @@ window.SITE = {
       "slug": "week-06",
       "week": 6,
       "badge": "6주차",
-      "title": "미니 프로젝트 1 — 전처리 보고서",
+      "title": "미니 프로젝트 1 — 전처리와 판단 근거",
       "subtitle": "16–18차시",
       "kicker": "6주차",
       "duration": "3차시",
       "target": "고등학교",
       "difficulty": "",
       "tags": [
-        "기상·따릉이"
+        "NEIS 급식 원본"
       ],
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "16–18차시",
-      "dataName": "기상·따릉이",
+      "dataName": "NEIS 급식 원본",
       "textbook": [],
       "objectives": [
-        "기상·따릉이 데이터의 전처리 방법을 선택하고 적용할 수 있다.",
-        "전처리 과정과 결과를 근거와 함께 보고서로 정리할 수 있다."
+        "원본 급식 데이터를 메뉴당 한 행으로 전처리하고 선택한 질문에 코드로 답할 수 있다.",
+        "괄호 처리의 판단 근거·예상과 달랐던 부분·자기 방법의 한계를 실제 사례와 함께 설명할 수 있다.",
+        "코드·출력·마크다운을 포함한 Colab 노트북 하나로 과정을 공유할 수 있다."
       ],
       "compressible": true
     },

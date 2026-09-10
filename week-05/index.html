@@ -303,9 +303,10 @@ display(parsed.groupby("학교명").size().rename("메뉴 행 수"))</code></pre
 <section class="lecture-section" id="after-class" aria-labelledby="after-class-title">
 <div class="section-heading"><h2 id="after-class-title">수업 후 참고용 결과</h2></div>
 <div class="lesson-panel" data-slide data-slide-title="수업 후 공개 · 다음 프로젝트로 이어가기" data-slide-skip>
-<aside class="callout"><div><strong>수업 후 공개</strong><p><code>meals-parsed.csv</code>는 교사가 생성·검토한 뒤 이 영역에서 제공할 참고용 파일입니다. 현재는 생성 전이므로 다운로드 링크를 제공하지 않습니다.</p></div></aside>
+<aside class="callout"><div><strong>수업 후 공개</strong><p>5주차 실습을 마친 뒤 자기 결과를 대조하는 참고용 파일입니다. 먼저 원본으로 실습하고 자신의 판단과 실패 사례를 기록하세요.</p></div></aside>
+<div class="dataset-download"><a class="button" href="../data/neis/meals-parsed.csv" download>수업 후 참고 · meals-parsed.csv</a><span>10,274행 × 8열 · 메뉴당 한 행 · UTF-8 BOM</span></div>
 <p>한 행에 메뉴 항목 하나를 담는 long format입니다. 컬럼은 <strong>학교명, 표준학교코드, 급식일자, 요일, 식사종류, 급식인원, 메뉴명, 알레르기번호</strong> 순서입니다. 설명 괄호는 메뉴명에 남고, 알레르기번호는 쉼표로 구분한 문자열이며 미표기는 빈 값입니다.</p>
-<p>실습을 끝내지 못한 학생도 이 결과로 6주차 미니 프로젝트에 참여할 수 있고, 완주한 학생은 자기 결과와 대조할 수 있습니다. 수업 도입에서는 원문으로 시작합니다.</p>
+<p>이 파일은 5주차 결과 대조에 사용합니다. 6주차 미니 프로젝트에서는 원본 meals.csv에서 직접 처리하고, 코드와 판단 근거·자기 방법의 한계를 노트북에 남깁니다.</p>
 </div>
 </section>
 <section class="lecture-section" id="references" aria-labelledby="references-title">
@@ -313,11 +314,11 @@ display(parsed.groupby("학교명").size().rename("메뉴 행 수"))</code></pre
 <div class="lesson-panel" data-slide data-slide-title="공식 참고 자료" data-slide-skip>
 <ul class="week-objectives"><li><a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.str.split.html" target="_blank" rel="noopener noreferrer">pandas str.split</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.explode.html" target="_blank" rel="noopener noreferrer">explode</a></li><li><a href="https://school.jje.go.kr/andeok-m/ad/fm/foodmenu/selectFoodMenuView.do?mi=100509" target="_blank" rel="noopener noreferrer">학교 공개 급식의 알레르기 번호표</a> · 번호 범위 참고용이며 이 학교의 식단은 실습에 사용하지 않습니다.</li></ul>
 <p>Colab 변수 오류는 앞 셀 실행 여부를, 한글 그래프는 설치·import 셀을 확인합니다. 원문이 새 패턴을 포함하면 자동 제거를 늘리기 전에 실패 사례를 기록합니다.</p>
-<p>6주차에는 전처리 선택과 근거를 보고서로 정리합니다. 학습 자료는 준비 중입니다.</p><p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+<p><a href="../week-06/index.html">6주차 미니 프로젝트</a>에서는 원본 급식 데이터를 전처리하고, 질문의 답과 판단 근거·한계를 Colab 노트북 하나로 정리합니다.</p><p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
 </div>
 </section>
       <div data-widget="week-navigation">
-        <p><a href="../week-04/index.html">← 4주차</a> · 현재 5주차 · 다음 주차 준비 중</p>
+        <p><a href="../week-04/index.html">← 4주차</a> · 현재 5주차 · <a href="../week-06/index.html">6주차 →</a></p>
         <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
       </div>
     </div>
