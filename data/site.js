@@ -238,14 +238,14 @@ window.SITE = {
       "target": "고등학교",
       "difficulty": "",
       "tags": [
-        "따릉이"
+        "따릉이 정제본"
       ],
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "19–21차시",
-      "dataName": "따릉이",
+      "dataName": "따릉이 정제본",
       "textbook": [
         {
           "unit": "Ⅱ-2-1",
@@ -253,8 +253,9 @@ window.SITE = {
         }
       ],
       "objectives": [
-        "기술통계와 추론통계의 역할을 구분할 수 있다.",
-        "Orange3와 Python으로 따릉이 데이터의 통계량을 구하고 해석할 수 있다."
+        "평균·중앙값·최빈값·분산·표준편차로 따릉이 데이터의 중심과 산포를 설명할 수 있다.",
+        "전체와 월별 통계량을 비교하고 데이터 범위에 따라 요약이 달라지는 이유를 설명할 수 있다.",
+        "353일 모집단에서 표본을 반복 추출하고 표본 크기에 따른 평균의 변화를 비교할 수 있다."
       ],
       "compressible": false
     },

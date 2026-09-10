@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="7주차 · 19–21차시 · 학습 자료 준비 중">
+  <meta name="description" content="7주차 · 19–21차시 · 따릉이 정제 데이터의 기술통계와 반복 표본 평균 비교">
   <meta name="color-scheme" content="light dark">
   <title>기술통계와 추론통계</title>
   <link rel="icon" href="data:,">
@@ -31,6 +31,7 @@
       <nav class="section-nav" aria-label="강의 섹션" data-section-nav></nav>
       <div class="header-actions">
         <button class="button button-primary" type="button" data-open-instructor>선생님 소개 보기</button>
+        <button class="button" type="button" data-presentation-toggle aria-pressed="false">발표 모드</button>
         <button class="button button-icon" type="button" data-theme-toggle aria-label="테마 전환">
           <svg data-theme-icon width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.9 13a9 9 0 0 1-9.9-9.9A9 9 0 1 0 20.9 13Z"/></svg>
         </button>
@@ -44,34 +45,296 @@
         <p class="kicker" data-lecture-kicker>7주차</p>
         <h1 id="lecture-title" data-lecture-title>기술통계와 추론통계</h1>
         <p class="hero-subtitle" data-lecture-subtitle>19–21차시</p>
+        <p class="section-description">4주차에서 처리한 결과를 이어받아 사용합니다. 353일의 중심과 퍼짐을 요약하고, 일부 날짜로 전체를 추측해 봅니다.</p>
+        <nav class="lesson-jump" aria-label="차시 바로가기"><a class="button" href="#lesson-1">19차시 · 기술통계</a><a class="button" href="#lesson-2">20차시 · 분포와 산포</a><a class="button" href="#lesson-3">21차시 · 모집단과 표본</a></nav>
       </section>
+<section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
+<div class="section-heading"><h2 id="objectives-title">이번 주의 목표</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="7주차 목표와 차시 구성">
+<ul class="week-objectives"><li>평균·중앙값·최빈값·분산·표준편차로 따릉이 데이터의 중심과 산포를 설명할 수 있다.</li><li>전체와 월별 통계량을 비교하고 데이터 범위에 따라 요약이 달라지는 이유를 설명할 수 있다.</li><li>353일 모집단에서 표본을 반복 추출하고 표본 크기에 따른 평균의 변화를 비교할 수 있다.</li></ul><div class="card-grid"><article class="card"><h3>19차시 · 기술통계</h3><p>대표하는 값과 퍼진 정도를 요약합니다.</p></article><article class="card"><h3>20차시 · 분포와 산포</h3><p>전체와 월별 모습을 비교합니다.</p></article><article class="card"><h3>21차시 · 모집단과 표본</h3><p>일부 날짜로 전체를 추측합니다.</p></article></div><p class="lesson-note">매 차시: 질문 → Orange3 → 개념 → Python → 비교. 완성 코드를 실행한 뒤 컬럼·월·표본 크기를 바꾸어 관찰합니다.</p>
+</div>
+</section>
+<section class="lecture-section" id="materials" aria-labelledby="materials-title">
+<div class="section-heading"><h2 id="materials-title">이어받을 데이터와 교재</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="4주차의 처리 결과로 이어가기">
 
-      <section class="lecture-section" id="objectives" aria-labelledby="objectives-title">
-        <div class="section-heading"><h2 id="objectives-title">학습목표</h2></div>
-        <ul class="week-objectives">
-          <li>기술통계와 추론통계의 역할을 구분할 수 있다.</li>
-          <li>Orange3와 Python으로 따릉이 데이터의 통계량을 구하고 해석할 수 있다.</li>
-        </ul>
-      </section>
+<div class="dataset-download"><a class="button button-primary" href="../data/weather-bike/bike-daily-clean.csv" download>bike-daily-clean.csv 내려받기</a><span>2024-03-01~2025-02-16 · 353행 × 8열 · UTF-8 BOM</span></div>
+<p><strong>4주차에서 처리한 결과를 이어받아 사용합니다.</strong> 강수량의 무강수 공백 200개를 0으로 반영한 파일이며, 날짜와 대여건수를 포함한 다른 컬럼은 그대로입니다.</p>
+<p>Orange3에서는 내려받은 파일을, Colab에서는 이 파일의 배포 URL을 사용합니다. 노트북 이름은 <code>week-07.ipynb</code>로 정하고 셀을 위에서부터 실행합니다.</p>
+<p><strong>관련 교재 p.82 (Ⅱ-2-1)</strong></p>
+</div>
+</section>
+<section class="lecture-section" id="lesson-1" aria-labelledby="lesson-1-title">
+<div class="section-heading"><p class="kicker">이번 주 1차시 · 19차시</p><h2 id="lesson-1-title">평균은 하루의 대여를 잘 대표할까?</h2></div>
+<div class="lesson-step" id="l1-question">
+<div class="lesson-panel" data-slide data-slide-title="19차시 ① 평균과 중앙값이 다르다">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“평균은 119,928건인데, 가운데 날짜의 값은 126,749건이다. 왜 평균이 더 작을까?”</p>
+<p>여기서 가운데는 <strong>대여건수를 작은 값부터 정렬했을 때의 가운데</strong>입니다. 날짜순 가운데와 다릅니다. 적게 대여한 날들이 어느 시기에 모이는지 먼저 예상합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-orange">
+<div class="lesson-panel" data-slide data-slide-title="19차시 ② Feature Statistics로 요약 보기">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>File로 <code>bike-daily-clean.csv</code>를 읽고 Data Table에서 353행을 확인합니다. 대여건수·강수량은 Numeric, 날짜는 Time, 요일은 Categorical로 읽습니다.</li><li>File → <strong>Feature Statistics</strong>를 연결해 대여건수의 Mean·Mode·분포를 봅니다. 설치 버전에서 이름이 <strong>Column Statistics</strong>로 보이면 같은 역할의 위젯을 사용합니다.</li><li>File → Box Plot도 연결합니다. 대여건수, Subgroups는 None, Annotated boxes를 선택해 평균과 중앙값을 비교합니다.</li></ol>
+<p class="lesson-note">Feature Statistics의 Dispersion은 분산 자체가 아닙니다. 숫자 속성에서는 표준편차를 평균으로 나눈 값이므로, 분산·표준편차는 아래 Python 결과와 구별해 읽습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="19차시 관찰 · 적게 대여한 날짜 찾기">
 
-      <section class="lecture-section" id="materials" aria-labelledby="materials-title">
-        <div class="section-heading"><h2 id="materials-title">사용 데이터와 교재</h2></div>
-        <dl class="week-materials">
-          <dt>사용 데이터</dt><dd>따릉이</dd>
-          <dt>교재 쪽수</dt><dd>관련 교재 p.82</dd>
-        </dl>
-      </section>
+<ol class="week-objectives"><li>Data Table에서 대여건수를 오름차순 정렬하고 낮은 값의 날짜를 봅니다.</li><li>File → Select Rows에서 날짜를 <strong>2024-12-01 이상, 2025-02-16 이하</strong>로 설정합니다. Matching Data → Feature Statistics와 Data Table을 연결합니다.</li><li>전체 평균과 겨울 기간 평균을 적고, 강수량의 전체 Mean도 확인합니다. 필터 조건과 행 수를 함께 기록합니다.</li></ol>
+<p>겨울만 보았을 때 평균이 어떻게 달라지는지 확인합니다. 낮은 날이 모두 겨울인지는 별도로 점검합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-concept">
+<div class="lesson-panel" data-slide data-slide-title="19차시 ③ 중심을 나타내는 세 값">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3><div class="lesson-table-scroll" role="region" aria-label="중심을 요약하는 값" tabindex="0"><table class="lesson-table"><caption>중심을 요약하는 값</caption><thead><tr><th scope="col">이름</th><th scope="col">뜻</th><th scope="col">읽을 때 확인할 것</th></tr></thead><tbody><tr><th scope="row">평균</th><td>값을 모두 더해 개수로 나눈 값</td><td>아주 작거나 큰 값도 계산에 반영됩니다.</td></tr><tr><th scope="row">중앙값</th><td>정렬했을 때 가운데 값</td><td>짝수 개면 가운데 두 값의 평균입니다.</td></tr><tr><th scope="row">최빈값</th><td>가장 자주 나타나는 값</td><td>여러 개가 동률일 수 있고, 두드러지는 값이 없을 수도 있습니다.</td></tr></tbody></table></div><p><strong>기술통계</strong>는 가지고 있는 데이터를 숫자와 그림으로 요약하는 일입니다. 평균 하나가 모든 날짜의 모습을 보여 주지는 못합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="19차시 개념 · 퍼진 정도도 함께 요약">
 
-      <section class="lecture-section" id="preparation" aria-labelledby="preparation-title">
-        <div class="section-heading"><h2 id="preparation-title">준비 중 안내</h2></div>
-        <aside class="callout" aria-label="학습 자료 준비 중">
-          <div><strong>이 주차의 학습 자료는 준비 중입니다</strong><p>7주차 · 19–21차시</p></div>
-        </aside>
-        <p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
-      </section>
+<h3>분산과 표준편차</h3><p><strong>분산</strong>은 각 값이 평균에서 떨어진 정도를 제곱해 요약한 값입니다. <strong>표준편차</strong>는 분산의 제곱근으로, 원래 데이터와 같은 단위에서 퍼짐을 읽게 해 줍니다.</p>
+<p>대여건수의 분산은 건², 표준편차는 건입니다. 서로 다른 두 집단을 비교할 때는 단위와 계산 기준을 맞춥니다. 작은 표준편차는 값들이 평균 주변에 더 모여 있음을 뜻합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-python">
+<div class="lesson-panel" data-slide data-slide-title="19차시 ④ 준비 셀 · 정제 CSV 읽기">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 1 · 정제 결과의 배포 URL 읽기"><code>import pandas as pd
+from IPython.display import display
 
+url = "https://kimjinhyuk1984.github.io/ds-2026/data/weather-bike/bike-daily-clean.csv"
+bike = pd.read_csv(url, encoding="utf-8-sig", parse_dates=["날짜"])
+print(bike.shape)
+display(bike.head())</code></pre><p>(353, 8)인지 확인합니다. 새 런타임에서는 이 셀부터 다시 실행합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="19차시 코드 · describe에서 무엇을 읽을까?">
+<pre data-code data-language="python" data-label="셀 2 · 기술통계"><code>x = bike["대여건수"]
+display(x.describe().round(2))
+print("평균:", round(x.mean(), 2))
+print("중앙값:", x.median())
+print("분산(pandas 기본):", round(x.var(ddof=1), 2))
+print("표준편차(pandas 기본):", round(x.std(ddof=1), 2))</code></pre><p><code>count</code>는 값의 개수, <code>mean</code>은 평균, <code>50%</code>는 중앙값, <code>std</code>는 표준편차입니다. <code>describe()</code>에 없는 분산은 따로 출력했습니다. 셀 2의 컬럼을 평균기온으로 바꿔 단위와 값을 비교한 뒤, 셀 3부터는 대여건수로 되돌려 셀 2를 다시 실행합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="19차시 코드 · 가장 자주 나오는 값이 있을까?">
+<pre data-code data-language="python" data-label="셀 3 · 최빈값과 동률"><code>counts = x.value_counts()
+print("대여건수 한 값의 최대 등장 횟수:", counts.max())
+if counts.max() == 1:
+    print("모두 한 번씩 나와 두드러진 최빈값이 없습니다.")
+else:
+    print("대여건수 최빈값:", x.mode().tolist())
+display(bike["요일"].value_counts())
+print("요일 최빈값:", bike["요일"].mode().tolist())</code></pre><p>대여건수는 353개 값이 모두 다릅니다. 도구가 Mode로 하나를 표시해도 대표하는 값 하나가 있다는 뜻은 아닙니다. 요일처럼 반복되는 값과 비교합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="19차시 코드 · 겨울 기간과 그 외 비교">
+<pre data-code data-language="python" data-label="셀 4 · 평균이 낮은 날짜들의 시기"><code>winter = bike["날짜"].dt.month.isin([12, 1, 2])
+by_season = bike.assign(구분=winter.map({True: "겨울(12~2월)", False: "그 외"}))
+display(by_season.groupby("구분")["대여건수"]
+        .agg(["count", "mean", "median"]).round(1))
+display(bike.nsmallest(5, "대여건수")[["날짜", "대여건수", "강수량"]])
+print("처리 후 강수량 평균(mm):", round(bike["강수량"].mean(), 2))</code></pre><p>겨울 78일의 낮은 값이 전체 평균에 어떻게 반영되는지 봅니다. 가장 낮은 날의 날짜·강수량도 확인해, 계절만으로 모든 저조일을 설명하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l1-compare">
+<div class="lesson-panel" data-slide data-slide-title="19차시 ⑤ 대표값과 데이터 범위">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives"><li>두 도구의 대여건수 평균 약 <strong>119,928건</strong>과 중앙값 <strong>126,749건</strong>을 대조합니다.</li><li>겨울 78일의 평균은 약 <strong>61,294건</strong>, 나머지 275일은 약 <strong>136,558건</strong>입니다. 겨울의 낮은 값들이 전체 평균을 끌어내리는 근거로 설명합니다.</li><li>최저일은 2024-05-05입니다. 겨울 저조일 외에도 평균에 영향을 주는 날들이 있습니다.</li></ul>
+<p>값의 범위와 기간을 확인한 뒤, “평균이 중앙값보다 작다”를 실제 날짜들의 특징과 연결해 씁니다. 원인을 한 가지로 확정하지 않습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="19차시 돌아보기 · 8.12에서 3.52로">
+<div class="lesson-table-scroll" role="region" aria-label="4주차의 처리 결과를 기술통계로 읽기" tabindex="0"><table class="lesson-table"><caption>4주차의 처리 결과를 기술통계로 읽기</caption><thead><tr><th scope="col">비교</th><th scope="col">평균 계산에 포함한 값</th><th scope="col">강수량 평균</th></tr></thead><tbody><tr><th scope="row">처리 전</th><td>빈칸을 제외한 153개 기록</td><td>8.12mm</td></tr><tr><th scope="row">처리 후</th><td>무강수 공백 200개를 0으로 반영한 353일</td><td>3.52mm</td></tr></tbody></table></div><p>평균의 계산 대상이 달라졌습니다. 비가 더 적게 내리도록 관측 사실을 바꾼 것이 아니라, 기록에서 비어 있던 무강수일을 계산에 반영한 결과입니다. “어떤 값들의 평균인가?”를 함께 적습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="도구 비교 보충 · 표준편차의 계산 기준" data-slide-skip>
+<pre data-code data-language="python" data-label="보충 셀 · 같은 기준으로 대조"><code>print("pandas 기본(n-1):", x.std(ddof=1))
+print("353개 전체 기준(n):", x.std(ddof=0))</code></pre><p>이 페이지의 <strong>49,526건</strong>은 pandas 기본값처럼 제곱한 차이의 합을 n−1로 나눠 계산한 표준편차입니다. 353개 전체를 n으로 나눈 기준은 약 <strong>49,455건</strong>이며 Orange3 Box Plot과 대조할 때 사용합니다. 공식 유도보다 어떤 기준인지 표시하는 데 집중합니다.</p>
+</div>
+</div>
+</section>
+<section class="lecture-section" id="lesson-2" aria-labelledby="lesson-2-title">
+<div class="section-heading"><p class="kicker">이번 주 2차시 · 20차시</p><h2 id="lesson-2-title">월별로 나누면 더 비슷해질까?</h2></div>
+<div class="lesson-step" id="l2-question">
+<div class="lesson-panel" data-slide data-slide-title="20차시 ① 평균만으로 준비할 수 있을까?">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“평균이 약 12만 건인데, 표준편차는 약 5만 건이다. 매일 비슷하게 대여한다고 말할 수 있을까?”</p>
+<p>대여건수의 표준편차 <strong>49,526건</strong>은 평균의 약 <strong>41.3%</strong>입니다. 서로 다른 계절을 한꺼번에 보아서 퍼짐이 커졌을지, 같은 달 안에서도 차이가 클지 예상합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-orange">
+<div class="lesson-panel" data-slide data-slide-title="20차시 ② 전체와 한 달의 분포">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li>File에서 전체 데이터용 Box Plot과 Distributions를 연결합니다. 두 위젯 모두 대여건수를 선택합니다. Box Plot은 Annotated boxes, Distributions의 Fitted distribution은 None으로 둡니다.</li><li>File → Select Rows에서 날짜 범위를 한 달로 고릅니다. Matching Data → 별도의 Box Plot·Distributions·Data Table을 연결합니다.</li><li>먼저 2025-01-01~01-31, 다음은 2024-05-01~05-31로 바꾸어 봅니다. 각각 31행인지 확인하고 전체와 비교합니다.</li></ol>
+<p>두 분포의 가로축 범위와 Bin width를 맞춰 비교합니다. 도구가 자동으로 축을 바꾸면 눈금 수치를 먼저 읽습니다. 서로 다른 행 수 때문에 막대 높이만으로 퍼짐을 판단하지 않습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="20차시 관찰 · 큰 퍼짐은 어디에서 왔을까?">
+
+<p>Box Plot에서는 평균과 중앙값의 위치, 박스와 전체 범위를 관찰합니다. 박스의 폭은 가운데 절반의 퍼짐이며 표준편차와 같은 값은 아닙니다.</p>
+<ul class="week-objectives"><li>겨울 한 달의 퍼짐이 전체보다 줄었는가?</li><li>2024년 5월도 같은가? 낮은 값과 높은 값이 함께 있는가?</li><li>한 달을 바꿀 때마다 행 수·가로축 범위·통계량을 함께 기록했는가?</li></ul>
+<p>다른 달도 확인하되 2025년 2월은 16일까지 <strong>16일</strong>만 포함합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-concept">
+<div class="lesson-panel" data-slide data-slide-title="20차시 ③ 분포와 산포">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3>
+<p><strong>분포</strong>는 값들이 어느 구간에 얼마나 모여 있는지를 보여 주고, <strong>산포</strong>는 그 값들이 퍼진 정도를 말합니다. 평균이 같아도 산포는 다를 수 있습니다.</p>
+<p>전체의 산포에는 계절별 평균 차이와 같은 달 안의 날짜별 차이가 함께 반영됩니다. 월별로 나누면 전자의 영향을 줄여 관찰할 수 있지만, 모든 달의 표준편차가 반드시 작아지는 것은 아닙니다.</p>
+<p>표준편차는 최대 차이도, 모든 날짜가 반드시 들어가는 범위도 아닙니다. “평균±표준편차 밖이면 오류”로 해석하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-python">
+<div class="lesson-panel" data-slide data-slide-title="20차시 ④ 그래프의 한글 준비">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 5 · 한글 폰트 준비"><code>!pip install -q koreanize-matplotlib
+
+import matplotlib.pyplot as plt
+import koreanize_matplotlib</code></pre><p>한 셀에서 설치와 두 import를 순서대로 실행합니다. <code>import koreanize_matplotlib</code>만으로 적용되며 따로 함수를 호출하지 않습니다. 사용하지 않는 것처럼 보여도 지우지 않습니다.</p><p>런타임 재시작은 필요 없습니다. 새 런타임에서는 설치부터 다시 실행합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="20차시 코드 · 월별 describe">
+<pre data-code data-language="python" data-label="셀 6 · 전체와 월별 통계량 비교"><code>month_key = bike["날짜"].dt.strftime("%Y-%m")
+monthly = bike.groupby(month_key)["대여건수"].describe()
+display(monthly.round(2))
+overall_std = bike["대여건수"].std()
+print("전체 표준편차:", round(overall_std, 2))
+display(monthly.loc[monthly["std"] &gt; overall_std, ["count", "mean", "std"]])
+print("평균 대비 표준편차(%):",
+      round(overall_std / bike["대여건수"].mean() * 100, 1))</code></pre><p>날짜에서 연·월을 묶는 기준을 만들어 <code>groupby().describe()</code>로 요약합니다. 원본 CSV에 새 컬럼을 저장하지 않습니다. 마지막 표에는 전체보다 표준편차가 큰 달만 나옵니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="20차시 코드 · 같은 구간으로 히스토그램 대조">
+<pre data-code data-language="python" data-label="셀 7 · month를 바꾸어 비교"><code>month = "2024-05"
+selected = bike.loc[month_key.eq(month), "대여건수"]
+fig, axes = plt.subplots(1, 2, figsize=(12, 4), sharex=True)
+for ax, values, title in zip(axes, [bike["대여건수"], selected], ["전체", month]):
+    ax.hist(values, bins=range(0, 210001, 10000), edgecolor="white")
+    ax.set(title=title, xlabel="대여건수(건)", ylabel="날짜 수(일)")
+plt.tight_layout()
+plt.show()</code></pre><p><code>month</code>를 <code>"2025-01"</code>, <code>"2024-08"</code>로 바꾸어 봅니다. 가로 구간은 1만 건으로 같고 세로축은 각각 날짜 수입니다. 달별로 다른 축 높이와 가로 방향의 퍼짐을 구별합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="20차시 코드 · 월별 박스플롯">
+<pre data-code data-language="python" data-label="셀 8 · 월별 중심과 퍼짐"><code>plot_data = bike.assign(월=month_key)
+plot_data.boxplot(column="대여건수", by="월", figsize=(11, 4), rot=45)
+plt.suptitle("")
+plt.title("월별 대여건수의 중심과 퍼짐")
+plt.xlabel("연·월")
+plt.ylabel("대여건수(건)")
+plt.tight_layout()
+plt.show()</code></pre><p>Python 박스플롯의 수염과 바깥 점 표시는 Orange3와 다를 수 있습니다. 같은 달의 평균·중앙값과 분포의 퍼짐을 먼저 비교하고, 점이 따로 표시되었다는 이유로 날짜를 삭제하지 않습니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l2-compare">
+<div class="lesson-panel" data-slide data-slide-title="20차시 ⑤ 줄어든 달과 예외">
+<h3><span class="step-number">05</span> 결과 비교</h3><div class="lesson-table-scroll" role="region" aria-label="pandas 기본 표준편차 기준으로 대조" tabindex="0"><table class="lesson-table"><caption>pandas 기본 표준편차 기준으로 대조</caption><thead><tr><th scope="col">대상</th><th scope="col">날짜 수</th><th scope="col">표준편차</th></tr></thead><tbody><tr><th scope="row">전체</th><td>353일</td><td>약 49,526건</td></tr><tr><th scope="row">2025년 1월</th><td>31일</td><td>약 20,964건</td></tr><tr><th scope="row">2024년 5월</th><td>31일</td><td>약 54,671건</td></tr></tbody></table></div><p><strong>12개월 중 11개월은 전체보다 작고, 2024년 5월은 더 큽니다.</strong> 같은 달에도 14,293건부터 193,336건까지 넓게 퍼집니다. 계절 구분만으로 모든 날짜의 차이가 사라지지는 않습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="20차시 비교 기록 · 도구와 조건 맞추기">
+
+<ul class="week-objectives"><li>Orange3에서 고른 월과 Python의 <code>month</code>, 날짜 수가 같은지 대조합니다.</li><li>Box Plot의 표준편차 수치까지 맞추려면 선택한 월의 <code>selected.std(ddof=0)</code>을 확인합니다. pandas 기본 월별 표의 값은 n−1 기준입니다.</li><li>“월별로 나누면 항상 표준편차가 줄어든다”를 실제 예외를 포함한 문장으로 고쳐 씁니다.</li></ul>
+<p>평균만 볼 때와 분포·산포까지 볼 때, 데이터를 설명하는 문장이 어떻게 달라졌는지 기록합니다.</p>
+</div>
+</div>
+</section>
+<section class="lecture-section" id="lesson-3" aria-labelledby="lesson-3-title">
+<div class="section-heading"><p class="kicker">이번 주 3차시 · 21차시</p><h2 id="lesson-3-title">30일만 보고 353일을 추측할 수 있을까?</h2></div>
+<div class="lesson-step" id="l3-question">
+<div class="lesson-panel" data-slide data-slide-title="21차시 ① 적은 날짜로 전체 평균 예상">
+<h3><span class="step-number">01</span> 질문 제기</h3>
+<p class="lesson-question">“353일 중 30일만 골라 평균을 구하면 전체 평균과 같을까? 다시 고르면 어떻게 될까?”</p>
+<p>이번 실습에서는 파일의 353일 전체를 알고 있습니다. 일부 날짜만 볼 수 있는 상황을 만들어 그 값으로 전체를 추측한 뒤, 알고 있는 전체 평균과 비교합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-orange">
+<div class="lesson-panel" data-slide data-slide-title="21차시 ② Data Sampler로 30일 뽑기">
+<h3><span class="step-number">02</span> Orange3에서 결과 확인</h3>
+<ol class="week-objectives"><li><strong>월별 Select Rows를 거치지 않은 File의 353행</strong>을 Data Sampler에 연결합니다.</li><li><strong>Fixed sample size = 30</strong>으로 설정합니다. Sample with replacement, Replicable sampling, Stratify sample은 모두 해제합니다.</li><li><strong>Data Sample</strong> 출력을 Data Table과 Feature Statistics에 연결합니다. Remaining Data 출력과 구별합니다.</li><li>Sample Data를 눌러 30행과 대여건수 평균을 기록합니다. 같은 크기로 다섯 번 뽑아 평균이 어떻게 달라지는지 봅니다.</li></ol>
+<p>원본 File → Feature Statistics도 따로 연결해 353일 전체 평균을 비교 기준으로 둡니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="21차시 관찰 · 한 번에 뽑는 날짜 수 늘리기">
+
+<p>Fixed sample size를 <strong>30 → 100 → 200</strong>으로 바꾸고 각각 다섯 번 뽑습니다. 한 번에 선택된 날짜는 중복되지 않지만, 다음 추출에서는 이전에 뽑혔던 날짜가 다시 나올 수 있습니다.</p>
+<p>전체 평균에서 가장 멀었던 결과와 가까웠던 결과를 적습니다. 한 번의 결과만 보고 결론을 내리지 않습니다. 표본 평균이 계속 같으면 Replicable sampling 해제와 Sample Data 재실행을 확인합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-concept">
+<div class="lesson-panel" data-slide data-slide-title="21차시 ③ 모집단·표본·추론통계">
+<h3><span class="step-number">03</span> 개념에 이름 붙이기</h3><div class="lesson-table-scroll" role="region" aria-label="이번 실습의 범위" tabindex="0"><table class="lesson-table"><caption>이번 실습의 범위</caption><thead><tr><th scope="col">이름</th><th scope="col">이번 실습에서의 의미</th></tr></thead><tbody><tr><th scope="row">모집단</th><td>알아보려는 전체: 이 파일의 353일</td></tr><tr><th scope="row">표본</th><td>모집단에서 일부 뽑은 날짜들: 예를 들어 30일</td></tr><tr><th scope="row">표본의 통계량</th><td>뽑힌 날짜들의 값으로 계산한 평균 등</td></tr><tr><th scope="row">추론통계</th><td>표본에서 구한 통계량으로 모집단의 특성을 추측하는 일</td></tr></tbody></table></div><p>뽑힌 날짜가 달라지면 표본 평균도 달라집니다. 같은 크기로 반복해 보고, 크기를 늘렸을 때 결과들이 얼마나 모이는지 관찰합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="21차시 개념 · 전체의 경계 정하기">
+
+<p><strong>여기서 모집단은 2024-03-01~2025-02-16의 353일입니다.</strong> 따릉이가 운영된 모든 과거와 미래 날짜를 뜻하지 않습니다.</p>
+<p>모든 날짜가 뽑힐 기회를 갖도록 무작위로 고릅니다. 겨울만 편의대로 고르면 표본이 커져도 전체 계절을 반영하기 어렵습니다. 표본 크기와 뽑는 범위를 함께 확인해야 합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-python">
+<div class="lesson-panel" data-slide data-slide-title="21차시 ④ 셀을 다시 실행해 평균 비교">
+<h3><span class="step-number">04</span> Python으로 재현</h3><pre data-code data-language="python" data-label="셀 9 · 매번 새 표본"><code>population = bike["대여건수"]
+n = 30
+sample = population.sample(n=n, replace=False)
+display(sample.head())
+print("표본 날짜 수:", len(sample))
+print("표본 평균:", round(sample.mean(), 1))
+print("353일 전체 평균:", round(population.mean(), 1))</code></pre><p>먼저 <code>n = 30</code>으로 같은 셀을 다섯 번 실행합니다. 이어 100, 200으로 바꿉니다. 표본마다 값이 달라질 수 있으므로 특정 출력 숫자를 정답으로 외우지 않습니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="21차시 코드 · 크기별 100번의 표본 평균">
+<pre data-code data-language="python" data-label="셀 10 · 반복 실험"><code>sizes = [30, 100, 200]
+repeats = 100
+seed_start = 0
+means = pd.DataFrame({
+    n: [population.sample(n=n, replace=False, random_state=seed_start + i).mean()
+        for i in range(repeats)]
+    for n in sizes
+})
+means.columns.name = "표본 크기(일)"
+display(means.head().round(1))</code></pre><p>표의 한 행은 한 번씩 뽑은 결과이며, 각 열에는 해당 크기의 평균이 100개 들어갑니다. <code>repeats</code>는 반복 횟수이고 표본 크기와 다릅니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="21차시 반복 실험 · 같은 실험과 다른 실험">
+
+<p><code>random_state</code>에는 반복마다 다른 값을 넣었습니다. 같은 <code>seed_start</code>로 다시 실행하면 같은 실험을 대조할 수 있고, <code>seed_start = 1000</code>으로 바꾸면 다른 추출 결과를 살펴볼 수 있습니다.</p>
+<p>비교할 때는 셀 10을 실행한 뒤 셀 11~12를 다시 실행합니다. Orange3와 Python은 추출 방식이 달라 같은 날짜나 평균이 뽑혀야 하는 것은 아닙니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="21차시 코드 · 반복 평균의 범위 비교">
+<pre data-code data-language="python" data-label="셀 11 · 얼마나 달라졌는지 표로 보기"><code>summary = pd.DataFrame({
+    "반복 평균들의 평균": means.mean(),
+    "가장 작은 표본 평균": means.min(),
+    "가장 큰 표본 평균": means.max()
+})
+display(summary.round(1))
+print("353일 전체 평균:", round(population.mean(), 1))</code></pre><p>같은 100번 반복에서 작은 평균과 큰 평균 사이가 어떻게 달라지는지 읽습니다. 이 범위는 이번에 실제로 뽑은 결과들의 범위입니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="21차시 코드 · 표본 평균들을 한 그림에서 비교">
+<pre data-code data-language="python" data-label="셀 12 · 크기별 표본 평균의 퍼짐"><code>ax = means.plot.box(figsize=(7, 4))
+ax.axhline(population.mean(), color="red", linestyle="--", label="353일 전체 평균")
+ax.set(xlabel="한 번에 뽑은 날짜 수(일)", ylabel="표본 평균 대여건수(건)",
+       title=f"각 크기에서 {repeats}번 뽑은 표본 평균")
+ax.legend()
+plt.tight_layout()
+plt.show()</code></pre><p>각 상자는 <strong>하루 대여건수가 아니라 100개의 표본 평균</strong>을 요약합니다. 같은 세로축에서 30·100·200일 표본 평균들의 퍼짐을 비교합니다.</p>
+</div>
+</div>
+<div class="lesson-step" id="l3-compare">
+<div class="lesson-panel" data-slide data-slide-title="21차시 ⑤ 표본으로 전체를 말할 때">
+<h3><span class="step-number">05</span> 결과 비교</h3>
+<ul class="week-objectives"><li>두 도구 모두 같은 크기의 표본을 다시 뽑으면 평균이 달라질 수 있는가?</li><li>표본 크기를 늘렸을 때 여러 평균이 전체 평균 주변에 더 모이는 경향이 보이는가?</li><li>한 번의 200일 표본이 모든 30일 표본보다 반드시 가까웠는가, 아니면 반복 결과의 전체 모습을 봐야 하는가?</li></ul>
+<p><strong>표본으로 모집단을 추측하는 것이 추론통계입니다.</strong> 표본이 커질수록 무작위 추출 결과의 흔들림은 대체로 줄지만, 한 번의 결과가 항상 더 가까운 것은 아닙니다. 뽑은 범위도 맞아야 합니다.</p>
+</div>
+</div>
+</section>
+<section class="lecture-section" id="assignment" aria-labelledby="assignment-title">
+<div class="section-heading"><h2 id="assignment-title">학습 기록과 돌아보기</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="7주차 학습 기록">
+
+<p>Colab 노트북에 실행 결과와 다음 세 가지 설명을 남깁니다. 숫자 옆에는 어떤 컬럼·기간·표본 크기를 사용했는지 적습니다.</p>
+<ol class="week-objectives"><li><strong>대표값:</strong> 평균 119,928건과 중앙값 126,749건이 다른 이유를 겨울과 다른 날짜의 실제 값으로 설명합니다. 강수량 8.12 → 3.52mm에서 계산 대상이 어떻게 달라졌는지도 적습니다.</li><li><strong>산포:</strong> 월별로 나누었을 때 줄어든 경우와 2024년 5월의 예외를 비교합니다. 직접 고른 한 달의 결과도 남깁니다.</li><li><strong>표본:</strong> 30·100·200일 반복 추출 그래프를 붙이고, 표본의 크기와 한 번의 결과를 구별해 결론을 씁니다.</li></ol>
+</div>
+</section>
+<section class="lecture-section" id="references" aria-labelledby="references-title">
+<div class="section-heading"><h2 id="references-title">다시 볼 내용과 도구 참고</h2></div>
+<div class="lesson-panel" data-slide data-slide-title="연결되는 학습">
+
+<p><a href="../week-04/index.html">4주차 · 결측치와 이상치</a>에서 강수량 처리의 근거와 극단값의 맥락을 다시 볼 수 있습니다. 다음 주에는 분포·산점도·박스플롯으로 데이터를 설명하는 시각화를 다룹니다.</p>
+<p>표본 반복 셀의 <code>seed_start</code>를 바꿨다면 요약과 그래프 셀도 다시 실행합니다. 한글이 네모로 보이면 셀 5의 설치와 import가 끝났는지 확인한 뒤 그래프를 다시 실행합니다.</p>
+</div>
+<div class="lesson-panel" data-slide data-slide-title="공식 도구 문서" data-slide-skip>
+
+<ul class="week-objectives"><li><a href="https://orangedatamining.com/widget-catalog/data/featurestatistics/" target="_blank" rel="noopener noreferrer">Orange3 Feature Statistics / Column Statistics</a> · <a href="https://orangedatamining.com/widget-catalog/visualize/boxplot/" target="_blank" rel="noopener noreferrer">Box Plot</a> · <a href="https://orangedatamining.com/widget-catalog/visualize/distributions/" target="_blank" rel="noopener noreferrer">Distributions</a></li><li><a href="https://orangedatamining.com/widget-catalog/transform/datasampler/" target="_blank" rel="noopener noreferrer">Orange3 Data Sampler</a></li><li><a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html" target="_blank" rel="noopener noreferrer">pandas describe</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.Series.std.html" target="_blank" rel="noopener noreferrer">std 계산 기준</a> · <a href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.sample.html" target="_blank" rel="noopener noreferrer">sample</a></li></ul>
+<p>교재는 관련 쪽수 p.82로 참조합니다. 위 도구 문서의 예제 데이터는 이 수업 실습에 사용하지 않습니다.</p>
+<p class="week-home-link"><a class="button" href="../index.html">학기 홈으로 돌아가기</a></p>
+</div>
+</section>
       <div data-widget="week-navigation">
-        <p>공개된 주차가 없습니다. 학습 자료는 주차별로 준비 중입니다.</p>
+        <p><a href="../week-06/index.html">← 6주차</a> · 현재 7주차 · 다음 주차 준비 중</p>
         <p><a href="../index.html">학기 홈으로 돌아가기</a></p>
       </div>
     </div>
