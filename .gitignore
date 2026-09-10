@@ -1,11 +1,13 @@
 # Raw downloads stay on disk and must not be committed.
 /source/
 /work-temp/
-# Only the reviewed final weather/bike CSV belongs in Git.
+# Reviewed lesson input and the approved post-class result belong in Git.
 /data/weather-bike/**/*.csv
 !/data/weather-bike/bike-daily.csv
+!/data/weather-bike/bike-daily-clean.csv
 # Published NEIS CSVs are commit candidates; raw source files remain ignored.
 !/data/neis/*.csv
+!/data/neis/meals-parsed.csv
 .venv/
 venv/
 __pycache__/

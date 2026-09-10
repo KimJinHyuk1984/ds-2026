@@ -147,14 +147,14 @@ window.SITE = {
       "target": "고등학교",
       "difficulty": "",
       "tags": [
-        "기상·따릉이"
+        "기상·따릉이 + NEIS 급식"
       ],
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
-      "status": "coming",
+      "status": "ready",
       "lessons": "10–12차시",
-      "dataName": "기상·따릉이",
+      "dataName": "기상·따릉이 + NEIS 급식",
       "textbook": [
         {
           "unit": "Ⅱ-1-2",
@@ -162,8 +162,9 @@ window.SITE = {
         }
       ],
       "objectives": [
-        "기상·따릉이 데이터에서 결측치와 이상치를 찾아낼 수 있다.",
-        "Orange3와 Python으로 결측치·이상치를 처리하고 결과를 비교할 수 있다."
+        "결측치가 있는 컬럼과 개수를 두 도구에서 확인할 수 있다.",
+        "기록 맥락에 따라 강수량 처리 방법을 선택하고 평균 대체·행 삭제의 영향을 비교할 수 있다.",
+        "극단값과 통계적 이상치 후보를 구별하고, 제거 전에 확인할 근거를 설명할 수 있다."
       ],
       "compressible": false
     },
@@ -171,21 +172,21 @@ window.SITE = {
       "slug": "week-05",
       "week": 5,
       "badge": "5주차",
-      "title": "정규화·파생변수와 데이터 편향",
+      "title": "텍스트 전처리와 파생변수",
       "subtitle": "13–15차시",
       "kicker": "5주차",
       "duration": "3차시",
       "target": "고등학교",
       "difficulty": "",
       "tags": [
-        "기상·따릉이"
+        "NEIS 급식 + 기상·따릉이"
       ],
       "accent": "neon-green",
       "emoji": "",
       "cover": "",
       "status": "coming",
       "lessons": "13–15차시",
-      "dataName": "기상·따릉이",
+      "dataName": "NEIS 급식 + 기상·따릉이",
       "textbook": [
         {
           "unit": "Ⅱ-1-2",
@@ -193,7 +194,7 @@ window.SITE = {
         }
       ],
       "objectives": [
-        "Orange3와 Python으로 데이터를 정규화하고 파생변수를 만들 수 있다.",
+        "메뉴와 알레르기 정보를 분리하고 정규화·메뉴 개수·요일 구분 등 파생변수를 만들 수 있다.",
         "전처리 과정에서 데이터 편향을 살펴보고 결과에 미치는 영향을 설명할 수 있다."
       ],
       "compressible": false
